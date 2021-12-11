@@ -72,7 +72,7 @@ export default class Server {
     }
 
     /**
-     * 
+     * Run the WebSocket server
      * @returns Promise for when the server is ready,
      */
     public run(): Promise<void> {
@@ -98,6 +98,11 @@ export default class Server {
         });
     }
 
+    /**
+     * Listen for new connections
+     * @param event Event name
+     * @param listener Event callback
+     */
     public on(event: "connect", listener: (connection: Connection) => void): void;
 
     public on(event: any, listener: any) {

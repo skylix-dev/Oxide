@@ -9,6 +9,10 @@ webSocketServer.on("connect", conn => {
     conn.on("message", "speak", message => {
         console.log("New message in: " + JSON.stringify(message));
     });
+
+    conn.on("messageError", "", error => {
+        console.log(error);
+    });
 });
 
 webSocketServer.run().then(() => {
