@@ -1,0 +1,15 @@
+# TypeScript files
+*.ts
+
+# Source Maps
+!*.map
+
+# Compiled Code
+!*.js
+
+# Delaration files
+!*.d.ts
+
+# NodeJS
+node_modules
+**/node_modules

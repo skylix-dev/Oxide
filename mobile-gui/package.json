@@ -1,0 +1,19 @@
+{
+  "name": "@illuxdev/oxide-mobile-gui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/Exports.js",
+  "type": "module",
+  "scripts": {
+    "watch": "tsc --watch"
+  },
+  "author": {
+    "name": "ILLUX",
+    "url": "https://illux.dev",
+    "email": "support@illux.dev"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.5.3"
+  }
+}

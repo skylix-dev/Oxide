@@ -1,0 +1,10 @@
+{
+    "cSpell.words": [
+        "ILLUX"
+    ],
+    "files.exclude": {
+        "**/*.d.ts": true,
+        "**/*.js": true,
+        "**/*.map": true
+    }
+}
