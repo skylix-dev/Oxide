@@ -7,5 +7,6 @@
         "**/*.d.ts": true,
         "**/*.js": true,
         "**/*.map": true
-    }
+    },
+    "git.inputValidation": "off"
 }
