@@ -36,7 +36,7 @@ export default class Server {
      * The public server event listeners storage
      */
     private events = {
-        connect: [] as ((connection: Connection) => void)[]
+        connect: [] as ((connection: Connection<any>) => void)[]
     };
 
     /**
@@ -78,12 +78,12 @@ export default class Server {
     public run(): Promise<void> {
         return new Promise((resolve, reject) => {
             if (this.running) {
-                reject(Errors.serverAlreadyRunning);
+                reject(Errors.alreadyRunning);
                 return;
             }
 
             if (this.starting) {
-                reject(Errors.serverAlreadyStarting);
+                reject(Errors.alreadyStarting);
                 return;
             }
 
@@ -103,7 +103,7 @@ export default class Server {
      * @param event Event name
      * @param listener Event callback
      */
-    public on(event: "connect", listener: (connection: Connection) => void): void;
+    public on<CustomConnectionProperties>(event: "connect", listener: (connection: Connection<CustomConnectionProperties>) => void): void;
 
     public on(event: any, listener: any) {
         (this.events as any)[event].push(listener);

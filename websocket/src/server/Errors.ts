@@ -1,6 +1,6 @@
 enum Errors {
-    serverAlreadyRunning,
-    serverAlreadyStarting
+    alreadyRunning,
+    alreadyStarting
 }
 
 export default Errors;
