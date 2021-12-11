@@ -1,5 +1,5 @@
 {
-  "name": "@illuxdev/oxide-websocket",
+  "name": "@illuxdev/oxide-utils",
   "version": "1.0.0",
   "description": "",
   "main": "src/Exports.js",
