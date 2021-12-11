@@ -4,8 +4,14 @@
   "description": "Create full-stack applications including, desktop, mobile, web, and servers!",
   "main": "index.js",
   "scripts": {
-    "watch": "(cd desktop-cli && npm run watch) & (cd ../desktop-gui && npm run watch) & (cd ../mobile-cli && npm run watch) & (cd ../mobile-gui && npm run watch) & (cd ../websocket && npm run watch) & (cd ../utils && npm run watch) && cd ../",
-    "postinstall": "(cd desktop-cli && npm i) & (cd ../desktop-gui && npm i) & (cd ../mobile-cli && npm i) & (cd ../mobile-gui && npm i) & (cd ../websocket && npm i) & (cd ../utils && npm i) && cd ../"
+    "watch:desktop-cli": "cd desktop-cli && npm run watch && cd ../",
+    "watch:desktop-gui": "cd desktop-gui && npm run watch && cd ../",
+    "watch:mobile-cli": "cd mobile-cli && npm run watch && cd ../",
+    "watch:mobile-gui": "cd mobile-gui && npm run watch && cd ../",
+    "watch:utils": "cd utils && npm run watch && cd ../",
+    "watch:websocket": "cd websocket && npm run watch && cd ../",
+    "watch": "run-p watch:desktop-cli watch:desktop-gui watch:mobile-cli watch:mobile-gui watch:utils watch:websocket",
+    "postinstall": "(cd desktop-cli && npm i) & (cd ../desktop-gui && npm i) & (cd ../mobile-cli && npm i) & (cd ../mobile-gui && npm i) & (cd ../websocket && npm i) & (cd ../utils && npm i) & (cd ../websocket && npm i) && cd ../"
   },
   "repository": {
     "type": "git",
@@ -20,5 +26,8 @@
   "bugs": {
     "url": "https://github.com/IlluxDev/Oxide/issues"
   },
-  "homepage": "https://github.com/IlluxDev/Oxide#readme"
+  "homepage": "https://github.com/IlluxDev/Oxide#readme",
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  }
 }

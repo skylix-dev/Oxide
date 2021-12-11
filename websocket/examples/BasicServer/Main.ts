@@ -4,5 +4,8 @@ const webSocketServer = new Server({
     port: 7090
 });
 
+webSocketServer;
 
-webSocketServer.run();
+webSocketServer.run().then(() => {
+    console.log("The server is ready");
+});

@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/Exports.js",
-  "type": "module",
   "scripts": {
     "watch": "tsc --watch"
   },
