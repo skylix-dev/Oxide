@@ -33,6 +33,13 @@ export default class Server {
     private starting = false;
 
     /**
+     * The public server event listeners storage
+     */
+    private events = {
+        connect: [] as ((connection: Connection) => void)[]
+    };
+
+    /**
      * Create a new WebSocket API server
      * @param settings Options for the WebSocket server
      */
@@ -60,6 +67,7 @@ export default class Server {
 
         this.realWebSocketServer.on("connection", webSocketConnection => {
             const connection = new Connection(webSocketConnection);
+            this.events.connect.forEach(event => event(connection));
         });
     }
 
@@ -88,5 +96,11 @@ export default class Server {
                 resolve();
             });
         });
+    }
+
+    public on(event: "connect", listener: (connection: Connection) => void): void;
+
+    public on(event: any, listener: any) {
+        (this.events as any)[event].push(listener);
     }
 }
