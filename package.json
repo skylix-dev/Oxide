@@ -4,8 +4,8 @@
   "description": "Create full-stack applications including, desktop, mobile, web, and servers!",
   "main": "index.js",
   "scripts": {
-    "watch": "(cd desktop-cli && npm run watch) & (cd ../desktop-gui && npm run watch) & (cd ../mobile-cli && npm run watch) & (cd ../mobile-gui && npm run watch) && cd ../",
-    "postinstall": "(cd desktop-cli && npm i) & (cd ../desktop-gui && npm i) & (cd ../mobile-cli && npm i) & (cd ../mobile-gui && npm i) && cd ../"
+    "watch": "(cd desktop-cli && npm run watch) & (cd ../desktop-gui && npm run watch) & (cd ../mobile-cli && npm run watch) & (cd ../mobile-gui && npm run watch) & (cd ../websocket && npm run watch) && cd ../",
+    "postinstall": "(cd desktop-cli && npm i) & (cd ../desktop-gui && npm i) & (cd ../mobile-cli && npm i) & (cd ../mobile-gui && npm i) & (cd ../websocket && npm i) && cd ../"
   },
   "repository": {
     "type": "git",

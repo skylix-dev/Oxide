@@ -1,6 +1,7 @@
 {
     "cSpell.words": [
-        "ILLUX"
+        "ILLUX",
+        "illuxdev"
     ],
     "files.exclude": {
         "**/*.d.ts": true,
