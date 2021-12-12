@@ -1,4 +1,4 @@
-type animationColors = "black"
+export type animationColors = "black"
 | "red"
 | "green"
 | "yellow"

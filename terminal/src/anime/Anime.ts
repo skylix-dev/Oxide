@@ -5,7 +5,7 @@ import cliColor from "cli-color";
 let isRunning = false;
 let animationText = "";
 let animationMode: "success" | "warning" | "error" | "info" = "info";
-let animationLoop: NodeJS.Timer | null = null;
+let animationLoop: any | null = null;
 let animationSettings: Settings;
 let frameInterval = 0;
 let currentFrame = 0;
@@ -43,7 +43,7 @@ function renderCurrentFrame(finalMode = false) {
         outputText = outputText.slice(0, -(difference + 4)) + " ...";
     }
 
-    process.stdout.write("\r " + cliColor[animationSettings.colors[animationMode]](spinnerFrame) + " " + outputText);
+    process.stdout.write("\r " + (cliColor as any)[(animationSettings as any).colors[animationMode]](spinnerFrame) + " " + outputText);
 
     if (currentFrame >= frames.length - 1) {
         currentFrame = 0;
@@ -60,10 +60,10 @@ export async function animate(text: string, mode: "success" | "warning" | "error
         const defaultSettings = {
             fps: 20,
             colors: {
-                success: "greenBright",
-                warning: "yellowBright",
-                error: "redBright",
-                info: "blueBright"
+                success: "green",
+                warning: "yellow",
+                error: "red",
+                info: "blackBright"
             }
         } as Settings;
     
