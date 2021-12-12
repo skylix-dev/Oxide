@@ -9,6 +9,46 @@ let animationLoop: NodeJS.Timer | null = null;
 let animationSettings: Settings;
 let frameInterval = 0;
 let currentFrame = 0;
+const frames = [
+    "⠋",
+    "⠙",
+    "⠹",
+    "⠸",
+    "⠼",
+    "⠴",
+    "⠦",
+    "⠧",
+    "⠇",
+    "⠏"
+];
+
+/**
+ * Generate whitespace to clear off trailing text of previous text or frame
+ */
+function generateWhiteSpace() {
+
+}
+
+/**
+ * Render the current frame in time
+ */
+function renderCurrentFrame() {
+    const width = process.stdout.getWindowSize()[0];
+    let spinnerSize = frames[currentFrame].length + 2;
+    let outputText = animationText;
+
+    if (width < (outputText.length + spinnerSize)) {
+        const difference = (outputText.length + spinnerSize) - width;
+        outputText = outputText.slice(0, -(difference + 4)) + " ...";
+    }
+
+    process.stdout.write("\r " + cliColor[animationSettings.colors[animationMode]](frames[currentFrame]) + " " + outputText);
+
+    if (currentFrame >= frames.length - 1) {
+        currentFrame = 0;
+        return;
+    }
+}
 
 /**
  * Create an animated spinner with text
@@ -17,8 +57,7 @@ let currentFrame = 0;
 export async function animate(text: string, mode: "success" | "warning" | "error" | "info" = "info", settings: Settings = {}) {
     const runAnimation = () => {
         const defaultSettings = {
-            fps: 15,
-            frames: [ "   ", ".  ", ".. ", "...", " ..", "  .", "   " ],
+            fps: 20,
             colors: {
                 success: "greenBright",
                 warning: "yellowBright",
@@ -34,12 +73,7 @@ export async function animate(text: string, mode: "success" | "warning" | "error
     
         animationLoop = setInterval(() => {
             isRunning = true;
-            process.stdout.write("\r " + cliColor[animationSettings.colors[animationMode]](animationSettings.frames[currentFrame]) + " " + animationText);
-    
-            if (currentFrame >= animationSettings.frames.length - 1) {
-                currentFrame = 0;
-                return;
-            }
+            renderCurrentFrame();
     
             currentFrame++;
         }, frameInterval);
@@ -63,22 +97,32 @@ export async function animate(text: string, mode: "success" | "warning" | "error
  */
 export function stop(mode: "success" | "warning" | "error" | "info" = "info", text?: string): Promise<void> {
     return new Promise((resolve) => {
-        let finalText = text;
-    
-        if (!finalText) {
-            finalText = animationText;
-        }
+        updateText(text, mode);
 
-        if (mode) {
-            animationMode = mode;
-        }
-
-        animationText = finalText;
-        clearInterval(animationLoop);
-
-        isRunning = false;
         process.stdout.write("\n");
-
         resolve();
     });
+}
+
+/**
+ * Update the text of a currently running animation
+ * @param text The new text
+ * @param mode The new mode
+ */
+export function updateText(text: string, mode: "success" | "warning" | "error" | "info" = "info") {
+    let finalText = text;
+    
+    if (!finalText) {
+        finalText = animationText;
+    }
+
+    if (mode) {
+        animationMode = mode;
+    }
+
+    animationText = finalText;
+    clearInterval(animationLoop);
+
+    isRunning = false;
+    renderCurrentFrame();
 }

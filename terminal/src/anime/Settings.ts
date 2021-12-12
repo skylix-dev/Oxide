@@ -38,10 +38,8 @@ export default interface Settings {
     fps?: number;
 
     /**
-     * All the frames for the spinner
+     * All color states for animation spinner
      */
-    frames?: string[];
-
     colors?: {
         success?: animationColors;
         warning?: animationColors;
