@@ -1,0 +1,24 @@
+{
+  "name": "@illuxdev/oxide-terminal",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/Exports.js",
+  "scripts": {
+    "watch": "tsc --watch"
+  },
+  "author": {
+    "name": "ILLUX",
+    "url": "https://illux.dev",
+    "email": "support@illux.dev"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/cli-color": "^2.0.1",
+    "@types/merge-deep": "^3.0.0",
+    "typescript": "^4.5.3"
+  },
+  "dependencies": {
+    "cli-color": "^2.0.1",
+    "merge-deep": "^3.0.3"
+  }
+}

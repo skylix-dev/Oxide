@@ -10,8 +10,9 @@
     "watch:mobile-gui": "cd mobile-gui && npm run watch && cd ../",
     "watch:utils": "cd utils && npm run watch && cd ../",
     "watch:websocket": "cd websocket && npm run watch && cd ../",
-    "watch": "run-p watch:desktop-cli watch:desktop-gui watch:mobile-cli watch:mobile-gui watch:utils watch:websocket",
-    "postinstall": "(cd desktop-cli && npm i) & (cd ../desktop-gui && npm i) & (cd ../mobile-cli && npm i) & (cd ../mobile-gui && npm i) & (cd ../websocket && npm i) & (cd ../utils && npm i) & (cd ../websocket && npm i) && cd ../"
+    "watch:terminal": "cd terminal && npm run watch && cd ../",
+    "watch": "run-p watch:desktop-cli watch:desktop-gui watch:mobile-cli watch:mobile-gui watch:utils watch:websocket watch:terminal",
+    "postinstall": "(cd desktop-cli && npm i) & (cd ../desktop-gui && npm i) & (cd ../mobile-cli && npm i) & (cd ../mobile-gui && npm i) & (cd ../websocket && npm i) & (cd ../utils && npm i) & (cd ../websocket && npm i) & (cd ../terminal && npm i) && cd ../"
   },
   "repository": {
     "type": "git",
