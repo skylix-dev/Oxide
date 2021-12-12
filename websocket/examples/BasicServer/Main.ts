@@ -42,7 +42,7 @@ webSocketServer.on<CustomProps>("connect", conn => {
     });
 
     conn.on("message", "send+kill:1000", () => {
-        conn.disconnect();
+        conn.disconnect(0, "Hey");
 
         setTimeout(() => {
             conn.send("test").then(() => {}).catch(error => {
@@ -51,6 +51,10 @@ webSocketServer.on<CustomProps>("connect", conn => {
                 }
             });
         }, 1000);
+    });
+
+    conn.on("message", "kill", () => {
+        conn.disconnect();
     });
 
     conn.on("disconnect", (code, reason) => {

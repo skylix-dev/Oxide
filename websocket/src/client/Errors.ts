@@ -1,6 +1,7 @@
 enum Errors {
     alreadyConnecting,
-    alreadyConnected
+    alreadyConnected,
+    notAlive
 }
 
 export default Errors;

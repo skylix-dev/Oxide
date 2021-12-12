@@ -108,9 +108,9 @@ export default class Connection<CustomProperties> {
      * @param code Reason code for closing the connection
      * @param reason The actual reason for closing the connection
      */
-    public disconnect(code: number = 1001, reason: string = "") {
+    public disconnect(code: number = 1005, reason: string = "") {
         if (this.connectionAlive) {
-            this.realWebSocketConnection.terminate();
+            this.realWebSocketConnection.close(code, reason);
         }
     }
 

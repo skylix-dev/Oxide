@@ -10,7 +10,7 @@ export default class Client {
     private realWebSocket?: WebSocket;
 
     /**
-     * The settings for the Oxide client
+     * The settings for the Oxide WebSocket client
      */
     private settings: Settings;
 
@@ -25,12 +25,23 @@ export default class Client {
     private connected = false;
 
     /**
-     * The address of the Oxide server
+     * The address of the Oxide WebSocket server
      */
     public serverAddress: string;
 
     /**
-     * Create a new Oxide server client
+     * All event listener callbacks
+     */
+    private events = {
+        disconnect: [] as ((code: number, reason: string) => void)[],
+        message: [] as {
+            channel: string;
+            listener: (message: any) => void;
+        }[]
+    };
+
+    /**
+     * Create a new Oxide WebSocket server client
      * @param settings Settings for the Oxide server client
      */
     public constructor(settings: Settings) {
@@ -44,7 +55,7 @@ export default class Client {
     }
 
     /**
-     * Generate a new connect URL to connect to an Oxide server
+     * Generate a new connect URL to connect to an Oxide WebSocket server
      * @returns The connect URL for the Oxide server
      */
     private generateConnectUri() {
@@ -52,6 +63,32 @@ export default class Client {
         return prefix + "://" + this.settings.host + ":" + this.settings.port;
     }
 
+    /**
+     * Send a message to the Oxide WebSocket server
+     * @param channel The channel to send the message in
+     * @param message The actual message data
+     * @returns Promise for if the message was sent
+     */
+    public send<MessageType>(channel: string, message: MessageType = {} as any): Promise<void> {
+        return new Promise((resolve, reject) => {
+            if (!this.connected) {
+                reject(Errors.notAlive);
+                return;
+            }
+
+            try {
+                this.realWebSocket?.send(JSON.stringify({ channel, message }));
+                resolve();
+            } catch (error) {
+                reject(Errors.notAlive);
+            }
+        });
+    }
+
+    /**
+     * 
+     * @returns Promise for when the client is connected to an Oxide WebSocket server
+     */
     public run(): Promise<void> {
         return new Promise((resolve, reject) => {
             if (this.connected) {
@@ -67,6 +104,12 @@ export default class Client {
             this.connecting = true;
             this.realWebSocket = new WebSocket(this.serverAddress);
 
+            this.realWebSocket.on("close", (ws: unknown, code: number, reason: any) => {
+                console.log(reason);
+                this.connected = false;
+                this.events.disconnect.forEach(event => event(code, reason ?? ""));
+            });
+
             this.realWebSocket.on("open", () => {
                 this.connecting = false;
                 this.connected = true;
@@ -74,5 +117,33 @@ export default class Client {
                 resolve();
             });
         });
+    }
+
+    /**
+     * Listen for when the server disconnects
+     * @param event Event name
+     * @param listener Event callback
+     * @param nullValue This value should not be used
+     */
+    public on(event: "disconnect", listener: (code: number, reason: string) => void, nullValue?: any): void;
+
+    /**
+     * Listen for message events from the server
+     * @param event Event type
+     * @param channel Channel for listening for messages
+     * @param listener Event callback
+     */
+    public on<MessageType>(event: "message", channel: string, listener: (message: MessageType) => void): void;
+
+    public on(event: any, listenerOrChannel: any, nullOrListener: any) {
+        if (typeof listenerOrChannel == "string" && typeof nullOrListener == "function") {
+            this.events.message.push({
+                channel: listenerOrChannel,
+                listener: nullOrListener
+            });
+            return;
+        }
+
+        (this.events as any)[event].push(listenerOrChannel);
     }
 }
