@@ -111,7 +111,7 @@ export function stop(mode: "success" | "warning" | "error" | "info" = "info", te
  * @param text The new text
  * @param mode The new mode
  */
-export function updateText(text: string, mode: "success" | "warning" | "error" | "info" = "info") {
+export function updateText(text?: string, mode: "success" | "warning" | "error" | "info" = "info") {
     let finalText = text;
     
     if (!finalText) {
