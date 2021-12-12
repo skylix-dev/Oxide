@@ -1,4 +1,4 @@
-import { Server, ServerConnectionErrors } from "../../src/Exports";
+import { ClientErrors, Server, ServerConnectionErrors } from "../../src/Exports";
 
 const webSocketServer = new Server({
     port: 7090
@@ -42,7 +42,7 @@ webSocketServer.on<CustomProps>("connect", conn => {
     });
 
     conn.on("message", "send+kill:1000", () => {
-        conn.disconnect(0, "Hey");
+        conn.disconnect(undefined);
 
         setTimeout(() => {
             conn.send("test").then(() => {}).catch(error => {
@@ -54,11 +54,11 @@ webSocketServer.on<CustomProps>("connect", conn => {
     });
 
     conn.on("message", "kill", () => {
-        conn.disconnect();
+        conn.disconnect(undefined);
     });
 
-    conn.on("disconnect", (code, reason) => {
-        console.log("Connection disconnected, CODE = " + code + " REASON = " + reason);
+    conn.on("disconnect", (code) => {
+        console.log("Connection disconnected, CODE = " + code);
     });
 });
 

@@ -33,11 +33,12 @@ export default class Client {
      * All event listener callbacks
      */
     private events = {
-        disconnect: [] as ((code: number, reason: string) => void)[],
+        disconnect: [] as ((code: number) => void)[],
         message: [] as {
             channel: string;
             listener: (message: any) => void;
-        }[]
+        }[],
+        error: [] as ((reason: Errors) => void)[]
     };
 
     /**
@@ -104,15 +105,24 @@ export default class Client {
             this.connecting = true;
             this.realWebSocket = new WebSocket(this.serverAddress);
 
-            this.realWebSocket.on("close", (ws: unknown, code: number, reason: any) => {
-                console.log(reason);
-                this.connected = false;
-                this.events.disconnect.forEach(event => event(code, reason ?? ""));
+            this.realWebSocket.on("error", error => {
+                const errorMessage = error.message + "\n";
+                const econnRefusedErrorRegexp = /connect ECONNREFUSED (.*?)\n/.exec(errorMessage);
+
+                if (econnRefusedErrorRegexp) {
+                    this.events.error.forEach(event => event(Errors.connectionRefused));
+                    reject(Errors.connectionRefused);
+                }
             });
 
             this.realWebSocket.on("open", () => {
                 this.connecting = false;
                 this.connected = true;
+
+                this.realWebSocket!.on("close", (code) => {
+                    this.connected = false;
+                    this.events.disconnect.forEach(event => event(code));
+                });
 
                 resolve();
             });
@@ -125,7 +135,7 @@ export default class Client {
      * @param listener Event callback
      * @param nullValue This value should not be used
      */
-    public on(event: "disconnect", listener: (code: number, reason: string) => void, nullValue?: any): void;
+    public on(event: "disconnect", listener: (code: number) => void, nullValue?: any): void;
 
     /**
      * Listen for message events from the server

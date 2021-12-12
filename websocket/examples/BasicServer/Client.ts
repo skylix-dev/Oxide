@@ -1,11 +1,11 @@
-import { Client } from "../../src/Exports";
+import { Client, ClientErrors } from "../../src/Exports";
 
 const client = new Client({
     port: 7090
 });
 
-client.on("disconnect", (code, reason) => {
-    console.log("CODE = " + code + " REASON = " + reason);
+client.on("disconnect", (code) => {
+    console.log("CODE = " + code);
 });
 
 client.run().then(() => {
@@ -14,4 +14,10 @@ client.run().then(() => {
     setTimeout(() => {
         client.send("kill");
     });
+}).catch(error => {
+    switch (error) {
+        case ClientErrors.connectionRefused: 
+            console.log("Failed to connect because the connection refused");
+            break;
+    }
 });

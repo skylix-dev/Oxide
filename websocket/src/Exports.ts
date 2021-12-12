@@ -1,3 +1,4 @@
+import "source-map-support/register";
 import Client from "./client/Client";
 import ClientErrors from "./client/Errors";
 import Server from "./server/Server";

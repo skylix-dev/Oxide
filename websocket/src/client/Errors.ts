@@ -1,7 +1,8 @@
 enum Errors {
     alreadyConnecting,
     alreadyConnected,
-    notAlive
+    notAlive,
+    connectionRefused
 }
 
 export default Errors;

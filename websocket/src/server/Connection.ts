@@ -1,4 +1,5 @@
 import { WebSocket } from "ws";
+import ConnectionCloseCodeRange from "./ConnectionCloseCodeRange";
 import ConnectionErrors from "./ConnectionErrors";
 
 export default class Connection<CustomProperties> {
@@ -29,7 +30,7 @@ export default class Connection<CustomProperties> {
             channel: string,
             listener: (message: any) => void
         }[],
-        disconnect: [] as ((code: number, reasonMessage: string) => void)[]
+        disconnect: [] as ((code: number) => void)[]
     };
 
     /**
@@ -38,9 +39,9 @@ export default class Connection<CustomProperties> {
     public constructor(connection: WebSocket) {
         this.realWebSocketConnection = connection;
 
-        connection.on("close", (code, reasonString) => {
+        connection.on("close", (code) => {
             this.connectionAlive = false;
-            this.events.disconnect.forEach(event => event(code, reasonString.toString()));
+            this.events.disconnect.forEach(event => event(code));
         });
 
         connection.on("message", message => {
@@ -108,9 +109,9 @@ export default class Connection<CustomProperties> {
      * @param code Reason code for closing the connection
      * @param reason The actual reason for closing the connection
      */
-    public disconnect(code: number = 1005, reason: string = "") {
+    public disconnect(code?: ConnectionCloseCodeRange) {
         if (this.connectionAlive) {
-            this.realWebSocketConnection.close(code, reason);
+            this.realWebSocketConnection.close(code);
         }
     }
 
