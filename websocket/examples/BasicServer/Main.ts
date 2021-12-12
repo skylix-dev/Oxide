@@ -45,7 +45,11 @@ webSocketServer.on<CustomProps>("connect", conn => {
         conn.disconnect();
 
         setTimeout(() => {
-            conn.send("test");
+            conn.send("test").then(() => {}).catch(error => {
+                if (error == ServerConnectionErrors.notAlive) {
+                    console.log("Failed to send message because the connection isn't alive");
+                }
+            });
         }, 1000);
     });
 
