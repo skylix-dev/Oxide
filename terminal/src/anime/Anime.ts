@@ -68,7 +68,7 @@ export async function animate(text: string, mode: "success" | "warning" | "error
         } as Settings;
     
         animationSettings = mergeDeep(defaultSettings, settings);
-        frameInterval = 1000 / animationSettings.fps;
+        frameInterval = 1000 / animationSettings.fps!;
         animationText = text;
         animationMode = mode;
     
