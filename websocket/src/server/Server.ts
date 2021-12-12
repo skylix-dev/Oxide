@@ -33,6 +33,11 @@ export default class Server {
     private starting = false;
 
     /**
+     * All of the currently connected clients
+     */
+    public openConnections: Connection<any>[] = [];
+
+    /**
      * The public server event listeners storage
      */
     private events = {
@@ -67,6 +72,8 @@ export default class Server {
 
         this.realWebSocketServer.on("connection", webSocketConnection => {
             const connection = new Connection(webSocketConnection);
+            this.openConnections.push(connection);
+
             this.events.connect.forEach(event => event(connection));
         });
     }
@@ -95,6 +102,35 @@ export default class Server {
 
                 resolve();
             });
+        });
+    }
+
+    /**
+     * Stop the websocket server
+     * @returns Promise for if the server was stopped
+     */
+    public stop(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            if (!this.running) {
+                reject(Errors.notRunning);
+                return;
+            }
+
+            this.httpServer.on("close", () => {
+                this.running = false;
+                resolve();
+            });
+
+            if (this.openConnections.length > 0) {
+                this.openConnections.forEach(connection => {
+                    connection.disconnect();
+                });
+
+                this.httpServer.close();
+                return;
+            }
+
+            this.httpServer.close();
         });
     }
 
