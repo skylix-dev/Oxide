@@ -32,9 +32,10 @@ function generateWhiteSpace() {
 /**
  * Render the current frame in time
  */
-function renderCurrentFrame() {
+function renderCurrentFrame(finalMode = false) {
     const width = process.stdout.getWindowSize()[0];
-    let spinnerSize = frames[currentFrame].length + 2;
+    let spinnerFrame = finalMode ? "•" : frames[currentFrame];
+    let spinnerSize = spinnerFrame.length + 2;
     let outputText = animationText;
 
     if (width < (outputText.length + spinnerSize)) {
@@ -42,7 +43,7 @@ function renderCurrentFrame() {
         outputText = outputText.slice(0, -(difference + 4)) + " ...";
     }
 
-    process.stdout.write("\r " + cliColor[animationSettings.colors[animationMode]](frames[currentFrame]) + " " + outputText);
+    process.stdout.write("\r " + cliColor[animationSettings.colors[animationMode]](spinnerFrame) + " " + outputText);
 
     if (currentFrame >= frames.length - 1) {
         currentFrame = 0;
@@ -98,6 +99,7 @@ export async function animate(text: string, mode: "success" | "warning" | "error
 export function stop(mode: "success" | "warning" | "error" | "info" = "info", text?: string): Promise<void> {
     return new Promise((resolve) => {
         updateText(text, mode);
+        renderCurrentFrame(true);
 
         process.stdout.write("\n");
         resolve();
