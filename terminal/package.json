@@ -1,6 +1,6 @@
 {
   "name": "@illuxdev/oxide-terminal",
-  "version": "1.0.0",
+  "version": "1.0.0-dev",
   "description": "",
   "main": "src/Exports.js",
   "scripts": {
