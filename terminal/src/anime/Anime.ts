@@ -4,6 +4,7 @@ import cliColor from "cli-color";
 
 let isRunning = false;
 let animationText = "";
+let animationOldText: string | null = null;
 let animationMode: "success" | "warning" | "error" | "info" = "info";
 let animationLoop: any | null = null;
 let animationSettings: Settings;
@@ -23,13 +24,6 @@ const frames = [
 ];
 
 /**
- * Generate whitespace to clear off trailing text of previous text or frame
- */
-function generateWhiteSpace() {
-
-}
-
-/**
  * Render the current frame in time
  */
 function renderCurrentFrame(finalMode = false) {
@@ -37,13 +31,21 @@ function renderCurrentFrame(finalMode = false) {
     let spinnerFrame = finalMode ? "•" : frames[currentFrame];
     let spinnerSize = spinnerFrame.length + 2;
     let outputText = animationText;
+    let whiteSpace = "";
 
     if (width < (outputText.length + spinnerSize)) {
         const difference = (outputText.length + spinnerSize) - width;
         outputText = outputText.slice(0, -(difference + 4)) + " ...";
+    } else {
+        let whiteSpaceSize = process.stdout.columns - (outputText.length + spinnerSize);
+        if (whiteSpaceSize < 0) {
+            whiteSpaceSize = 0;
+        }
+
+        whiteSpace = " ".repeat(whiteSpaceSize);
     }
 
-    process.stdout.write("\r " + (cliColor as any)[(animationSettings as any).colors[animationMode]](spinnerFrame) + " " + outputText);
+    process.stdout.write("\r " + (cliColor as any)[(animationSettings as any).colors[animationMode]](spinnerFrame) + " " + outputText + whiteSpace);
 
     if (currentFrame >= frames.length - 1) {
         currentFrame = 0;
@@ -69,6 +71,13 @@ export async function animate(text: string, mode: "success" | "warning" | "error
     
         animationSettings = mergeDeep(defaultSettings, settings);
         frameInterval = 1000 / animationSettings.fps!;
+
+        if (!animationOldText) {
+            animationOldText = text;
+        } else {
+            animationOldText = animationText;
+        }
+
         animationText = text;
         animationMode = mode;
     
