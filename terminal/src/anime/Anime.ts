@@ -105,9 +105,11 @@ export async function animate(text: string, mode: "success" | "warning" | "error
  * @param mode The new state of the final animation frame
  * @param text The new text for the final animation frame
  */
-export function stop(mode: "success" | "warning" | "error" | "info" = "info", text?: string): Promise<void> {
+export function stop(text?: string, mode: "success" | "warning" | "error" | "info" = "info"): Promise<void> {
     return new Promise((resolve) => {
         updateText(text, mode);
+        clearInterval(animationLoop);
+        isRunning = false;
         renderCurrentFrame(true);
 
         process.stdout.write("\n");
@@ -132,8 +134,5 @@ export function updateText(text?: string, mode: "success" | "warning" | "error" 
     }
 
     animationText = finalText;
-    clearInterval(animationLoop);
-
-    isRunning = false;
     renderCurrentFrame();
 }
