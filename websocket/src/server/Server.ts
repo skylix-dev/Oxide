@@ -5,7 +5,6 @@ import { WebSocketServer } from "ws";
 import mergeDeep from "merge-deep";
 import Errors from "./Errors";
 import Connection from "./Connection";
-import ConnectionErrors from "./ConnectionErrors";
 
 export default class Server {
     /**

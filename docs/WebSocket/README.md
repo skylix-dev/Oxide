@@ -1,4 +1,4 @@
-# WebSocket
+# WebSocket v1.0.0
 Create fast, high-level WebSocket API servers.
 
 # Basic Server

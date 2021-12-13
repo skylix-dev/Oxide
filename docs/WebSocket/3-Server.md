@@ -2,7 +2,7 @@
 Create powerful and fast WebSocket servers.
 
 # `new Server(settings)`
- - `settings`
+  - `settings`
     - `port`: `number` The port of the server.
     - `host`: `string` (Optional) The host name for the server. Default: `"0.0.0.0"`.
     - `pendingLimit`: `number` (Optional) The limit of pending connections on the WebSocket server. Default: `10000`.
@@ -12,3 +12,11 @@ Create powerful and fast WebSocket servers.
         - Object Value
             - `certificate`: `string` (Optional) The SSL certificate in its raw format. Default: `""`.
             - `key`: `string` (Optional) The SSL certificate key in its raw format. Default: `""`.
+
+# Event: `connect`
+This event is fired when a new client connects to the WebSocket server.
+
+**Usage**
+  - Returns: `void`.
+  - Parameters
+    - `connection`: [`Connection`](https://github.com/IlluxDev/Oxide/blob/ceb3b4cace3e91908b48b4437d819d69bed4ee39/websocket/src/server/Connection.ts)`<MessageType /* From type parameter */>` The connection object for the newly connected client.
