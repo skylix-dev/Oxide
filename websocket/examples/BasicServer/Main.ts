@@ -12,10 +12,6 @@ interface SetNameMessage {
     name?: string;
 }
 
-process.on('uncaughtException', (err) => {
-    console.error(err);
-});
-
 webSocketServer.on<CustomProps>("connect", conn => {
     console.log("New connection", "Clients = " + webSocketServer.totalConnected);
     webSocketServer.emit("emit:dump", {
