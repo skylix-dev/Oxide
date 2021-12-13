@@ -35,7 +35,12 @@ export default class Server {
     /**
      * All of the currently connected clients
      */
-    public openConnections: Connection<any>[] = [];
+    private openConnections: Connection<any>[] = [];
+
+    /**
+     * The number of currently alive connections to the server
+     */
+    public totalConnected = 0;
 
     /**
      * The public server event listeners storage
@@ -71,11 +76,70 @@ export default class Server {
         });
 
         this.realWebSocketServer.on("connection", webSocketConnection => {
-            const connection = new Connection(webSocketConnection);
-            this.openConnections.push(connection);
+            const connection = new Connection(webSocketConnection, this, () => {
+                this.openConnections.push(connection);
+                this.totalConnected = this.openConnections.length;
 
-            this.events.connect.forEach(event => event(connection));
+                this.events.connect.forEach(event => event(connection));
+            }, (identifier) => {
+                this.openConnections.forEach((deadConnection, index) => {
+                    if (deadConnection.identifier == identifier) {
+                        let newOpenConns = [] as Connection<any>[];
+
+                        this.openConnections.forEach(openConn => {
+                            if (openConn.connectionAlive) {
+                                newOpenConns.push(openConn);
+                            }
+                        });
+
+                        this.openConnections = newOpenConns;
+                        this.totalConnected = this.openConnections.length;
+                    }
+                });
+            });
         });
+    }
+
+    /**
+     * Get a connection based on it identifier
+     * @param identifier The identifier of the connection
+     * @returns The connection, if it doesn't exist or is not alive, undefined is returned
+     */
+    public getConnection<ConnectionPropType>(identifier: string): Connection<ConnectionPropType> | undefined {
+        let result: Connection<ConnectionPropType> | undefined = undefined;
+        
+        this.openConnections.forEach(connection => {
+            if (connection.connectionAlive && connection.identifier == identifier) {
+                result = connection;
+            }
+        });
+
+        return result;
+    }
+
+    /**
+     * Get all currently connected clients
+     * @returns All the alive and connected connections
+     */
+    public getConnections<PropType>(): Connection<PropType>[] {
+        return [...this.openConnections];
+    }
+
+    /**
+     * Check if a connection exists and is alive on this server
+     * @param identifier The connection identifier
+     * @returns If the connection is alive and exists on this server
+     */
+    public connectionExists(identifier: string): boolean {
+        let exists = false;
+        
+        this.openConnections.forEach(connection => {
+            if (connection.connectionAlive && connection.identifier == identifier) {
+                exists = true;
+            }
+        });
+
+        return exists;
     }
 
     /**

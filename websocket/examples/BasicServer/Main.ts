@@ -68,7 +68,7 @@ webSocketServer.on<CustomProps>("connect", conn => {
     });
 
     conn.on("disconnect", (code) => {
-        console.log("Connection disconnected, CODE = " + code);
+        console.log("Connection disconnected, CODE = " + code, "Clients = " + webSocketServer.totalConnected);
     });
 });
 

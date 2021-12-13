@@ -115,6 +115,38 @@ export default class Client {
                 }
             });
 
+            this.on("message", "_system:status:ready", () => {
+                resolve();
+            });
+
+            this.realWebSocket.on("message", rawMessage => {
+                const jsonParsePromise = () => {
+                    return new Promise<any>((resolve, reject) => {
+                        try {
+                            const messageObject = JSON.parse(rawMessage.toString());
+                            resolve(messageObject);
+                        } catch (error) {
+                            reject(error);
+                        }
+                    });
+                }
+
+                jsonParsePromise().then(messageData => {
+                    const channel = messageData.channel;
+                    const content = messageData.message;
+
+                    if (typeof channel == "string" && typeof content == "object" && !Array.isArray(content)) {
+                        this.events.message.forEach(event => {
+                            if (event.channel == channel) {
+                                event.listener(content);
+                            }
+                        });
+                    }
+                }).catch(error => {
+
+                });
+            });
+
             this.realWebSocket.on("open", () => {
                 this.connecting = false;
                 this.connected = true;
@@ -123,8 +155,6 @@ export default class Client {
                     this.connected = false;
                     this.events.disconnect.forEach(event => event(code));
                 });
-
-                resolve();
             });
         });
     }

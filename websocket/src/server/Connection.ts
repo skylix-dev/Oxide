@@ -1,6 +1,8 @@
 import { WebSocket } from "ws";
 import ConnectionCloseCodeRange from "./ConnectionCloseCodeRange";
 import ConnectionErrors from "./ConnectionErrors";
+import Server from "./Server";
+import * as uuid from "uuid";
 
 export default class Connection<CustomProperties> {
     /**
@@ -17,6 +19,16 @@ export default class Connection<CustomProperties> {
      * Is the connection to the server alive
      */
     public connectionAlive = true;
+
+    /**
+     * The identifier for the connection
+     */
+    public identifier!: string;
+
+    /**
+     * The parent Oxide WebSocket server
+     */
+    public server: Server;
 
     /**
      * All event callbacks for event listeners
@@ -36,12 +48,29 @@ export default class Connection<CustomProperties> {
     /**
      * WebSocket server connection object
      */
-    public constructor(connection: WebSocket) {
+    public constructor(connection: WebSocket, server: Server, onFinish: () => void, onDeath: (identifier: string) => void) {
         this.realWebSocketConnection = connection;
+        this.server = server;
+        
+        const generateIdentifier = () => {
+            this.identifier = uuid.v4();
+
+            if (server.connectionExists(this.identifier)) {
+                generateIdentifier();
+            }
+        };
+
+        generateIdentifier();
+
+        this.send("_system:status:ready").then(() => {
+            onFinish();
+        });
 
         connection.on("close", (code) => {
             this.connectionAlive = false;
             this.events.disconnect.forEach(event => event(code));
+
+            onDeath(this.identifier);
         });
 
         connection.on("message", message => {
@@ -60,7 +89,7 @@ export default class Connection<CustomProperties> {
                 const channel: string | undefined | any = messageObject.channel;
                 const contents: any | undefined = messageObject.message;
 
-                if (typeof channel == "string" && typeof contents == "object") {
+                if (typeof channel == "string" && typeof contents == "object" && !Array.isArray(contents)) {
                     this.events.message.forEach(event => {
                         if (event.channel == channel) {
                             event.listener(contents);

@@ -12,7 +12,7 @@ client.run().then(() => {
     console.log("Connected to the server at " + client.serverAddress);
 
     setTimeout(() => {
-        client.send("reboot");
+        // client.send("reboot");
     });
 }).catch(error => {
     switch (error) {
