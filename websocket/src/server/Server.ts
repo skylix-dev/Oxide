@@ -41,7 +41,11 @@ export default class Server {
      * The number of currently alive connections to the server
      */
     private totalConnected = 0;
-
+    
+    /**
+    * The Identifier of the server to tell the cleint what server they are connected too. can be helpful for multiservering
+    */
+    private serverIdentifier = "";
     /**
      * The public server event listeners storage
      */
@@ -57,7 +61,8 @@ export default class Server {
         const defaultSettings = {
             host: "0.0.0.0",
             ssl: false,
-            pendingLimit: 10000
+            pendingLimit: 10000,
+            ServerIdentifier: "DevServer"
         } as Settings;
 
         this.settings = mergeDeep(defaultSettings, { ...settings });
@@ -113,10 +118,11 @@ export default class Server {
      * Send a message to every open connection
      * @param channel The channel to send the message on
      * @param message The actual message
+     * @param identifier
      */
     public emit<MessageType>(channel: string, message: MessageType = {} as any) {
         this.openConnections.forEach(connection => {
-            connection.send(channel, message).catch(() => {});
+            connection.send(channel, identifier, message).catch(() => {});
         });
     }
 
@@ -183,7 +189,7 @@ export default class Server {
             this.httpServer.listen(this.settings.port, this.settings.host, this.settings.pendingLimit, () => {
                 this.starting = false;
                 this.running = true;
-
+                
                 resolve();
             });
         });
