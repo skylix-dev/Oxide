@@ -8,7 +8,7 @@ Create full-stack applications including, desktop, mobile, web, and servers!
 </center>
 
 # Contributing
-Interested in helping to improve this project? Get started in contributing by reading the [guide](/CONTRIBUTING.md)
+Interested in helping to improve this project? Get started in contributing by reading the [guide](/CONTRIBUTING.md).
 
 # License
-This project is under the MIT license
+This project is under the MIT license.
