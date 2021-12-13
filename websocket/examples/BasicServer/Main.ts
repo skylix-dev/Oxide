@@ -5,11 +5,11 @@ const webSocketServer = new Server({
 });
 
 interface CustomProps {
-    name?: string;
+    name: string;
 }
 
 interface SetNameMessage {
-    name?: string;
+    name: string;
 }
 
 webSocketServer.on<CustomProps>("connect", conn => {
