@@ -133,7 +133,7 @@ export default class Server {
      * Get all currently connected clients
      * @returns All the alive and connected connections
      */
-    public getConnections<PropType>(): Connection<PropType>[] {
+    public getConnections<ConnectionPropType>(): Connection<ConnectionPropType>[] {
         return [...this.openConnections];
     }
 

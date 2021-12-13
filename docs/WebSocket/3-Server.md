@@ -44,6 +44,22 @@ This method is used to get an alive and connected connection from this server.
   - Parameters
     - `identifier`: `string` The identifier for the connection.
   - Type Parameters
-    - `ConnectionPropType` The types for the custom connection properties
+    - `ConnectionPropType` The types for the custom connection properties.
   - Return
     - Type: [`Connection`](https://github.com/IlluxDev/Oxide/blob/ceb3b4cace3e91908b48b4437d819d69bed4ee39/websocket/src/server/Connection.ts)`<ConnectionPropType /* Type Parameter */>` | `undefined`.
+
+# Method: `getConnections`
+This method is used to return all the currently alive connections to the server.
+
+  - Type Parameters
+    - `ConnectionPropType` The types for the custom connection properties.
+  - Return
+    - Type: [`Connection`](https://github.com/IlluxDev/Oxide/blob/ceb3b4cace3e91908b48b4437d819d69bed4ee39/websocket/src/server/Connection.ts)`<ConnectionPropType /* Type Parameter */>[]`.
+
+# Method: `connectionExists`
+This method is used to test and see if an alive connection with a specific identifier exists on this server.
+
+  - Parameters
+    - `identifier`: `string` The actual connection identifier.
+  - Return
+    - Type: `boolean` If the connection with that identifier actually exists.
