@@ -1,3 +1,4 @@
+<!-- Change the github class URLs to be documented MD files -->
 # Class: `Server`
 Create powerful and fast WebSocket servers.
 
@@ -16,7 +17,33 @@ Create powerful and fast WebSocket servers.
 # Event: `connect`
 This event is fired when a new client connects to the WebSocket server.
 
-**Usage**
-  - Returns: `void`.
+  - Expected Return: `void`.
   - Parameters
-    - `connection`: [`Connection`](https://github.com/IlluxDev/Oxide/blob/ceb3b4cace3e91908b48b4437d819d69bed4ee39/websocket/src/server/Connection.ts)`<MessageType /* From type parameter */>` The connection object for the newly connected client.
+    - `connection`: [`Connection`](https://github.com/IlluxDev/Oxide/blob/ceb3b4cace3e91908b48b4437d819d69bed4ee39/websocket/src/server/Connection.ts)`<CustomConnectionProperties /* Type Parameter */>` The connection object for the newly connected client.
+  - Type Parameters
+    `CustomConnectionProperties` The custom properties for the connection.
+
+# Property: `totalConnected`
+This is the number of connected and alive connections to this server.
+
+ - Type: `number`.
+ - Default: `0`.
+
+# Method: `emit`
+This method is used to send the same message to all connected and alive connections.
+
+  - Parameters
+    - `channel`: `string` The channel to send the messages to.
+    - `message`: `MessageType /* Type Parameter */` (Optional) The actual message to send. Default: `{}`.
+  - Type Parameters
+    - `MessageType` The type for the message being sent.
+
+# Method: `getConnection`
+This method is used to get an alive and connected connection from this server.
+
+  - Parameters
+    - `identifier`: `string` The identifier for the connection.
+  - Type Parameters
+    - `ConnectionPropType` The types for the custom connection properties
+  - Return
+    - Type: [`Connection`](https://github.com/IlluxDev/Oxide/blob/ceb3b4cace3e91908b48b4437d819d69bed4ee39/websocket/src/server/Connection.ts)`<ConnectionPropType /* Type Parameter */>` | `undefined`.
