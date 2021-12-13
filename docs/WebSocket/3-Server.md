@@ -63,3 +63,18 @@ This method is used to test and see if an alive connection with a specific ident
     - `identifier`: `string` The actual connection identifier.
   - Return
     - Type: `boolean` If the connection with that identifier actually exists.
+    - Promise Error Argument: Error code from [Errors](./ServerErrors.md).
+
+# Method `run`
+This method is used to start a WebSocket server.
+
+  - Return
+    - Type: `Promise<void>` Promise for when the server is started.
+    - Promise Error Argument: Error code from [Errors](./ServerErrors.md).
+
+# Method `stop`
+This method is used to stop a running server.
+
+  - Return
+    - Type: `Promise<void>` Promise for when the server has been fully stopped.
+    - Promise Error Argument: Error code from [Errors](./ServerErrors.md).
