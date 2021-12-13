@@ -67,3 +67,50 @@ server.run().then(() => {
     console.log("[SRV] The server failed to start", "Error Code = " + errorCode);
 });
 ```
+
+## Full Code
+```ts
+// TypeScript
+import { Server } from "@illuxdev/oxide-websocket";
+
+const server = new Server({
+    port: 3549 // WebSocket server port
+});
+
+server.on("connect", connection => {
+    console.log("[SRV] New connection", "Total = " + server.totalConnections);
+
+    connection.on("disconnect", code => {
+        console.log("[SRV] Connection disconnected", "Total = " + server.totalConnections);
+    });
+});
+
+server.run().then(() => {
+    console.log("[SRV] The server is running at port 3549", "Local Address = ws://localhost:3549", "Public Address = ws://0.0.0.0:3549");
+}).catch(errorCode => {
+    console.log("[SRV] The server failed to start", "Error Code = " + errorCode);
+});
+```
+
+```js
+// JavaScript
+const { Server } = require("@illuxdev/oxide-websocket");
+
+const server = new Server({
+    port: 3549 // WebSocket server port
+});
+
+server.on("connect", connection => {
+    console.log("[SRV] New connection", "Total = " + server.totalConnections);
+
+    connection.on("disconnect", code => {
+        console.log("[SRV] Connection disconnected", "Total = " + server.totalConnections);
+    });
+});
+
+server.run().then(() => {
+    console.log("[SRV] The server is running at port 3549", "Local Address = ws://localhost:3549", "Public Address = ws://0.0.0.0:3549");
+}).catch(errorCode => {
+    console.log("[SRV] The server failed to start", "Error Code = " + errorCode);
+});
+```
