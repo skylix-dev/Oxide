@@ -28,7 +28,11 @@ export default class Client {
      * The address of the Oxide WebSocket server
      */
     public serverAddress: string;
-
+    
+    /**
+    * Sever Identifier
+    */
+    public serverIdentifier: string;
     /**
      * All event listener callbacks
      */
@@ -101,7 +105,6 @@ export default class Client {
                 reject(Errors.alreadyConnecting);
                 return;
             }
-
             this.connecting = true;
             this.realWebSocket = new WebSocket(this.serverAddress);
 
@@ -177,9 +180,10 @@ export default class Client {
     public on<MessageType>(event: "message", channel: string, listener: (message: MessageType) => void): void;
 
     public on(event: any, listenerOrChannel: any, nullOrListener: any) {
-        if (typeof listenerOrChannel == "string" && typeof nullOrListener == "function") {
+        if (typeof listenerOrChannel == "string" && typeof ID == "string" && typeof nullOrListener == "function") {
             this.events.message.push({
                 channel: listenerOrChannel,
+                indentifier: ID,
                 listener: nullOrListener
             });
             return;
