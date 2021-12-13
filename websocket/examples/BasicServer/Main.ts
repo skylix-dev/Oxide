@@ -17,7 +17,10 @@ process.on('uncaughtException', (err) => {
 });
 
 webSocketServer.on<CustomProps>("connect", conn => {
-    console.log("New connection");
+    console.log("New connection", "Clients = " + webSocketServer.totalConnected);
+    webSocketServer.emit("emit:dump", {
+        acton: "New Join"
+    });
     conn.on("message", "speak", message => {
         console.log("New message in: " + JSON.stringify(message));
     });

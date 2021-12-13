@@ -48,7 +48,7 @@ export default class Connection<CustomProperties> {
     /**
      * WebSocket server connection object
      */
-    public constructor(connection: WebSocket, server: Server, onFinish: () => void, onDeath: (identifier: string) => void) {
+    public constructor(connection: WebSocket, server: Server, onFinish: () => void, onDeath: (identifier: string, stateUpdatesDone: () => void) => void) {
         this.realWebSocketConnection = connection;
         this.server = server;
         
@@ -68,9 +68,10 @@ export default class Connection<CustomProperties> {
 
         connection.on("close", (code) => {
             this.connectionAlive = false;
-            this.events.disconnect.forEach(event => event(code));
-
-            onDeath(this.identifier);
+            
+            onDeath(this.identifier, () => {
+                this.events.disconnect.forEach(event => event(code));
+            });
         });
 
         connection.on("message", message => {

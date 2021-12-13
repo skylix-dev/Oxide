@@ -5,6 +5,7 @@ import { WebSocketServer } from "ws";
 import mergeDeep from "merge-deep";
 import Errors from "./Errors";
 import Connection from "./Connection";
+import ConnectionErrors from "./ConnectionErrors";
 
 export default class Server {
     /**
@@ -81,7 +82,7 @@ export default class Server {
                 this.totalConnected = this.openConnections.length;
 
                 this.events.connect.forEach(event => event(connection));
-            }, (identifier) => {
+            }, (identifier, stateUpdatesDone) => {
                 this.openConnections.forEach((deadConnection, index) => {
                     if (deadConnection.identifier == identifier) {
                         let newOpenConns = [] as Connection<any>[];
@@ -93,10 +94,22 @@ export default class Server {
                         });
 
                         this.openConnections = newOpenConns;
-                        this.totalConnected = this.openConnections.length;
+                        this.totalConnected = newOpenConns.length;
+                        stateUpdatesDone();
                     }
                 });
             });
+        });
+    }
+
+    /**
+     * Send a message to every open connection
+     * @param channel The channel to send the message on
+     * @param message The actual message
+     */
+    public emit<MessageType>(channel: string, message: MessageType = {} as any) {
+        this.openConnections.forEach(connection => {
+            connection.send(channel, message).catch(() => {});
         });
     }
 

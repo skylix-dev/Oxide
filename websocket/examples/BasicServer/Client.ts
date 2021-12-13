@@ -8,6 +8,10 @@ client.on("disconnect", (code) => {
     console.log("CODE = " + code);
 });
 
+client.on("message", "emit:dump", message => {
+    console.log("Message from emit dump", message);
+});
+
 client.run().then(() => {
     console.log("Connected to the server at " + client.serverAddress);
 

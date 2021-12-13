@@ -115,10 +115,6 @@ export default class Client {
                 }
             });
 
-            this.on("message", "_system:status:ready", () => {
-                resolve();
-            });
-
             this.realWebSocket.on("message", rawMessage => {
                 const jsonParsePromise = () => {
                     return new Promise<any>((resolve, reject) => {
@@ -135,6 +131,14 @@ export default class Client {
                     const channel = messageData.channel;
                     const content = messageData.message;
 
+                    if (this.connecting && channel == "_system:status:ready") {
+                        this.connecting = false;
+                        this.connected = true;
+                        
+                        resolve();
+                        return;
+                    }
+
                     if (typeof channel == "string" && typeof content == "object" && !Array.isArray(content)) {
                         this.events.message.forEach(event => {
                             if (event.channel == channel) {
@@ -148,9 +152,6 @@ export default class Client {
             });
 
             this.realWebSocket.on("open", () => {
-                this.connecting = false;
-                this.connected = true;
-
                 this.realWebSocket!.on("close", (code) => {
                     this.connected = false;
                     this.events.disconnect.forEach(event => event(code));
