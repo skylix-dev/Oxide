@@ -4,6 +4,28 @@ An instance of this class is received through the `connect` event from [Server](
   - Type Parameters
     - `CustomProperties` The data type for the custom connection properties.
 
+# Event: `message`
+This event is fired when a message is **successfully** received **and** processed. 
+
+  - Type Parameters
+    - `MessageType` The data type for the message.
+  - Parameters
+    - `message`: `MessageType /* Type Parameter */` The actual message.
+  - Event parameters
+    - `channel`: `string` The channel to listen for messages on.
+
+# Event: `messageError`
+This event is fired when a message was received but an error occurred when trying to process the data.
+
+  - Parameters
+    - `error` The error code from the enum. [ConnectionErrors](./6-ConnectionErrors.md)
+
+# Event: `disconnect`
+This event is fired when this connection loses the connection or disconnects from the server.
+
+  - Parameters
+    - `code` The closing code or reason.
+
 # Method: `getIdentifier`
 The identifier that the server assigns.
 

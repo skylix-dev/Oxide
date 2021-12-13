@@ -168,13 +168,15 @@ export default class Connection<CustomProperties> {
      */
     public on<MessageType>(event: "message" | "messageError", channel: string, listener: (message: MessageType) => void): void;
 
+    // TODO: Split message and message error
+
     /**
      * Listen for when the connection disconnects from the server
      * @param event Event name
      * @param listener Event callback
      * @param nullValue This parameter serves no purpose with this event
      */
-    public on(event: "disconnect", listener: (code: number, reasonMessage: string) => void, nullValue?: null): void;
+    public on(event: "disconnect", listener: (code: number) => void, nullValue?: null): void;
 
     public on(event: any, listenerOrChannel: any, nullOrListener: any) {
         if (typeof listenerOrChannel == "string" && typeof nullOrListener == "function") {
