@@ -18,17 +18,17 @@ export default class Connection<CustomProperties> {
     /**
      * Is the connection to the server alive
      */
-    public connectionAlive = true;
+    private connectionAlive = true;
 
     /**
      * The identifier for the connection
      */
-    public identifier!: string;
+    private identifier!: string;
 
     /**
      * The parent Oxide WebSocket server
      */
-    public server: Server;
+    private server: Server;
 
     /**
      * All event callbacks for event listeners
@@ -108,6 +108,14 @@ export default class Connection<CustomProperties> {
     }
 
     /**
+     * See if the connection is alive
+     * @returns If the connection is alive
+     */
+    public isAlive(): boolean {
+        return this.connectionAlive;
+    }
+
+    /**
      * Send a message to this connection
      * @param channel The channel to send the message on
      * @param message The actual message response
@@ -132,6 +140,13 @@ export default class Connection<CustomProperties> {
                 reject(ConnectionErrors.notAlive);
             }
         });
+    }
+
+    /**
+     * Get the connection identifier
+     */
+    public getIdentifier(): string {
+        return this.identifier;
     }
 
     /**

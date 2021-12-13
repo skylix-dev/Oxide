@@ -40,7 +40,7 @@ export default class Server {
     /**
      * The number of currently alive connections to the server
      */
-    public totalConnected = 0;
+    private totalConnected = 0;
 
     /**
      * The public server event listeners storage
@@ -83,11 +83,11 @@ export default class Server {
                 this.events.connect.forEach(event => event(connection));
             }, (identifier, stateUpdatesDone) => {
                 this.openConnections.forEach((deadConnection, index) => {
-                    if (deadConnection.identifier == identifier) {
+                    if (deadConnection.getIdentifier() == identifier) {
                         let newOpenConns = [] as Connection<any>[];
 
                         this.openConnections.forEach(openConn => {
-                            if (openConn.connectionAlive) {
+                            if (openConn.isAlive()) {
                                 newOpenConns.push(openConn);
                             }
                         });
@@ -99,6 +99,14 @@ export default class Server {
                 });
             });
         });
+    }
+
+    /**
+     * Get the number of total connections
+     * @returns The number of total connections
+     */
+    public countTotalClients(): number {
+        return this.totalConnected;
     }
 
     /**
@@ -121,7 +129,7 @@ export default class Server {
         let result: Connection<ConnectionPropType> | undefined = undefined;
         
         this.openConnections.forEach(connection => {
-            if (connection.connectionAlive && connection.identifier == identifier) {
+            if (connection.isAlive() && connection.getIdentifier() == identifier) {
                 result = connection;
             }
         });
@@ -146,7 +154,7 @@ export default class Server {
         let exists = false;
         
         this.openConnections.forEach(connection => {
-            if (connection.connectionAlive && connection.identifier == identifier) {
+            if (connection.isAlive() && connection.getIdentifier() == identifier) {
                 exists = true;
             }
         });

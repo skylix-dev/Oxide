@@ -18,15 +18,15 @@ Create powerful and fast WebSocket servers.
 This event is fired when a new client connects to the WebSocket server.
 
   - Parameters
-    - `connection`: [`Connection`](https://github.com/IlluxDev/Oxide/blob/ceb3b4cace3e91908b48b4437d819d69bed4ee39/websocket/src/server/Connection.ts)`<CustomConnectionProperties /* Type Parameter */>` The connection object for the newly connected client.
+    - `connection`: [`Connection`](5-Connection.md)`<CustomConnectionProperties /* Type Parameter */>` The connection object for the newly connected client.
   - Type Parameters
     `CustomConnectionProperties` The custom properties for the connection.
 
-# Property: `totalConnected`
-This is the number of connected and alive connections to this server.
+# Method: `countTotalClients`
+This method is used to get the total number of connections to this server.
 
- - Type: `number`.
- - Default: `0`.
+  - Return
+    - Type: `number` The number of connections
 
 # Method: `emit`
 This method is used to send the same message to all connected and alive connections.
@@ -45,7 +45,7 @@ This method is used to get an alive and connected connection from this server.
   - Type Parameters
     - `ConnectionPropType` The types for the custom connection properties.
   - Return
-    - Type: [`Connection`](https://github.com/IlluxDev/Oxide/blob/ceb3b4cace3e91908b48b4437d819d69bed4ee39/websocket/src/server/Connection.ts)`<ConnectionPropType /* Type Parameter */>` | `undefined`.
+    - Type: [`Connection`](./5-Connection.md)`<ConnectionPropType /* Type Parameter */>` | `undefined`.
 
 # Method: `getConnections`
 This method is used to return all the currently alive connections to the server.
@@ -53,7 +53,7 @@ This method is used to return all the currently alive connections to the server.
   - Type Parameters
     - `ConnectionPropType` The types for the custom connection properties.
   - Return
-    - Type: [`Connection`](https://github.com/IlluxDev/Oxide/blob/ceb3b4cace3e91908b48b4437d819d69bed4ee39/websocket/src/server/Connection.ts)`<ConnectionPropType /* Type Parameter */>[]`.
+    - Type: [`Connection`](./5-Connection.md)`<ConnectionPropType /* Type Parameter */>[]`.
 
 # Method: `connectionExists`
 This method is used to test and see if an alive connection with a specific identifier exists on this server.
@@ -62,18 +62,18 @@ This method is used to test and see if an alive connection with a specific ident
     - `identifier`: `string` The actual connection identifier.
   - Return
     - Type: `boolean` If the connection with that identifier actually exists.
-    - Promise Error Argument: Error code from [Errors](./ServerErrors.md).
+    - Promise Error Argument: Error code from [Errors](./4-ServerErrors.md).
 
 # Method `run`
 This method is used to start a WebSocket server.
 
   - Return
     - Type: `Promise<void>` Promise for when the server is started.
-    - Promise Error Argument: Error code from [Errors](./ServerErrors.md).
+    - Promise Error Argument: Error code from [Errors](./4-ServerErrors.md).
 
 # Method `stop`
 This method is used to stop a running server.
 
   - Return
     - Type: `Promise<void>` Promise for when the server has been fully stopped.
-    - Promise Error Argument: Error code from [Errors](./ServerErrors.md).
+    - Promise Error Argument: Error code from [Errors](./4-ServerErrors.md).
