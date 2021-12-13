@@ -4,6 +4,11 @@ An instance of this class is received through the `connect` event from [Server](
   - Type Parameters
     - `CustomProperties` The data type for the custom connection properties.
 
+# Property: `props`
+These are the custom properties for the connection which can be changed or updated when ever with access to an instance of a valid connection.
+
+  - Type: `CustomProperties /* Type Parameter */`
+
 # Event: `message`
 This event is fired when a message is **successfully** received **and** processed. 
 
@@ -43,3 +48,17 @@ This method is used to send a message to the connection.
   - Return
     - Type: `Promise<void>` Promise for if the message was sent.
   - Promise Error Argument: Error code from [ConnectionErrors](./6-ConnectionErrors.md).
+
+# Method: `isAlive`
+This method is used to check if the connection is still alive.
+
+  - Return
+    - Type: `boolean` If the connection is still alive and open.
+
+# Method: `disconnect`
+This method is used to disconnect and close the connection between the client and server.
+
+  - Return
+    - Type: `Promise<void>` Promise for if the connection was closed successfully.
+    - Promise Error Argument: Error code from [ConnectionErrors](./6-ConnectionErrors.md)
+    
