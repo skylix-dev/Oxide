@@ -17,7 +17,6 @@ Create powerful and fast WebSocket servers.
 # Event: `connect`
 This event is fired when a new client connects to the WebSocket server.
 
-  - Expected Return: `void`.
   - Parameters
     - `connection`: [`Connection`](https://github.com/IlluxDev/Oxide/blob/ceb3b4cace3e91908b48b4437d819d69bed4ee39/websocket/src/server/Connection.ts)`<CustomConnectionProperties /* Type Parameter */>` The connection object for the newly connected client.
   - Type Parameters
