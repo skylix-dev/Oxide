@@ -120,3 +120,6 @@ package-lock.json
 
 # NodeJS
 **/node_modules
+
+# Publish Packages
+*.zip

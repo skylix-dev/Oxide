@@ -13,3 +13,6 @@
 # NodeJS
 node_modules
 **/node_modules
+
+# Publish Packages
+*.zip
