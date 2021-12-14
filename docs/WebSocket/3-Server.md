@@ -1,4 +1,3 @@
-<!-- Change the github class URLs to be documented MD files -->
 # Class: `Server`
 Create powerful and fast WebSocket servers.
 

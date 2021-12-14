@@ -50,12 +50,70 @@ export default class CommandParser {
     }
 
     /**
+     * Get a command by its command trigger
+     * @param commandName The command's trigger
+     * @returns The command if it exists, other wise undefined
+     */
+    public getCommand(commandName: string): Command | undefined {
+        for (const command in this.commandRegistry) {
+            if (this.commandRegistry[command].name == commandName) {
+                return this.commandRegistry[command];
+            }
+        }
+
+        return undefined;
+    } 
+
+    /**
      * Execute a command from the registry from a string
      * @param commandString The raw full command to be executed
+     * @param throwError Should the error be thrown through a rejection in the promise if there is an error
      */
-    public execute(commandString: string): Promise<void> {
+    public execute(commandString: string, throwError = false): Promise<void> {
         return new Promise((resolve, reject) => {
-            const parsedCommandData = yargs
+            const parsedCommandData = yargs.help(false).parse(commandString) as {
+                _: string[],
+                $0: any,
+                [index: string]: any;
+            };
+
+            const commandOptions = {} as any;
+
+            if (this.commandExists(parsedCommandData._[0] ?? "")) {
+                for (const commandItem in parsedCommandData) {
+                    if (commandItem != "_" && commandItem != "$0") {
+                        commandOptions[commandItem] = parsedCommandData[commandItem];
+                    }
+                }
+                
+                const registryCommand = this.getCommand(parsedCommandData._[0]);
+
+                if (registryCommand?.options && registryCommand.options.length > 0) {
+                    let missingFlags = [] as string[];
+                    let invalidFlags = [] as string[];
+
+                    registryCommand.options.forEach(option => {
+                        if (option.required && !commandOptions.hasOwnProperty(option.name)) {
+                            missingFlags.push(option.name);
+                        }
+                    });
+
+                    for (const inputFlag in commandOptions) {
+                        if (!(registryCommand.options.filter(opt => opt.name == inputFlag).length > 0)) {
+                            invalidFlags.push(inputFlag);
+                        }
+                    }
+
+                    console.log(missingFlags, invalidFlags);
+                }
+
+                resolve();
+                return;
+            }
+
+            if (throwError) {
+                reject(Errors.doesNotExist);
+            }
         });
     }
 

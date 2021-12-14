@@ -13,7 +13,7 @@ interface SetNameMessage {
 }
 
 webSocketServer.on<CustomProps>("connect", conn => {
-    console.log("New connection", "Clients = " + webSocketServer.totalConnected);
+    console.log("New connection", "Clients = " + webSocketServer.countTotalClients());
     webSocketServer.emit("emit:dump", {
         acton: "New Join"
     });
@@ -67,7 +67,7 @@ webSocketServer.on<CustomProps>("connect", conn => {
     });
 
     conn.on("disconnect", (code) => {
-        console.log("Connection disconnected, CODE = " + code, "Clients = " + webSocketServer.totalConnected);
+        console.log("Connection disconnected, CODE = " + code, "Clients = " + webSocketServer.countTotalClients());
     });
 });
 

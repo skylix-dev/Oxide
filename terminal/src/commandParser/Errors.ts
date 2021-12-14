@@ -1,5 +1,6 @@
 enum Errors {
-    alreadyExists
+    alreadyExists,
+    doesNotExist
 }
 
 export default Errors;
