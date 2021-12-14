@@ -1,7 +1,7 @@
-export default interface Command {
+export default interface Command<FlagTypes> {
     name: string;
     description: string;
-    handler: (args: string[], options: any) => void;
+    handler: (args: string[], options: FlagTypes) => void;
     options?: {
         name: string;
         description: string;

@@ -6,10 +6,10 @@ interface SayHelloFlags {
     customName?: string;
 }
 
-cli.registerCommand({
+cli.registerCommand<SayHelloFlags>({
     name: "say-hello-world",
     description: "This command prints the text" + ` "Hello World!"`,
-    handler: (args, options: SayHelloFlags) => {
+    handler: (args, options) => {
         console.log(args, options);
     },
     options: [
@@ -21,12 +21,11 @@ cli.registerCommand({
         {
             name: "cute",
             description: "Make it cute",
-            required: true,
             type: "boolean"
         }
     ]
-}).then(identifier => {
-    cli.execute("say-hello-world --customName XFaon --invalidFlag");
-}).catch(errCode => {
-    console.log("Err occurred", "CODE = " + errCode);
 });
+
+setTimeout(() => {
+    cli.execute();
+}, 1000);
