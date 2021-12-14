@@ -6,6 +6,7 @@ import mergeDeep from "merge-deep";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import { logging } from "../Exports";
+import HelpCommandFlags from "./HelpCommandFlags";
 
 export default class CommandParser {
     /**
@@ -25,13 +26,45 @@ export default class CommandParser {
      */
     public constructor(settings: Settings = {}) {
         const defaultSettings = {
-            defaultHelpPageRenderer: commands => {
-                logging.info("Help Commands | Page 1 of 1");
+            defaultHelpPageRenderer: (commands, page, isInvalid) => {
+                if (page < 1) {
+                    logging.warning("Page " + page + " does not exist, showing results for page 1");
+                    page = 1;
+                }
+
+                const commandPages: {
+                    name: string,
+                    description: string
+                }[][] = [];
+
+                const maxPerPage = 1;
+                let buildingPage = 0;
+                
+                commands.forEach(command => {
+                    if (commandPages[buildingPage] == undefined) {
+                        commandPages.push([]);
+                    }
+
+                    if (commandPages[buildingPage].length < maxPerPage) {
+                        commandPages[buildingPage].push(command);
+                    } else {
+                        buildingPage++;
+                        commandPages.push([]);
+                        commandPages[buildingPage].push(command);
+                    }
+                });
+
+                if (commandPages[page - 1] == undefined) {
+                    logging.warning("Page " + page + " does not exist, showing results for page 1");
+                    page = 1;
+                }
+
+                logging.info("Help Commands | Page " + page + " of " + commandPages.length);
                 logging.info(`Use "help --page <page number>" to change the page`);
                 logging.info("");
                 logging.info("Commands:");
 
-                commands.forEach(command => {
+                commandPages[page - 1].forEach(command => {
                     logging.info(`  ${command.name} - ${command.description}`);
                 });
             },
@@ -45,9 +78,16 @@ export default class CommandParser {
 
         this.settings = mergeDeep(defaultSettings, settings);
 
-        this.registerCommand({
+        this.registerCommand<HelpCommandFlags>({
             name: "help",
             description: "Get a list of all possible commands",
+            options: [
+                {
+                    name: "page",
+                    description: "The help page number",
+                    type: "number"
+                }
+            ],
             handler: (args, options) => {
                 const commands  = [] as any[];
                 const registry = this.getAllCommands();
@@ -61,7 +101,7 @@ export default class CommandParser {
                     });
                 }
 
-                this.settings.defaultHelpPageRenderer!(commands);
+                this.settings.defaultHelpPageRenderer!(commands, options.page ?? 1, false);
             }
         });
     } 

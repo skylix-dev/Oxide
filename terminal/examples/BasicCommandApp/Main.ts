@@ -32,6 +32,4 @@ cli.registerCommand<SayHelloFlags>({
     ]
 });
 
-setTimeout(() => {
-    cli.execute();
-}, 1000);
+cli.execute();

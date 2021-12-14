@@ -7,12 +7,12 @@ export default interface Settings {
     defaultHelpPageRenderer?: (commands: {
         name: string;
         description: string;
-    }[]) => void;
+    }[], page: number, isInvalid: boolean) => void;
 
     /**
      * The renderer for a sub help page
      */
-    specificHelpPageRenderer?: (commands: Command[]) => void;
+    specificHelpPageRenderer?: (commands: Command<any>[]) => void;
 
     /**
      * The renderer for command usage error
