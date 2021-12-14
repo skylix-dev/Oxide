@@ -254,11 +254,15 @@ export default class CommandParser {
                                         
                                         case "string":
                                             if (optionType != "string") {
-                                                typeErrorFlags.push({
-                                                    name: option.name,
-                                                    expectedType: option.type,
-                                                    givenType: optionType
-                                                });
+                                                if (optionType == "number") {
+                                                    commandOptions[option.name] = commandOptions[option.name] + "";
+                                                } else {
+                                                    typeErrorFlags.push({
+                                                        name: option.name,
+                                                        expectedType: option.type,
+                                                        givenType: optionType
+                                                    });
+                                                }
                                             }
                                             break;
 
