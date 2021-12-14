@@ -79,7 +79,7 @@ export default class CommandParser {
                 logging.info(`Invalid usage for command "${name}", use "help ${name}" to get a detailed list of commands and options`);
 
                 if (invalid.length > 0) {
-                    logging.error("Unexpected options were provided");
+                    logging.error("Unexpected/invalid options were provided");
 
                     invalid.forEach(option => {
                         logging.info("  --" + option + "  <-  Invalid");
@@ -215,6 +215,12 @@ export default class CommandParser {
 
                     if (missingFlags.length != 0) {
                         this.settings.usageErrorRenderer!(parsedCommandData._[0], invalidFlags, missingFlags);
+                        
+                        if (throwError) {
+                            reject();
+                        }
+
+                        return;
                     }
 
                     if (missingFlags.length == 0) {
@@ -234,11 +240,15 @@ export default class CommandParser {
                                     switch (option.type) {
                                         case "boolean":
                                             if (optionType != "boolean") {
-                                                typeErrorFlags.push({
-                                                    name: option.name,
-                                                    expectedType: option.type,
-                                                    givenType: optionType
-                                                });
+                                                if (commandOptions[option.name].toLowerCase() == "true" ||commandOptions[option.name].toLowerCase() == "false") {
+                                                    commandOptions[option.name] = commandOptions[option.name].toLowerCase() == "true" ? true : false;
+                                                } else {
+                                                    typeErrorFlags.push({
+                                                        name: option.name,
+                                                        expectedType: option.type,
+                                                        givenType: optionType
+                                                    });
+                                                }
                                             }
                                             break;
                                         

@@ -1,4 +1,4 @@
-import { CommandParser } from "../../src/Exports";
+import { CommandParser, logging } from "../../src/Exports";
 
 const cli = new CommandParser();
 
@@ -12,6 +12,12 @@ cli.registerCommand<SayHelloFlags>({
     description: "This command prints the text" + ` "Hello World!"`,
     handler: (args, options) => {
         if (options.cute) {
+            logging.info("Cute [###########] Generic");
+        } else {
+            logging.info("Cute [#          ] Generic");
+        }
+
+        if (options.cute) {
             console.log(`Hewo ${options.customName ?? "wowld"} uwu`);
             return;
         }
@@ -27,7 +33,8 @@ cli.registerCommand<SayHelloFlags>({
         {
             name: "cute",
             description: "Make it cute",
-            type: "boolean"
+            type: "boolean",
+            required: true
         }
     ]
 });
@@ -327,7 +334,8 @@ cli.registerCommand<SayHelloFlags>({
         {
             name: "cute",
             description: "Make it cute",
-            type: "boolean"
+            type: "boolean",
+            required: true
         }
     ]
 });
