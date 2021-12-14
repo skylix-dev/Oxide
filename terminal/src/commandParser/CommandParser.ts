@@ -76,7 +76,21 @@ export default class CommandParser {
                 console.log(commands);
             },
             usageErrorRenderer: (name, invalid, missing) => {
-                console.log("Invalid Usage On Command: " + name, invalid, missing);
+                logging.info(`Invalid usage for command "${name}", use "help ${name}" to get a detailed list of commands and options`);
+
+                if (invalid.length > 0) {
+                    logging.error("Unexpected options were provided");
+
+                    invalid.forEach(option => {
+                        logging.info("  --" + option + "  <-  Invalid");
+                    });
+                } else if (missing.length > 0) {
+                    logging.error("The following options were expected but not provided");
+
+                    missing.forEach(option => {
+                        logging.info("  --" + option + "  <-  Missing Option");
+                    });
+                }
             }
         } as Settings;
 
@@ -286,7 +300,7 @@ export default class CommandParser {
             if (parsedCommandData._.length != 0 && !this.commandExists(parsedCommandData._[0])) {
                 isInvalidCommand = true;
             }
-            
+
             this.settings.defaultHelpPageRenderer!(commands, 1, isInvalidCommand);
 
             if (throwError) {
