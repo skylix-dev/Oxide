@@ -32,4 +32,329 @@ cli.registerCommand<SayHelloFlags>({
     ]
 });
 
+cli.registerCommand<SayHelloFlags>({
+    name: "say-hello-world",
+    description: "This command prints the text" + ` "Hello World!"`,
+    handler: (args, options) => {
+        if (options.cute) {
+            console.log(`Hewo ${options.customName ?? "wowld"} uwu`);
+            return;
+        }
+
+        console.log(`Hello ${options.customName ?? "world"}!`);
+    },
+    options: [
+        {
+            name: "customName",
+            description: "Use a different name instead of world",
+            type: "string"
+        },
+        {
+            name: "cute",
+            description: "Make it cute",
+            type: "boolean"
+        }
+    ]
+});
+
+cli.registerCommand<SayHelloFlags>({
+    name: "say-hello-world",
+    description: "This command prints the text" + ` "Hello World!"`,
+    handler: (args, options) => {
+        if (options.cute) {
+            console.log(`Hewo ${options.customName ?? "wowld"} uwu`);
+            return;
+        }
+
+        console.log(`Hello ${options.customName ?? "world"}!`);
+    },
+    options: [
+        {
+            name: "customName",
+            description: "Use a different name instead of world",
+            type: "string"
+        },
+        {
+            name: "cute",
+            description: "Make it cute",
+            type: "boolean"
+        }
+    ]
+});
+
+cli.registerCommand<SayHelloFlags>({
+    name: "say-hello-world",
+    description: "This command prints the text" + ` "Hello World!"`,
+    handler: (args, options) => {
+        if (options.cute) {
+            console.log(`Hewo ${options.customName ?? "wowld"} uwu`);
+            return;
+        }
+
+        console.log(`Hello ${options.customName ?? "world"}!`);
+    },
+    options: [
+        {
+            name: "customName",
+            description: "Use a different name instead of world",
+            type: "string"
+        },
+        {
+            name: "cute",
+            description: "Make it cute",
+            type: "boolean"
+        }
+    ]
+});
+
+cli.registerCommand<SayHelloFlags>({
+    name: "say-hello-world",
+    description: "This command prints the text" + ` "Hello World!"`,
+    handler: (args, options) => {
+        if (options.cute) {
+            console.log(`Hewo ${options.customName ?? "wowld"} uwu`);
+            return;
+        }
+
+        console.log(`Hello ${options.customName ?? "world"}!`);
+    },
+    options: [
+        {
+            name: "customName",
+            description: "Use a different name instead of world",
+            type: "string"
+        },
+        {
+            name: "cute",
+            description: "Make it cute",
+            type: "boolean"
+        }
+    ]
+});
+
+cli.registerCommand<SayHelloFlags>({
+    name: "say-hello-world",
+    description: "This command prints the text" + ` "Hello World!"`,
+    handler: (args, options) => {
+        if (options.cute) {
+            console.log(`Hewo ${options.customName ?? "wowld"} uwu`);
+            return;
+        }
+
+        console.log(`Hello ${options.customName ?? "world"}!`);
+    },
+    options: [
+        {
+            name: "customName",
+            description: "Use a different name instead of world",
+            type: "string"
+        },
+        {
+            name: "cute",
+            description: "Make it cute",
+            type: "boolean"
+        }
+    ]
+});
+
+cli.registerCommand<SayHelloFlags>({
+    name: "say-hello-world",
+    description: "This command prints the text" + ` "Hello World!"`,
+    handler: (args, options) => {
+        if (options.cute) {
+            console.log(`Hewo ${options.customName ?? "wowld"} uwu`);
+            return;
+        }
+
+        console.log(`Hello ${options.customName ?? "world"}!`);
+    },
+    options: [
+        {
+            name: "customName",
+            description: "Use a different name instead of world",
+            type: "string"
+        },
+        {
+            name: "cute",
+            description: "Make it cute",
+            type: "boolean"
+        }
+    ]
+});
+
+cli.registerCommand<SayHelloFlags>({
+    name: "say-hello-world",
+    description: "This command prints the text" + ` "Hello World!"`,
+    handler: (args, options) => {
+        if (options.cute) {
+            console.log(`Hewo ${options.customName ?? "wowld"} uwu`);
+            return;
+        }
+
+        console.log(`Hello ${options.customName ?? "world"}!`);
+    },
+    options: [
+        {
+            name: "customName",
+            description: "Use a different name instead of world",
+            type: "string"
+        },
+        {
+            name: "cute",
+            description: "Make it cute",
+            type: "boolean"
+        }
+    ]
+});
+
+cli.registerCommand<SayHelloFlags>({
+    name: "say-hello-world",
+    description: "This command prints the text" + ` "Hello World!"`,
+    handler: (args, options) => {
+        if (options.cute) {
+            console.log(`Hewo ${options.customName ?? "wowld"} uwu`);
+            return;
+        }
+
+        console.log(`Hello ${options.customName ?? "world"}!`);
+    },
+    options: [
+        {
+            name: "customName",
+            description: "Use a different name instead of world",
+            type: "string"
+        },
+        {
+            name: "cute",
+            description: "Make it cute",
+            type: "boolean"
+        }
+    ]
+});
+
+cli.registerCommand<SayHelloFlags>({
+    name: "say-hello-world",
+    description: "This command prints the text" + ` "Hello World!"`,
+    handler: (args, options) => {
+        if (options.cute) {
+            console.log(`Hewo ${options.customName ?? "wowld"} uwu`);
+            return;
+        }
+
+        console.log(`Hello ${options.customName ?? "world"}!`);
+    },
+    options: [
+        {
+            name: "customName",
+            description: "Use a different name instead of world",
+            type: "string"
+        },
+        {
+            name: "cute",
+            description: "Make it cute",
+            type: "boolean"
+        }
+    ]
+});
+
+cli.registerCommand<SayHelloFlags>({
+    name: "say-hello-world",
+    description: "This command prints the text" + ` "Hello World!"`,
+    handler: (args, options) => {
+        if (options.cute) {
+            console.log(`Hewo ${options.customName ?? "wowld"} uwu`);
+            return;
+        }
+
+        console.log(`Hello ${options.customName ?? "world"}!`);
+    },
+    options: [
+        {
+            name: "customName",
+            description: "Use a different name instead of world",
+            type: "string"
+        },
+        {
+            name: "cute",
+            description: "Make it cute",
+            type: "boolean"
+        }
+    ]
+});
+
+cli.registerCommand<SayHelloFlags>({
+    name: "say-hello-world",
+    description: "This command prints the text" + ` "Hello World!"`,
+    handler: (args, options) => {
+        if (options.cute) {
+            console.log(`Hewo ${options.customName ?? "wowld"} uwu`);
+            return;
+        }
+
+        console.log(`Hello ${options.customName ?? "world"}!`);
+    },
+    options: [
+        {
+            name: "customName",
+            description: "Use a different name instead of world",
+            type: "string"
+        },
+        {
+            name: "cute",
+            description: "Make it cute",
+            type: "boolean"
+        }
+    ]
+});
+
+cli.registerCommand<SayHelloFlags>({
+    name: "say-hello-world",
+    description: "This command prints the text" + ` "Hello World!"`,
+    handler: (args, options) => {
+        if (options.cute) {
+            console.log(`Hewo ${options.customName ?? "wowld"} uwu`);
+            return;
+        }
+
+        console.log(`Hello ${options.customName ?? "world"}!`);
+    },
+    options: [
+        {
+            name: "customName",
+            description: "Use a different name instead of world",
+            type: "string"
+        },
+        {
+            name: "cute",
+            description: "Make it cute",
+            type: "boolean"
+        }
+    ]
+});
+
+cli.registerCommand<SayHelloFlags>({
+    name: "say-hello-world",
+    description: "This command prints the text" + ` "Hello World!"`,
+    handler: (args, options) => {
+        if (options.cute) {
+            console.log(`Hewo ${options.customName ?? "wowld"} uwu`);
+            return;
+        }
+
+        console.log(`Hello ${options.customName ?? "world"}!`);
+    },
+    options: [
+        {
+            name: "customName",
+            description: "Use a different name instead of world",
+            type: "string"
+        },
+        {
+            name: "cute",
+            description: "Make it cute",
+            type: "boolean"
+        }
+    ]
+});
+
 cli.execute();

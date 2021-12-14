@@ -27,6 +27,10 @@ export default class CommandParser {
     public constructor(settings: Settings = {}) {
         const defaultSettings = {
             defaultHelpPageRenderer: (commands, page, isInvalid) => {
+                if (isInvalid) {
+                    logging.warning("Sorry, but that command doesn't exist");
+                }
+
                 if (page < 1) {
                     logging.warning("Page " + page + " does not exist, showing results for page 1");
                     page = 1;
@@ -37,7 +41,7 @@ export default class CommandParser {
                     description: string
                 }[][] = [];
 
-                const maxPerPage = 1;
+                const maxPerPage = 8;
                 let buildingPage = 0;
                 
                 commands.forEach(command => {
@@ -59,7 +63,7 @@ export default class CommandParser {
                     page = 1;
                 }
 
-                logging.info("Help Commands | Page " + page + " of " + commandPages.length);
+                logging.info("Help Commands | Page " + page + " of " + commandPages.length + " | 8 results max per page");
                 logging.info(`Use "help --page <page number>" to change the page`);
                 logging.info("");
                 logging.info("Commands:");
@@ -278,7 +282,12 @@ export default class CommandParser {
                 });
             }
 
-            this.settings.defaultHelpPageRenderer!(commands);
+            let isInvalidCommand = false;
+            if (parsedCommandData._.length != 0 && !this.commandExists(parsedCommandData._[0])) {
+                isInvalidCommand = true;
+            }
+            
+            this.settings.defaultHelpPageRenderer!(commands, 1, isInvalidCommand);
 
             if (throwError) {
                 reject(Errors.doesNotExist);
