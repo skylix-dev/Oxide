@@ -8,5 +8,20 @@
         "**/*.js": true,
         "**/*.map": true
     },
-    "git.inputValidation": "off"
+    "git.inputValidation": "off",
+    "auto-close-tag.activationOnLanguage": [
+        "xml",
+        "php",
+        "blade",
+        "ejs",
+        "jinja",
+        "plaintext",
+        "markdown",
+        "vue",
+        "liquid",
+        "erb",
+        "lang-cfml",
+        "cfml",
+        "HTML (Eex)"
+    ]
 }

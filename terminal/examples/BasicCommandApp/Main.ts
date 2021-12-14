@@ -4,13 +4,19 @@ const cli = new CommandParser();
 
 interface SayHelloFlags {
     customName?: string;
+    cute?: boolean;
 }
 
 cli.registerCommand<SayHelloFlags>({
     name: "say-hello-world",
     description: "This command prints the text" + ` "Hello World!"`,
     handler: (args, options) => {
-        console.log(args, options);
+        if (options.cute) {
+            console.log(`Hewo ${options.customName ?? "wowld"} uwu`);
+            return;
+        }
+
+        console.log(`Hello ${options.customName ?? "world"}!`);
     },
     options: [
         {

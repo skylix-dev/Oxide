@@ -134,13 +134,19 @@ export default class CommandParser {
                     }[];
 
                     const observeDataType: (input: any) => ("string" | "boolean" | "number") = (input: any) => {
-                        if (input == "true" || input == true || input == false || input == "false") {
+                        if (typeof input == "boolean") {
                             return "boolean";
                         }
 
-                        if (typeof input == "string" && /^\d+$/.test(input)) {
-
+                        if (typeof input == "string") {
+                            return "string";
                         }
+
+                        if (typeof input == "number") {
+                            return "number";
+                        }
+
+                        return "string";
                     }
 
                     registryCommand.options.forEach(option => {
@@ -163,14 +169,61 @@ export default class CommandParser {
                         if (invalidFlags.length != 0) {
                             this.settings.usageErrorRenderer!(parsedCommandData._[0], invalidFlags, missingFlags);
                         } else {
-                            const command = this.getCommand(parsedCommandData._[0]);
-                            command?.handler([], {});
-                        }
-                    }
-                }
+                            registryCommand.options.forEach(option => {
+                                if (option.type && commandOptions.hasOwnProperty(option.name)) {
+                                    const optionType = observeDataType(commandOptions[option.name]);
 
-                resolve();
-                return;
+                                    switch (option.type) {
+                                        case "boolean":
+                                            if (optionType != "boolean") {
+                                                typeErrorFlags.push({
+                                                    name: option.name,
+                                                    expectedType: option.type,
+                                                    givenType: optionType
+                                                });
+                                            }
+                                            break;
+                                        
+                                        case "string":
+                                            if (optionType != "string") {
+                                                typeErrorFlags.push({
+                                                    name: option.name,
+                                                    expectedType: option.type,
+                                                    givenType: optionType
+                                                });
+                                            }
+                                            break;
+
+                                        case "number":
+                                            if (optionType != "number") {
+                                                typeErrorFlags.push({
+                                                    name: option.name,
+                                                    expectedType: option.type,
+                                                    givenType: optionType
+                                                });
+                                            }
+                                            break;
+                                    }
+                                }
+                            });
+
+                            if (typeErrorFlags.length == 0) {
+                                registryCommand.handler(parsedCommandData._.splice(1), commandOptions);
+                                resolve();
+                                return;
+                            }
+
+                            console.log("Flag type errors:", typeErrorFlags);
+                            return;
+                        }
+
+                        return;
+                    }
+                } else {
+                    registryCommand!.handler(parsedCommandData._.splice(1), commandOptions);
+                    resolve();
+                    return;
+                }
             }
 
             const commands  = [] as any[];
