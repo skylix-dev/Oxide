@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import mergeDeep from 'merge-deep';
 import { anime, CommandParser, logging } from "@illuxdev/oxide-terminal";
 import Command from "@illuxdev/oxide-terminal/src/commandParser/Command";
 import fs from "fs-extra";
@@ -27,7 +28,17 @@ const resolveConfig = (configLocation = "app.config.ts", readConfig = true) => {
     
         anime.animate("Reading application config");
     
-        const loaded = () => anime.stop("App config loaded successfully", "success");
+        const loaded = (configModule: any) => {
+            if (typeof configModule.default != "object") {
+                anime.stop("The config does not provide an export named default, using default config instead", "error");
+
+                resolve(defaultConfig);
+                return;
+            }
+
+            anime.stop("App config loaded successfully", "success");
+            resolve(mergeDeep(defaultConfig, configModule.default));
+        }
 
         const appDir = path.join(process.cwd(), path.dirname(configLocation));
         const config = path.join(process.cwd(), configLocation);
@@ -47,13 +58,11 @@ const resolveConfig = (configLocation = "app.config.ts", readConfig = true) => {
                 fs.writeFileSync(path.join(appDir, "temp/app.config.js"), compiledTypeScript.outputText);
 
                 import(path.join(appDir, "temp/app.config.js")).then(configModule => {
-                    loaded();
-                    resolve(configModule);
+                    loaded(configModule);
                 });
             } else if (config.endsWith(".js")) {
                 import(path.join(appDir, "app.config.js")).then(configModule => {
-                    loaded();
-                    resolve(configModule);
+                    loaded(configModule);
                 }); 
             } else {
                 anime.stop("Your app config must be a JavaScript (.js) or TypeScript (.ts) file, using default config instead", "warning");

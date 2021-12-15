@@ -22,8 +22,10 @@
   },
   "dependencies": {
     "@illuxdev/oxide-terminal": "^1.1.0-dev",
+    "@types/merge-deep": "^3.0.0",
     "config": "^3.3.6",
     "fs-extra": "^10.0.0",
+    "merge-deep": "^3.0.3",
     "typescript": "^4.5.3"
   }
 }
