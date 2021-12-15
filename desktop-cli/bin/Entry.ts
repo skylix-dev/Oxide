@@ -68,7 +68,7 @@ export function resolveConfig(configLocation = "app.config.ts", readConfig = tru
                     loaded(configModule);
                 });
             } else if (config.endsWith(".js")) {
-                import(path.join(appDir, "app.config.js")).then(configModule => {
+                import(path.join(appDir, config)).then(configModule => {
                     loaded(configModule);
                 }); 
             } else {

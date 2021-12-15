@@ -1,6 +1,7 @@
 import { spawn, ChildProcess } from "child_process";
+import path from "path/posix";
+import Errors from "./Errors";
 import RendererSettings from "./RendererSettings";
-import Settings from "./Settings";
 
 export default class Dev {
     /**
@@ -21,17 +22,49 @@ export default class Dev {
         typeScript: false
     };
 
+    /**
+     * Process of the renderer
+     */
     private rendererProcess?: ChildProcess;
+
+    /**
+     * Command for running npx via spawn
+     */
+    private npxTrigger: string;
 
     /**
      * Create a new development server
      * @param settings Settings for the dev server
      */
-    public constructor(settings: Settings) {
-
+    public constructor() {
+        this.npxTrigger = process.platform == "win32" ? "npx.cmd" : "npx";
     }
 
-    private startRenderer(settings: RendererSettings) {
-        
+    /**
+     * Start the rendering server
+     * @param settings Settings for the renderer
+     * @returns A promise containing the server port if successful
+     */
+    public startRenderer(settings: RendererSettings): Promise<number> {
+        return new Promise((resolve, reject) => {
+            if (this.bootUpProcesses.renderer) {
+                reject(Errors.alreadyStarting);
+                return;
+            }
+
+            if (this.life.renderer) {
+                reject(Errors.alreadyRunning);
+                return;
+            }
+
+            this.bootUpProcesses.renderer = true;
+
+            const portFlag = settings.forcedPort ? " --port=" + settings.forcedPort + "" : "";
+            const command = `${this.npxTrigger} vite${portFlag}`;
+
+            this.rendererProcess = spawn(command, {
+                cwd: settings.projectRoot
+            });
+        });      
     }
 }
