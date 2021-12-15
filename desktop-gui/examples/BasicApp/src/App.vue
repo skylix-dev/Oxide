@@ -5,7 +5,7 @@ import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-  <img alt="Vue logo" src="https://emera.us/assets/logo.png" />
+  <img alt="Vue logo" src="https://raw.githubusercontent.com/IlluxDev/Illux/main/Logo.svg" />
   <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
 </template>
 
@@ -15,7 +15,11 @@ import HelloWorld from './components/HelloWorld.vue'
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #999;
   margin-top: 60px;
+}
+
+body {
+  background: #292929;
 }
 </style>

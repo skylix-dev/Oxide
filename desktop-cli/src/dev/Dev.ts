@@ -4,6 +4,8 @@ import ElectronSettings from "./ElectronSettings";
 import Errors from "./Errors";
 import RendererSettings from "./RendererSettings";
 import fs from "fs-extra";
+import chokidar, { FSWatcher } from "chokidar";
+import { anime, logging } from "@illuxdev/oxide-terminal";
 
 export default class Dev {
     /**
@@ -56,6 +58,7 @@ export default class Dev {
     public stopRenderer() {
         if (this.rendererProcess && !this.rendererProcess.killed) {
             this.rendererProcess.kill("SIGTERM");
+            this.life.renderer = false;
         }
     }
 
@@ -106,7 +109,17 @@ export default class Dev {
      */
     public stopElectron() {
         if (this.electronProcess && !this.electronProcess.killed) {
-            process.kill(-this.electronProcess.pid!);
+            this.electronProcess.kill("SIGTERM");
+            this.life.electron = false;
+        }
+    }
+
+    /**
+     * Stop the TypeScript watch compiler
+     */
+    public stopTypeScript() {
+        if (this.typeScriptProcess && !this.typeScriptProcess.killed) {
+            this.typeScriptProcess.kill("SIGTERM");
         }
     }
 
@@ -157,34 +170,62 @@ export default class Dev {
             }
 
             startTypeScript(() => {
-                this.electronProcess = spawn("node", [ "process/electron.js", settings.projectRoot, settings.electronMain.slice(0, -2) + "js", settings.port + "" ], {
-                    cwd: __dirname
-                });
+                const startElectron = () => {
+                    this.electronProcess = spawn("node", [ "process/electron.js", settings.projectRoot, settings.electronMain.slice(0, -2) + "js", settings.port + "" ], {
+                        cwd: __dirname
+                    });
 
-                this.electronProcess.stdout?.on("data", data => {
-                    const promiseJsonParse = <ObjectType>(stringifiedJson: string) => {
-                        return new Promise<ObjectType>((resolve, reject) => {
-                            try {
-                                const jsonObject = JSON.parse(stringifiedJson);
-                                resolve(jsonObject);
-                            } catch (error) {
-                                reject(error);
-                            }
-                        });
-                    }
-
-                    promiseJsonParse<any>(data.toString()).then((message) => {
-                        switch (message.channel) {
-                            case "_internal:setup:task":
-                                if (!this.life.electron && message.message.renderer.success) {
-                                    this.life.electron = true;
-                                    this.bootUpProcesses.electron = false;
-                                    resolve();
+                    this.electronProcess!.stdout?.on("data", data => {
+                        const promiseJsonParse = <ObjectType>(stringifiedJson: string) => {
+                            return new Promise<ObjectType>((resolve, reject) => {
+                                try {
+                                    const jsonObject = JSON.parse(stringifiedJson);
+                                    resolve(jsonObject);
+                                } catch (error) {
+                                    reject(error);
                                 }
-                                break;
+                            });
                         }
-                    }).catch(() => {});
-                });
+    
+                        const dataLines = data.toString().split("\n") as string[];
+
+                        dataLines.forEach(dataLine => {
+                            promiseJsonParse<any>(dataLine.toString()).then((message) => {
+                                switch (message.channel) {
+                                    case "_internal:setup:task":
+                                        if (!this.life.electron && message.message.renderer.success) {
+                                            this.life.electron = true;
+                                            this.bootUpProcesses.electron = false;
+        
+                                            startChokidar();
+                                            resolve();
+                                        }
+                                        break;
+                                }
+                            }).catch(() => {});
+                        });
+                    });
+                }
+                
+                const stopElectron = () => {
+                    this.electronProcess?.kill("SIGTERM");
+                }
+
+                const restartElectron = () => {
+                    stopElectron();
+                    startElectron();
+                }
+
+                let watcher: FSWatcher;
+                startElectron();
+
+                const startChokidar = () => {
+                    watcher = chokidar.watch(settings.electronRoot);
+
+                    watcher.on("all", () => {
+                        restartElectron();
+                    });
+                }
             });
         });
     }

@@ -4,14 +4,15 @@ app.once("ready", () => {
     const win = new BrowserWindow({
         width: 1200,
         height: 600,
-        show: false
+        show: false,
+        title: "Title"
     });
 
     const send = (data: any) => {
         process.stdout.write(JSON.stringify(data));
     }
-
-    win.on("show", () => {
+ 
+    win.on("show", () => { 
         send({
             channel: "_internal:window:action",
             message: {
