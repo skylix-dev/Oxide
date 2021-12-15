@@ -1,6 +1,11 @@
-<template></template>
+<template>
+    <p>Hello</p>
+</template>
 
 <script lang="ts">
-// import electron from "electron";
-// console.log(electron);
+import { defineComponent } from "vue";
+
+export default defineComponent({
+    
+});
 </script>

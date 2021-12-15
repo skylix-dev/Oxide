@@ -105,6 +105,7 @@ export default class DevCmd {
 
                 switch (error) {
                     case DevErrors.entryNotFound:
+                        this.devServer.stopRenderer();
                         anime.stop("Failed to start Electron in development because entry script was not found after " + time + "s", "error");
                         break;
                 }
