@@ -1,5 +1,5 @@
 import { spawn, ChildProcess } from "child_process";
-import path from "path/posix";
+import path from "path";
 import Errors from "./Errors";
 import RendererSettings from "./RendererSettings";
 
@@ -63,6 +63,14 @@ export default class Dev {
 
             this.rendererProcess = spawn(this.npxTrigger, [ "vite", portFlag ], {
                 cwd: settings.projectRoot
+            });
+
+            this.rendererProcess?.stdout?.on("data", (message) => {
+                console.log(message.toString());
+            });
+
+            this.rendererProcess?.stderr?.on("data", (message) => {
+                console.log(message.toString());
             });
         });      
     }
