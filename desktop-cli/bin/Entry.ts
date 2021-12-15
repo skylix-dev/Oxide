@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 
 import mergeDeep from 'merge-deep';
-import { anime, CommandParser, logging } from "@illuxdev/oxide-terminal";
+import { anime, CommandParser } from "@illuxdev/oxide-terminal";
 import Command from "@illuxdev/oxide-terminal/src/commandParser/Command";
 import fs from "fs-extra";
 import path from "path";
 import AppConfig from "../src/AppConfig";
-import BaseFlags from "./BaseFlags";
 import { ModuleKind, transpileModule } from "typescript";
+import BuildCmd from './commands/build/BuildCmd';
+import DevCmd from './commands/dev/DevCmd';
 
 const cli = new CommandParser();
 const defaultConfig: AppConfig = {
@@ -19,7 +20,13 @@ const defaultConfig: AppConfig = {
     }
 };
 
-const resolveConfig = (configLocation = "app.config.ts", readConfig = true) => {
+/**
+ * Get an app config
+ * @param configLocation Location of the config
+ * @param readConfig Should the config be read
+ * @returns Promise containing app config
+ */
+export function resolveConfig(configLocation = "app.config.ts", readConfig = true): Promise<AppConfig> {
     return new Promise<AppConfig>(resolve => {
         if (!readConfig) {
             resolve(defaultConfig);
@@ -89,17 +96,11 @@ const baseFlags: Command<any>["options"] = [
     }
 ];
 
-cli.registerCommand<BaseFlags>({
-    name: "dev",
-    description: "Start the application in development",
-    handler: (args, flags) => {
-        resolveConfig(flags.config, flags.readConfig).then(config => {
-            console.log(config);
-        });
-    },
-    options: [
-        ...baseFlags
-    ]
+export { baseFlags };
+const commandLoaders = [ BuildCmd, DevCmd ] as any[];
+
+commandLoaders.forEach(CommandConstructor => {
+    new CommandConstructor(cli);
 });
 
 cli.execute();
