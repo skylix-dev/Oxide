@@ -57,17 +57,23 @@ export default class DevCmd {
      */
     public startRenderer(flags: (BaseFlags & Options)): Promise<number> {
         anime.animate("Starting renderer in development");
+        let time = 0;
+        let timer = setInterval(() => {
+            time++;
+        }, 1000);
 
         return new Promise(resolve => {
             this.devServer.startRenderer({
                 projectRoot: process.cwd(),
                 forcedPort: flags.port
             }).then(port => {
-                anime.stop("Renderer has been started successfully at port " + port, "success");
+                clearInterval(timer);
+                anime.stop("Renderer has been started successfully at port " + port + " after " + time + "s", "success");
                 resolve(port);
             }).catch(error => {
-                anime.stop("Failed to start development server", "error");
-            })
+                clearInterval(timer);
+                anime.stop("Failed to start development server after " + time + "s", "error");
+            });
         });
     }
 
@@ -81,17 +87,25 @@ export default class DevCmd {
         anime.animate("Starting Electron in development");
 
         return new Promise(resolve => {
+            let time = 0;
+            let timer = setInterval(() => {
+                time++;
+            }, 1000);
+
             this.devServer.startElectron({ 
                 port,
                 electronMain: this.config.paths?.electronMain!,
                 electronRoot: path.join(process.cwd(), this.config.paths?.electronRoot!).replace(new RegExp(/\\/g), "/"),
                 projectRoot: process.cwd()
             }).then(() => {
-                anime.stop("Electron has been started successfully in development", "success");
+                clearInterval(timer);
+                anime.stop("Electron has been started successfully in development after " + time  + "s", "success");
             }).catch(error => {
+                clearInterval(timer);
+
                 switch (error) {
                     case DevErrors.entryNotFound:
-                        anime.stop("Failed to start Electron in development because entry script was not found", "error");
+                        anime.stop("Failed to start Electron in development because entry script was not found after " + time + "s", "error");
                         break;
                 }
             });
