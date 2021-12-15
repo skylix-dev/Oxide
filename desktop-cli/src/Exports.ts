@@ -4,9 +4,10 @@ import RendererConfig from "./RendererConfig";
 import Dev from "./dev/Dev";
 import vuePlugin from "@vitejs/plugin-vue";
 import commonjsExternals from "vite-plugin-commonjs-externals";
+import builtInModules from "builtin-modules";
 
 /**
- * Add typing to your app's config
+ * Add typing to your app"s config
  * @param config Your app config
  * @returns Your app config
  */
@@ -17,7 +18,14 @@ export function defineConfig(config: AppConfig): AppConfig {
 export function defineRendererConfig(config: RendererConfig): UserConfig {
     return {
         plugins: [ vuePlugin(), commonjsExternals({
-            externals: [/^electron(\/.+)?$/]
+            externals: [
+                "electron",
+                "electron/main",
+                "electron/common",
+                "electron/renderer",
+                "original-fs",
+                ...builtInModules
+            ]
         }) ],
         base: "./"
     }
