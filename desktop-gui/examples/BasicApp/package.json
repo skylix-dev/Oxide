@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "postinstall": "cd examples/BasicApp && npm i && cd ../../"
   },
   "dependencies": {
     "@illuxdev/oxide-desktop-cli": "file:../../../desktop-cli",
