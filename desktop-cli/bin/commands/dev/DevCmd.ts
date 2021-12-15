@@ -2,6 +2,7 @@ import { anime, CommandParser } from "@illuxdev/oxide-terminal";
 import path from "path/posix";
 import AppConfig from "../../../src/AppConfig";
 import Dev from "../../../src/dev/Dev";
+import { DevErrors } from "../../../src/Exports";
 import BaseFlags from "../../BaseFlags";
 import { baseFlags, resolveConfig } from "../../Entry";
 import Options from "./Options";
@@ -83,9 +84,16 @@ export default class DevCmd {
             this.devServer.startElectron({ 
                 port,
                 electronMain: this.config.paths?.electronMain!,
-                electronRoot: path.join(process.cwd(), this.config.paths?.electronRoot!).replace(new RegExp(/\\/g), "/")
+                electronRoot: path.join(process.cwd(), this.config.paths?.electronRoot!).replace(new RegExp(/\\/g), "/"),
+                projectRoot: process.cwd()
             }).then(() => {
-                anime.stop("Electron has been started successfully in development");
+                anime.stop("Electron has been started successfully in development", "success");
+            }).catch(error => {
+                switch (error) {
+                    case DevErrors.entryNotFound:
+                        anime.stop("Failed to start Electron in development because entry script was not found", "error");
+                        break;
+                }
             });
         });
     }

@@ -5,6 +5,9 @@ import Dev from "./dev/Dev";
 import vuePlugin from "@vitejs/plugin-vue";
 import commonjsExternals from "vite-plugin-commonjs-externals";
 import builtInModules from "builtin-modules";
+import DevElectronSettings from "./dev/ElectronSettings";
+import DevRendererSettings from "./dev/RendererSettings";
+import DevErrors from "./dev/Errors";
 
 /**
  * Add typing to your app"s config
@@ -31,4 +34,4 @@ export function defineRendererConfig(config: RendererConfig): UserConfig {
     }
 }
 
-export { Dev };
+export { Dev, DevErrors, DevRendererSettings, DevElectronSettings };

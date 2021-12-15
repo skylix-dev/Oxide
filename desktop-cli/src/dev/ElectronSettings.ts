@@ -13,4 +13,9 @@ export default interface ElectronSettings {
      * Root directory for all the Electron files
      */
     electronRoot: string;
+
+    /**
+     * Root dir of the project
+     */
+    projectRoot: string;
 }

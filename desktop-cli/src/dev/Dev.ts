@@ -3,6 +3,7 @@ import path from "path";
 import ElectronSettings from "./ElectronSettings";
 import Errors from "./Errors";
 import RendererSettings from "./RendererSettings";
+import fs from "fs-extra";
 
 export default class Dev {
     /**
@@ -85,6 +86,11 @@ export default class Dev {
         });      
     }
 
+    /**
+     * Start an Electron development app
+     * @param settings Settings for the Electron starter
+     * @returns Promise for when app has been started, error will contain an error from Error export
+     */
     public startElectron(settings: ElectronSettings): Promise<void> {
         return new Promise((resolve, reject) => {
             if (this.bootUpProcesses.electron) {
@@ -100,16 +106,15 @@ export default class Dev {
             let tscRunning = false;
 
             const startTypeScript = (done: CallableFunction) => {
-                console.log(settings)
-                typeScriptProcess = spawn(this.npxTrigger, [ "tsc", "--watch" ], {
+                typeScriptProcess = spawn(this.npxTrigger, [ "tsc", "--watch", "--module", "commonjs", "--target", "esnext" ], {
                     cwd: settings.electronRoot
                 });
 
                 typeScriptProcess.stdout?.on("data", data => {
                     if (!tscRunning) {
-                        console.log(data.toString().split(""));
-                        if (data.toString().startsWith("")) {
+                        if (data.toString().includes("Watching for file changes.\r\n")) {
                             tscRunning = true;
+                            done();
                         }
                     }
                 });
@@ -118,7 +123,42 @@ export default class Dev {
             this.bootUpProcesses.electron = true;
 
             startTypeScript(() => {
-                this.electronProcess = spawn(this.npxTrigger, [ "electron", settings.electronMain, settings.port + "" ]);
+                let electronFullMainPath = path.join(settings.projectRoot, settings.electronMain);
+                if (electronFullMainPath.endsWith(".ts")) {
+                    electronFullMainPath.slice(0, -1) + ".ts"
+                }
+
+                if (!fs.existsSync(electronFullMainPath)) {
+                    reject(Errors.entryNotFound);
+                    return;
+                }
+
+                this.electronProcess = spawn(this.npxTrigger, [ "electron", settings.electronMain.slice(0, -2) + "js", settings.port + "" ], {
+                    cwd: settings.projectRoot
+                });
+
+                this.electronProcess.stdout?.on("data", data => {
+                    const promiseJsonParse = <ObjectType>(stringifiedJson: string) => {
+                        return new Promise<ObjectType>((resolve, reject) => {
+                            try {
+                                const jsonObject = JSON.parse(stringifiedJson);
+                                resolve(jsonObject);
+                            } catch (error) {
+                                reject(error);
+                            }
+                        });
+                    }
+
+                    promiseJsonParse<any>(data.toString()).then((message) => {
+                        switch (message.channel) {
+                            case "_internal:setup:task":
+                                if (message.message.renderer.success) {
+                                    resolve();
+                                }
+                                break;
+                        }
+                    }).catch(() => {});
+                });
             });
         });
     }
