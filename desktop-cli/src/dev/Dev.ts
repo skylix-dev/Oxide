@@ -59,10 +59,9 @@ export default class Dev {
 
             this.bootUpProcesses.renderer = true;
 
-            const portFlag = settings.forcedPort ? " --port=" + settings.forcedPort + "" : "";
-            const command = `${this.npxTrigger} vite${portFlag}`;
+            const portFlag = settings.forcedPort ? "--port=" + settings.forcedPort : "";
 
-            this.rendererProcess = spawn(command, {
+            this.rendererProcess = spawn(this.npxTrigger, [ "vite", portFlag ], {
                 cwd: settings.projectRoot
             });
         });      
