@@ -1,12 +1,12 @@
 <template>
     <div class="app">
-        <div :class="`title-bar`+ (!titleBar.focused ? ' mode-blurred' : '') + (titleBar.fullScreen ? ' mode-full-screen' : '')">
+        <div :class="`title-bar`+ (!titleBar.focused ? ' mode-blurred' : '') + (titleBar.fullScreen ? ' mode-full-screen' : '') + (extendTitleBarIntoView ? ' mode-extend-to-view' : '')">
             <div class="title-area">
-                <div v-if="showTitleArea" class="icon-outer">
+                <div v-if="showTitleArea && !extendTitleBarIntoView" class="icon-outer">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Microsoft_Office_logo_%282019%E2%80%93present%29.svg/2048px-Microsoft_Office_logo_%282019%E2%80%93present%29.svg.png" alt="ERR" />
                 </div>
 
-                <span v-if="showTitleArea" class="text">{{ title }}</span>
+                <span v-if="showTitleArea && !extendTitleBarIntoView" class="text">{{ title }}</span>
             </div>
 
             <div class="window-buttons">
@@ -91,6 +91,10 @@ export default defineComponent({
         showTitleArea: {
             type: Boolean,
             default: true
+        },
+        extendTitleBarIntoView: {
+            type: Boolean,
+            default: false
         }
     },
     methods: {
@@ -213,7 +217,23 @@ export default defineComponent({
             }
         }
 
-        &.mode-full-screen {
+        &.mode-extend-to-view {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: transparent;
+            pointer-events: none;
+            -webkit-app-region: no-drag;
+
+            .window-buttons {
+                position: fixed;
+                top: 0;
+                right: 0;
+                pointer-events: all;
+            }
+        }
+
+        &.mode-full-screen:not(&.mode-extend-to-view) {
             background: transparent;
             position: fixed;
             top: -30px;

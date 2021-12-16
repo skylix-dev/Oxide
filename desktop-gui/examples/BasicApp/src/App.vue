@@ -1,6 +1,10 @@
 <template>
 	<App>
 		<Button>Hello</Button>
+        <Button primary>Hello</Button>
+
+        <Button disabled>Hello</Button>
+        <Button disabled primary>Hello</Button>
 	</App>
 </template>
 
@@ -17,7 +21,11 @@ export default defineComponent({
 </script>
 
 <style>
-	:root {
+body {
+    background: #202020;
+}
+
+:root {
     --fill_text_primary: #FFFFFF;
     --fill_text_secondary: rgba(255, 255, 255, 78.6%);
     --fill_text_tertiary: rgba(255, 255, 255, 54.42%);
