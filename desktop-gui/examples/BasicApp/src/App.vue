@@ -1,6 +1,6 @@
 <template>
 	<App>
-		<Button primary>Hello</Button>
+		<Button primary disabled>Hello</Button>
 	</App>
 </template>
 

@@ -41,7 +41,7 @@ export default defineComponent({
         align-items: center;
         justify-content: center;
         font-family: $_font;
-        font-size: 14px;
+        font-size: 15px;
         transition: background 100ms ease-in-out, color 100ms ease-in-out;
         color: $fill_text_primary;
         user-select: none;
@@ -79,7 +79,7 @@ export default defineComponent({
 
                 &.mode-primary {
                     background: $fill_accent_tertiary;
-                    color: $fill_textOnAccent_secondary;;
+                    color: $fill_textOnAccent_secondary;
                 }
             }
         }
