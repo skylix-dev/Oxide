@@ -4,7 +4,8 @@
 	"description": "",
 	"main": "src/Exports.js",
 	"scripts": {
-		"watch": "tsc --watch"
+		"watch": "tsc --watch",
+		"postinstall": "cd examples/BasicApp && npm i && cd ../../"
 	},
 	"author": {
 		"name": "ILLUX",

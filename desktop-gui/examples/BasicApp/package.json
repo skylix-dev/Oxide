@@ -4,10 +4,10 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "vue-tsc --noEmit && vite build",
-		"preview": "vite preview",
-		"postinstall": "cd examples/BasicApp && npm i && cd ../../"
+		"preview": "vite preview"
 	},
 	"dependencies": {
+		"@electron/remote": "^2.0.1",
 		"@illuxdev/oxide-desktop-cli": "file:../../../desktop-cli",
 		"@illuxdev/oxide-desktop-gui": "file:../..",
 		"vue": "^3.2.25"

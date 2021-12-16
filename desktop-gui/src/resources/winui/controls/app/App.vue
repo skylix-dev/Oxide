@@ -1,6 +1,6 @@
 <template>
     <div class="app">
-        <div class="title-bar">
+        <div :class="`title-bar`+ (!titleBar.focused ? ' mode-blurred' : '') + (titleBar.fullScreen ? ' mode-full-screen' : '')">
             <div class="title-area">
                 <div v-if="showTitleArea" class="icon-outer">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Microsoft_Office_logo_%282019%E2%80%93present%29.svg/2048px-Microsoft_Office_logo_%282019%E2%80%93present%29.svg.png" alt="ERR" />
@@ -10,17 +10,18 @@
             </div>
 
             <div class="window-buttons">
-                <button>
-                    <Icon style="font-size: 18px" :icon="icons.subtract16Regular" />
+                <button @click="windowManager.minimize()">
+                    <Icon style="font-size: 17px" :icon="icons.subtract16Regular" />
                 </button>
 
-                <button>
-                    <Icon v-if="titleBar.maximized" style="font-size: 16px" :icon="icons.restore16Regular" />
-                    <Icon v-else style="font-size: 18px" :icon="icons.maximize16Regular" />
+                <button @click="middleButtonAction()">
+                    <Icon v-if="titleBar.maximized && !titleBar.fullScreen" style="font-size: 16px" :icon="icons.restore16Regular" />
+                    <Icon v-if="!titleBar.maximized && !titleBar.fullScreen" style="font-size: 16px" :icon="icons.maximize16Regular" />
+                    <Icon v-if="titleBar.fullScreen" style="font-size: 17px" :icon="icons.fullScreenMinimize24Regular" />
                 </button>
                 
-                <button class="mode-close">
-                    <Icon style="font-size: 17px" :icon="icons.dismiss16Regular" />
+                <button @click="windowManager.close()" class="mode-close">
+                    <Icon style="font-size: 16px" :icon="icons.dismiss16Regular" />
                 </button>
             </div>
         </div>
@@ -38,10 +39,32 @@ import dismiss16Regular from '@iconify-icons/fluent/dismiss-16-regular';
 import subtract16Regular from '@iconify-icons/fluent/subtract-16-regular';
 import restore16Regular from '@iconify-icons/fluent/restore-16-regular';
 import maximize16Regular from '@iconify-icons/fluent/maximize-16-regular';
+import fullScreenMinimize24Regular from '@iconify-icons/fluent/full-screen-minimize-24-regular';
+import { windowManager } from "../../../../../examples/BasicApp/node_modules/@illuxdev/oxide-desktop-gui/src/Exports";
+
+let onStateChange: null | (() => void) = null;
+let onFocusChange: null | (() => void) = null;
+let initEvents = false;
 
 export default defineComponent({
     components: {
         Icon
+    },
+    created() {
+        if (!initEvents) {
+            initEvents = true;
+            windowManager.on("state", () => onStateChange && onStateChange());
+            windowManager.on("focusChange", () => onFocusChange && onFocusChange());
+        }
+
+        onStateChange = () => {
+            this.titleBar.maximized = windowManager.getWindowState() == "maximized";
+            this.titleBar.fullScreen = windowManager.getWindowState() == "fullScreen";
+        }
+
+        onFocusChange = () => {
+             this.titleBar.focused = windowManager.isFocused()
+        }
     },
     data() {
         return {
@@ -49,11 +72,15 @@ export default defineComponent({
                 dismiss16Regular,
                 subtract16Regular,
                 restore16Regular,
-                maximize16Regular
+                maximize16Regular,
+                fullScreenMinimize24Regular
             },
             titleBar: {
-                maximized: false
-            }
+                maximized: windowManager.getWindowState() == "maximized",
+                focused: windowManager.isFocused(),
+                fullScreen: windowManager.getWindowState() == "fullScreen"
+            },
+            windowManager
         }
     },
     props: {
@@ -64,6 +91,17 @@ export default defineComponent({
         showTitleArea: {
             type: Boolean,
             default: true
+        }
+    },
+    methods: {
+        middleButtonAction() {
+            if (this.titleBar.fullScreen) {
+                windowManager.exitFullScreen();
+            } else if (this.titleBar.maximized) {
+                windowManager.restore();
+            } else {
+                windowManager.maximize();
+            }
         }
     }
 });
@@ -89,10 +127,12 @@ export default defineComponent({
         display: flex;
         align-items: center;
         justify-content: space-between;
+        transition: top 100ms;
 
         .window-buttons {
             -webkit-app-region: no-drag;
             display: flex;
+            transition: 100ms;
 
             button {
                 border: none;
@@ -151,10 +191,48 @@ export default defineComponent({
             .text {
                 color: $fill_text_primary;
                 font-family: $_font;
-                font-size: 13px;
+                font-size: 12px;
             }
         }
 
+        &.mode-blurred {
+            .window-buttons {
+                button {
+                    color: $fill_text_tertiary;
+
+                    &:hover {
+                        color: $fill_text_primary;
+                    }
+                }
+            }   
+
+            .title-area {
+                .text {
+                    color: $fill_text_tertiary;
+                }
+            }
+        }
+
+        &.mode-full-screen {
+            background: transparent;
+            position: fixed;
+            top: -30px;
+            left: 0;
+            -webkit-app-region: no-drag;
+
+            &:hover {
+                top: 0;
+            }
+
+            .window-buttons {
+                pointer-events: all;
+            }
+
+            .title-area {
+                pointer-events: none;
+                opacity: 0;
+            }
+        }
     }
 
     .content {

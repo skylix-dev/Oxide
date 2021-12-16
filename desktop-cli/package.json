@@ -21,6 +21,7 @@
 		"@types/node": "^16.11.13"
 	},
 	"dependencies": {
+		"@electron/remote": "^2.0.1",
 		"@illuxdev/oxide-terminal": "^1.1.0-dev",
 		"@types/merge-deep": "^3.0.0",
 		"@vitejs/plugin-vue": "^2.0.1",

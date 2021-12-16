@@ -1,12 +1,20 @@
 import { BrowserWindow, app } from "electron";
+import { initialize, enable } from "@electron/remote/main";
 
 app.once("ready", () => {
 	const win = new BrowserWindow({
 		width: 1200,
 		height: 600,
 		show: false,
-		frame: false
+		frame: false,
+		webPreferences: {
+			nodeIntegration: true,
+			contextIsolation: false
+		}
 	});
+
+	enable(win.webContents);
+	initialize();
 
 	const send = (data: any) => {
 		process.stdout.write(JSON.stringify(data));
@@ -18,17 +26,15 @@ app.once("ready", () => {
 			message: {
 				action: "show",
 			},
-		});
-	});
-
-	console.log(process.argv);
+		}); 
+	});  
 
 	win
 		.loadURL("http://localhost:" + process.argv[process.argv.length - 1])
 		.then(() => {
 			send({
 				channel: "_internal:setup:task",
-				message: {
+				message: { 
 					renderer: {
 						success: true,
 					},
