@@ -1,21 +1,21 @@
 export default interface ElectronSettings {
-    /**
-     * Port of the development server
-     */
-    port: number;
+	/**
+	 * Port of the development server
+	 */
+	port: number;
 
-    /**
-     * Location of the Electron entry script
-     */
-    electronMain: string;
+	/**
+	 * Location of the Electron entry script
+	 */
+	electronMain: string;
 
-    /**
-     * Root directory for all the Electron files
-     */
-    electronRoot: string;
+	/**
+	 * Root directory for all the Electron files
+	 */
+	electronRoot: string;
 
-    /**
-     * Root dir of the project
-     */
-    projectRoot: string;
+	/**
+	 * Root dir of the project
+	 */
+	projectRoot: string;
 }

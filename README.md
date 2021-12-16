@@ -1,4 +1,5 @@
 # Oxide
+
 Create full-stack applications including, desktop, mobile, web, and servers!
 
 <center>
@@ -8,7 +9,9 @@ Create full-stack applications including, desktop, mobile, web, and servers!
 </center>
 
 # Contributing
+
 Interested in helping to improve this project? Get started in contributing by reading the [guide](/CONTRIBUTING.md).
 
 # License
+
 This project is under the MIT license.

@@ -1,29 +1,24 @@
 {
-    "cSpell.words": [
-        "ILLUX",
-        "illuxdev",
-        "vite",
-        "vitejs"
-    ],
-    "files.exclude": {
-        "**/*.d.ts": true,
-        "**/*.js": true,
-        "**/*.map": true
-    },
-    "git.inputValidation": "off",
-    "auto-close-tag.activationOnLanguage": [
-        "xml",
-        "php",
-        "blade",
-        "ejs",
-        "jinja",
-        "plaintext",
-        "markdown",
-        "vue",
-        "liquid",
-        "erb",
-        "lang-cfml",
-        "cfml",
-        "HTML (Eex)"
-    ]
+	"cSpell.words": ["ILLUX", "illuxdev", "vite", "vitejs"],
+	"files.exclude": {
+		"**/*.d.ts": true,
+		"**/*.js": true,
+		"**/*.map": true
+	},
+	"git.inputValidation": "off",
+	"auto-close-tag.activationOnLanguage": [
+		"xml",
+		"php",
+		"blade",
+		"ejs",
+		"jinja",
+		"plaintext",
+		"markdown",
+		"vue",
+		"liquid",
+		"erb",
+		"lang-cfml",
+		"cfml",
+		"HTML (Eex)"
+	]
 }

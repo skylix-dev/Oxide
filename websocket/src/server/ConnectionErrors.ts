@@ -1,5 +1,5 @@
 enum ConnectionErrors {
-    notAlive
+	notAlive,
 }
 
 export default ConnectionErrors;

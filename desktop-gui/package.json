@@ -1,18 +1,18 @@
 {
-  "name": "@illuxdev/oxide-desktop-gui",
-  "version": "1.0.0",
-  "description": "",
-  "main": "src/Exports.js",
-  "scripts": {
-    "watch": "tsc --watch"
-  },
-  "author": {
-    "name": "ILLUX",
-    "url": "https://illux.dev",
-    "email": "support@illux.dev"
-  },
-  "license": "MIT",
-  "devDependencies": {
-    "typescript": "^4.5.3"
-  }
+	"name": "@illuxdev/oxide-desktop-gui",
+	"version": "1.0.0",
+	"description": "",
+	"main": "src/Exports.js",
+	"scripts": {
+		"watch": "tsc --watch"
+	},
+	"author": {
+		"name": "ILLUX",
+		"url": "https://illux.dev",
+		"email": "support@illux.dev"
+	},
+	"license": "MIT",
+	"devDependencies": {
+		"typescript": "^4.5.3"
+	}
 }

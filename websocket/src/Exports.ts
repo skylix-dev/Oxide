@@ -8,11 +8,11 @@ import ServerErrors from "./server/Errors";
 import ServerConnectionErrors from "./server/ConnectionErrors";
 
 export {
-    Server,
-    ServerErrors,
-    ServerSettings,
-    ServerConnectionErrors,
-    Client,
-    ClientSettings,
-    ClientErrors
+	Server,
+	ServerErrors,
+	ServerSettings,
+	ServerConnectionErrors,
+	Client,
+	ClientSettings,
+	ClientErrors,
 };

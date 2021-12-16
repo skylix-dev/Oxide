@@ -1,4 +1,4 @@
-import { animationColors } from './../anime/Settings';
+import { animationColors } from "./../anime/Settings";
 import cliColor from "cli-color";
 
 /**
@@ -7,15 +7,15 @@ import cliColor from "cli-color";
  * @param color The color of the prefix
  */
 export function custom(text: string, prefix: string, color: animationColors) {
-    console.log(cliColor[color](" [ " + prefix + " ]") + " " + text);
-} 
+	console.log(cliColor[color](" [ " + prefix + " ]") + " " + text);
+}
 
 /**
  * Log an info message
  * @param text Text to log
  */
 export function info(text: string) {
-    custom(text, "Info", "blackBright");
+	custom(text, "Info", "blackBright");
 }
 
 /**
@@ -23,21 +23,21 @@ export function info(text: string) {
  * @param text Text to log
  */
 export function success(text: string) {
-    custom(text, "Success", "green");
+	custom(text, "Success", "green");
 }
 
 /**
  * Log a warning message
  * @param text Text to log
  */
- export function warning(text: string) {
-    custom(text, "Warning", "yellow");
+export function warning(text: string) {
+	custom(text, "Warning", "yellow");
 }
 
 /**
  * Log an error message
  * @param text Text to log
  */
- export function error(text: string) {
-    custom(text, "Error", "redBright");
+export function error(text: string) {
+	custom(text, "Error", "redBright");
 }

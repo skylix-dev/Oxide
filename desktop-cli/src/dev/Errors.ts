@@ -1,7 +1,7 @@
 enum Errors {
-    alreadyStarting,
-    alreadyRunning,
-    entryNotFound
+	alreadyStarting,
+	alreadyRunning,
+	entryNotFound,
 }
 
 export default Errors;

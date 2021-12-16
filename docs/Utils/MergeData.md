@@ -1,19 +1,21 @@
 # MergeData: `function`
+
 This function allows you to merge objects string and numbers.
 
 # Usage Example
+
 ```ts
 // TypeScript
 import { mergeData } from "@illuxdev/oxide-utils";
 
 const objectOne = {
-    name: "initial"
-}
+	name: "initial",
+};
 
 console.log("Before Merge: " + objectOne.name);
 
 const merged = mergeData(objectOne, {
-    name: "Updated Name"
+	name: "Updated Name",
 });
 
 console.log("After Merge: " + objectOne.name);
@@ -24,13 +26,13 @@ console.log("After Merge: " + objectOne.name);
 const { mergeData } = require("@illuxdev/oxide-utils");
 
 const objectOne = {
-    name: "initial"
-}
+	name: "initial",
+};
 
 console.log("Before Merge: " + objectOne.name);
 
 const merged = mergeData(objectOne, {
-    name: "Updated Name"
+	name: "Updated Name",
 });
 
 console.log("After Merge: " + objectOne.name);

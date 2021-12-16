@@ -1,37 +1,37 @@
 {
-  "name": "@illuxdev/oxide-desktop-cli",
-  "version": "1.0.0",
-  "description": "",
-  "main": "src/Exports.js",
-  "scripts": {
-    "watch": "tsc --watch"
-  },
-  "bin": {
-    "oxide-desktop": "bin/Entry.js"
-  },
-  "author": {
-    "name": "ILLUX",
-    "url": "https://illux.dev",
-    "email": "support@illux.dev"
-  },
-  "license": "MIT",
-  "devDependencies": {
-    "@types/config": "^0.0.40",
-    "@types/fs-extra": "^9.0.13",
-    "@types/node": "^16.11.13"
-  },
-  "dependencies": {
-    "@illuxdev/oxide-terminal": "^1.1.0-dev",
-    "@types/merge-deep": "^3.0.0",
-    "@vitejs/plugin-vue": "^2.0.1",
-    "builtin-modules": "^3.2.0",
-    "chokidar": "^3.5.2",
-    "config": "^3.3.6",
-    "electron": "^16.0.4",
-    "fs-extra": "^10.0.0",
-    "merge-deep": "^3.0.3",
-    "typescript": "^4.5.3",
-    "vite": "^2.7.2",
-    "vite-plugin-commonjs-externals": "^0.1.1"
-  }
+	"name": "@illuxdev/oxide-desktop-cli",
+	"version": "1.0.0",
+	"description": "",
+	"main": "src/Exports.js",
+	"scripts": {
+		"watch": "tsc --watch"
+	},
+	"bin": {
+		"oxide-desktop": "bin/Entry.js"
+	},
+	"author": {
+		"name": "ILLUX",
+		"url": "https://illux.dev",
+		"email": "support@illux.dev"
+	},
+	"license": "MIT",
+	"devDependencies": {
+		"@types/config": "^0.0.40",
+		"@types/fs-extra": "^9.0.13",
+		"@types/node": "^16.11.13"
+	},
+	"dependencies": {
+		"@illuxdev/oxide-terminal": "^1.1.0-dev",
+		"@types/merge-deep": "^3.0.0",
+		"@vitejs/plugin-vue": "^2.0.1",
+		"builtin-modules": "^3.2.0",
+		"chokidar": "^3.5.2",
+		"config": "^3.3.6",
+		"electron": "^16.0.4",
+		"fs-extra": "^10.0.0",
+		"merge-deep": "^3.0.3",
+		"typescript": "^4.5.3",
+		"vite": "^2.7.2",
+		"vite-plugin-commonjs-externals": "^0.1.1"
+	}
 }

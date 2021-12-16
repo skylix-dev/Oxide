@@ -15,23 +15,26 @@ import DevErrors from "./dev/Errors";
  * @returns Your app config
  */
 export function defineConfig(config: AppConfig): AppConfig {
-    return config;
+	return config;
 }
 
 export function defineRendererConfig(config: RendererConfig): UserConfig {
-    return {
-        plugins: [ vuePlugin(), commonjsExternals({
-            externals: [
-                "electron",
-                "electron/main",
-                "electron/common",
-                "electron/renderer",
-                "original-fs",
-                ...builtInModules
-            ]
-        }) ],
-        base: "./"
-    }
+	return {
+		plugins: [
+			vuePlugin(),
+			commonjsExternals({
+				externals: [
+					"electron",
+					"electron/main",
+					"electron/common",
+					"electron/renderer",
+					"original-fs",
+					...builtInModules,
+				],
+			}),
+		],
+		base: "./",
+	};
 }
 
 export { Dev, DevErrors, DevRendererSettings, DevElectronSettings };
