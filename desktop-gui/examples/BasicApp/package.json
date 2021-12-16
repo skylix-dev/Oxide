@@ -9,6 +9,7 @@
 	},
 	"dependencies": {
 		"@illuxdev/oxide-desktop-cli": "file:../../../desktop-cli",
+		"@illuxdev/oxide-desktop-gui": "file:../..",
 		"vue": "^3.2.25"
 	},
 	"devDependencies": {

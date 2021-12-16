@@ -1,5 +1,12 @@
 {
-	"cSpell.words": ["ILLUX", "illuxdev", "vite", "vitejs"],
+	"cSpell.words": [
+		"ILLUX",
+		"illuxdev",
+		"quarternary",
+		"vite",
+		"vitejs",
+		"winui"
+	],
 	"files.exclude": {
 		"**/*.d.ts": true,
 		"**/*.js": true,
@@ -20,5 +27,6 @@
 		"lang-cfml",
 		"cfml",
 		"HTML (Eex)"
-	]
+	],
+	"editor.tabSize": 4
 }

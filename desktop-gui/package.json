@@ -14,5 +14,11 @@
 	"license": "MIT",
 	"devDependencies": {
 		"typescript": "^4.5.3"
+	},
+	"dependencies": {
+		"@iconify-icons/fluent": "^1.1.33",
+		"@iconify/vue": "^3.1.1",
+		"sass": "^1.45.0",
+		"vue": "^3.2.26"
 	}
 }

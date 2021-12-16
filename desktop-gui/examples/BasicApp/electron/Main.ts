@@ -5,8 +5,7 @@ app.once("ready", () => {
 		width: 1200,
 		height: 600,
 		show: false,
-		titleBarOverlay: true,
-		titleBarStyle: "hidden",
+		frame: false
 	});
 
 	const send = (data: any) => {
