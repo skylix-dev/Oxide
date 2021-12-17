@@ -1,0 +1,70 @@
+import { Settings } from './Settings';
+import mergeDeep from "merge-deep";
+import { BrowserWindow, app, dialog } from "electron";
+import isDev from "electron-is-dev";
+
+export default class DesktopElectron {
+	/**
+	 * Settings for the instance
+	 */
+	private settings: Settings;
+
+	/**
+	 * Is the app ready
+	 */
+	private appReady = false;
+
+	/**
+	 * The app window
+	 */
+	private browserWindow?: BrowserWindow;
+
+	/**
+	 * Create a new Electron instance (This class must be used for oxide-desktop-gui to work correctly)
+	 */
+	public constructor(settings: Settings) {
+		const defaultSettings = {
+			width: 1200,
+			height: 800
+		} as Settings;
+
+		if (app.isReady()) {
+			this.appReady = true;
+		} else {
+			app.once("ready", () => {
+				this.appReady = true;
+			});
+		}
+
+		this.settings = mergeDeep(defaultSettings, settings);
+	}
+
+	/**
+	 * Run the app
+	 */
+	public run() {
+		const logic = () => {
+			this.browserWindow = new BrowserWindow({
+				width: this.settings.width,
+				height: this.settings.height,
+                show: false
+			});
+
+            if (isDev) {
+                this.browserWindow.loadURL("http://localhost:" + process.argv[2]).then(() => {
+                    this.browserWindow?.show();
+                });
+            }
+		}
+
+		if (this.appReady) {
+			logic();
+			return;
+		}
+
+		app.once("ready", () => {
+			this.appReady = true;
+            logic();
+		});
+	}
+}

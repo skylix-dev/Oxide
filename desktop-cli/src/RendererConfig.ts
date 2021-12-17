@@ -1,1 +1,6 @@
-export default interface RendererConfig {}
+export default interface RendererConfig {
+    /**
+     * The app type
+     */
+    type?: "react" | "vue";
+}

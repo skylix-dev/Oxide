@@ -8,6 +8,7 @@ import builtInModules from "builtin-modules";
 import DevElectronSettings from "./dev/ElectronSettings";
 import DevRendererSettings from "./dev/RendererSettings";
 import DevErrors from "./dev/Errors";
+import reactPlugin from "@vitejs/plugin-react";
 
 /**
  * Add typing to your app"s config
@@ -21,7 +22,7 @@ export function defineConfig(config: AppConfig): AppConfig {
 export function defineRendererConfig(config: RendererConfig): UserConfig {
 	return {
 		plugins: [
-			vuePlugin(),
+			config.type == "vue" ? vuePlugin() : reactPlugin(),
 			commonjsExternals({
 				externals: [
 					"electron",
