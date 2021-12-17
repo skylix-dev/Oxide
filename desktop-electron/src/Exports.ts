@@ -1,40 +1,18 @@
-import AppConfig from "./AppConfig";
-import { UserConfig } from "vite";
-import RendererConfig from "./RendererConfig";
-import Dev from "./dev/Dev";
-import vuePlugin from "@vitejs/plugin-vue";
-import commonjsExternals from "vite-plugin-commonjs-externals";
-import builtInModules from "builtin-modules";
-import DevElectronSettings from "./dev/ElectronSettings";
-import DevRendererSettings from "./dev/RendererSettings";
-import DevErrors from "./dev/Errors";
+import { Settings } from './Settings';
+import mergeDeep from "merge-deep";
 
-/**
- * Add typing to your app"s config
- * @param config Your app config
- * @returns Your app config
- */
-export function defineConfig(config: AppConfig): AppConfig {
-	return config;
+export default class DesktopElectron {
+	/**
+	 * Settings for the instance
+	 */
+	private settings: Settings;
+
+	/**
+	 * Create a new Electron instance (This class must be used for oxide-desktop-gui to work correctly)
+	 */
+	public constructor(settings: Settings) {
+		const defaultSettings = {} as Settings;
+
+		this.settings = mergeDeep(defaultSettings, settings);
+	}
 }
-
-export function defineRendererConfig(config: RendererConfig): UserConfig {
-	return {
-		plugins: [
-			vuePlugin(),
-			commonjsExternals({
-				externals: [
-					"electron",
-					"electron/main",
-					"electron/common",
-					"electron/renderer",
-					"original-fs",
-					...builtInModules,
-				],
-			}),
-		],
-		base: "./",
-	};
-}
-
-export { Dev, DevErrors, DevRendererSettings, DevElectronSettings };

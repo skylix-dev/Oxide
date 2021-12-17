@@ -21,7 +21,7 @@
 		"install:terminal": "cd  terminal && npm i && cd ../",
 		"install:desktop-electron": "cd desktop-electron && npm i && cd ../",
 		"watch": "run-p watch:desktop-cli watch:desktop-gui watch:mobile-cli watch:mobile-gui watch:utils watch:websocket watch:terminal watch:desktop-electron",
-		"postinstall": "run-p install:desktop-cli install:desktop-gui install:mobile-cli install:mobile-gui install:utils install:websocket install:terminal install:desktop-electron",
+		"postinstall": "run-p install:desktop-cli install:desktop-gui install:mobile-cli install:mobile-gui install:utils install:websocket install:terminal install:desktop-electron && npm run watch",
 		"prettier": "prettier --write ."
 	},
 	"repository": {
