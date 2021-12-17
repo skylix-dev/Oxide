@@ -1,23 +1,23 @@
 {
-	"name": "basic-app",
-	"version": "0.0.0",
-	"scripts": {
-		"dev": "vite",
-		"build": "vue-tsc --noEmit && vite build",
-		"preview": "vite preview"
-	},
-	"dependencies": {
-		"@electron/remote": "^2.0.1",
-		"@illuxdev/oxide-desktop-cli": "file:../../../desktop-cli",
-		"@illuxdev/oxide-desktop-gui": "file:../..",
-		"vue": "^3.2.25"
-	},
-	"devDependencies": {
-		"@types/node": "^16.11.13",
-		"@vitejs/plugin-vue": "^2.0.0",
-		"electron": "^16.0.4",
-		"typescript": "^4.4.4",
-		"vite": "^2.7.2",
-		"vue-tsc": "^0.29.8"
-	}
+  "name": "basic-app",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@illuxdev/oxide-desktop-cli": "file:../../../desktop-cli",
+    "@illuxdev/oxide-desktop-gui": "file:../..",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.33",
+    "@types/react-dom": "^17.0.10",
+    "@vitejs/plugin-react": "^1.0.7",
+    "typescript": "^4.4.4",
+    "vite": "^2.7.2"
+  }
 }

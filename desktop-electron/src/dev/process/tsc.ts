@@ -1,10 +1,8 @@
 import { spawn } from "child_process";
 
-console.log(process.argv);
-
 const vite = spawn(
 	process.platform == "win32" ? "npx.cmd" : "npx",
-	["tsc", "--watch", "--module", "commonjs", "--target", "esnext", "--noEmit", "false"],
+	["tsc", "--watch", "--module", "commonjs", "--target", "esnext"],
 	{
 		cwd: process.argv[2],
 	}
