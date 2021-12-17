@@ -201,7 +201,6 @@ export default class Dev {
 					this.electronProcess!.stderr?.on("data", (data) => {console.log(data.toString())});
 
 					this.electronProcess!.stdout?.on("data", (data) => {
-						console.log(data.toString());
 						const promiseJsonParse = <ObjectType>(stringifiedJson: string) => {
 							return new Promise<ObjectType>((resolve, reject) => {
 								try {
