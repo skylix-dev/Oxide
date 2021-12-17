@@ -5,7 +5,6 @@ import Errors from "./Errors";
 import RendererSettings from "./RendererSettings";
 import fs from "fs-extra";
 import chokidar, { FSWatcher } from "chokidar";
-import { anime, logging } from "@illuxdev/oxide-terminal";
 
 export default class Dev {
 	/**
@@ -182,7 +181,9 @@ export default class Dev {
 				return;
 			}
 
+			console.log("ST");
 			startTypeScript(() => {
+				console.log("SE");
 				const startElectron = () => {
 					this.electronProcess = spawn(
 						"node",
@@ -197,7 +198,10 @@ export default class Dev {
 						}
 					);
 
+					this.electronProcess!.stderr?.on("data", (data) => {console.log(data.toString())});
+
 					this.electronProcess!.stdout?.on("data", (data) => {
+						console.log(data.toString());
 						const promiseJsonParse = <ObjectType>(stringifiedJson: string) => {
 							return new Promise<ObjectType>((resolve, reject) => {
 								try {
@@ -249,8 +253,10 @@ export default class Dev {
 				const startChokidar = () => {
 					watcher = chokidar.watch(settings.electronRoot);
 
-					watcher.on("all", () => {
-						restartElectron();
+					watcher.on("all", path => {
+						if (path.endsWith(".js")) {
+							restartElectron();
+						}
 					});
 				};
 			});

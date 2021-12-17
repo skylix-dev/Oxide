@@ -10,7 +10,6 @@
   "dependencies": {
     "@illuxdev/oxide-desktop-cli": "file:../../../desktop-cli",
     "@illuxdev/oxide-desktop-electron": "file:../../../desktop-electron",
-    "@illuxdev/oxide-desktop-gui": "file:../..",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },

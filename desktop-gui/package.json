@@ -4,7 +4,9 @@
 	"description": "",
 	"main": "src/Exports.js",
 	"scripts": {
-		"watch": "tsc --watch"
+		"watch": "tsc --watch",
+		"install:example:basic-app": "cd examples/BasicApp && npm i && cd ../../",
+		"postinstall": "npm run install:example:basic-app"
 	},
 	"author": {
 		"name": "ILLUX",
@@ -14,12 +16,14 @@
 	"license": "MIT",
 	"devDependencies": {
 		"@types/node": "^17.0.0",
+		"@types/react": "^17.0.37",
 		"typescript": "^4.5.3"
 	},
 	"dependencies": {
 		"@iconify-icons/fluent": "^1.1.33",
 		"@iconify/vue": "^3.1.1",
-		"sass": "^1.45.0",
-		"vue": "^3.2.26"
+		"react": "^17.0.2",
+		"react-dom": "^17.0.2",
+		"sass": "^1.45.0"
 	}
 }
