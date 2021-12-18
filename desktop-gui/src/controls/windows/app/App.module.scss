@@ -1,0 +1,49 @@
+@import "../_theme/Vars.scss";
+
+.root {
+    width: 100vw;
+    height: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.titleBar {
+    width: 100%;
+    height: 32px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background: $background_solidBackground_base;
+}
+
+.body {
+    height: calc(100vh - 32px);
+    position: absolute;
+    top: 32px;
+    left: 0;
+    width: 100vw;
+    background: $background_solidBackground_tertiary;
+    padding: 0;
+    margin: 0;
+}
+
+.titleBarTitleArea {
+    display: flex;
+    flex-direction: row;
+}
+
+.titleBarTitleAreaIcon {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+        width: 100%;
+    }
+}

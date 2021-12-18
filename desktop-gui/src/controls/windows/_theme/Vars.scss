@@ -1,0 +1,253 @@
+:root {
+    --fill_text_primary: #FFFFFF;
+    --fill_text_secondary: rgba(255, 255, 255, 78.6%);
+    --fill_text_tertiary: rgba(255, 255, 255, 54.42%);
+    --fill_text_disabled: rgba(255, 255, 255, 36.28%);
+    --fill_accentText_primary: #99EBFF;
+    --fill_accentText_secondary: #99EBFF;
+    --fill_accentText_tertiary: #60CDFF;
+    --fill_accentText_disabled: rgba(255, 255, 255, 36.28%);
+    --fill_textOnAccent_primary: #000000;
+    --fill_textOnAccent_secondary: rgba(0, 0, 0, 50%);
+    --fill_textOnAccent_disabled: rgba(255, 255, 255, 53.02%);
+    --fill_textOnAccent_selectedText: #FFFFFF;
+    --fill_control_transparent: #FFFFFF00;
+    --fill_control_default: rgba(255, 255, 255, 6.05%);
+    --fill_control_secondary: rgba(255, 255, 255, 8.37%);
+    --fill_control_tertiary: rgba(255, 255, 255, 3.26%);
+    --fill_control_disabled: rgba(255, 255, 255, 4.19%);
+    --fill_control_inputActive: rgba(30, 30, 30, 70%);
+    --fill_controlStrong_default: rgba(255, 255, 255, 54.42%);
+    --fill_controlStrong_disabled: rgba(255, 255, 255, 24.65%);
+    --fill_controlAlt_transparent: #FFFFFF00;
+    --fill_controlAlt_secondary: rgba(0, 0, 0, 10%);
+    --fill_controlAlt_tertiary: rgba(255, 255, 255, 4.19%);
+    --fill_controlAlt_quarternary: rgba(255, 255, 255, 6.98%);
+    --fill_controlAlt_disabled: #FFFFFF00;
+    --fill_subtle_transparent: #FFFFFF00;
+    --fill_subtle_secondary: rgba(255, 255, 255, 6.05%);
+    --fill_subtle_tertiary: rgba(255, 255, 255, 4.19%);
+    --fill_subtle_disabled: #FFFFFF00;
+    --fill_accent_default: #60CDFF;
+    --fill_accent_secondary: rgba(96, 205, 255, 90%);
+    --fill_accent_tertiary: rgba(96, 205, 255, 80%);
+    --fill_accent_disabled: rgba(255, 255, 255, 15.81%);
+    --fill_accent_selectedTextBackground: #0078D4;
+    --fill_controlSolid_default: #454545;
+    --fill_system_critical: #FF99A4;
+    --fill_system_success: #6CCB5F;
+    --fill_system_attention: #60CDFF;
+    --fill_system_caution: #FCE100;
+    --fill_system_attentionBackground: rgba(255, 255, 255, 3.26%);
+    --fill_system_successBackground: #393D1B;
+    --fill_system_cautionBackground: #433519;
+    --fill_system_criticalBackground: #442726;
+    --fill_system_neutral: rgba(255, 255, 255, 54.42%);
+    --fill_system_neutralBackground: rgba(255, 255, 255, 3.26%);
+    --fill_system_solidAttentionBackground: #2E2E2E;
+    --fill_system_solidNeutral: #9D9D9D;
+    --fill_system_solidNeutralBackground: #2E2E2E;
+    --fill_controlOnImage_default: rgba(28, 28, 28, 70%);
+    --fill_controlOnImage_secondary: #1A1A1A;
+    --fill_controlOnImage_tertiary: #131313;
+    --fill_controlOnImage_disabled: #1E1E1E00;
+    --elevation_control_border: rgba(255, 255, 255, 6.98%);
+    --elevation_control_borderBottom: rgba(255, 255, 255, 9.3%);
+    --elevation_circle_border: rgba(255, 255, 255, 6.98%);
+    --elevation_circle_borderBottom: rgba(255, 255, 255, 9.3%);
+    --elevation_textControl_border: rgba(255, 255, 255, 54.42%);
+    --elevation_textControl_borderFocused: rgba(255, 255, 255, 54.42%);
+    --elevation_accentControl_border: rgba(255, 255, 255, 8%);
+    --elevation_strokeColor_controlStroke_default: rgba(255, 255, 255, 6.98%);
+    --elevation_strokeColor_controlStroke_onAccentDefault: rgba(255, 255, 255, 8%);
+    --elevation_strokeColor_controlStroke_secondary: rgba(255, 255, 255, 9.3%);
+    --elevation_strokeColor_controlStroke_onAccentSecondary: rgba(255, 255, 255, 14%);
+    --elevation_strokeColor_controlStroke_onAccentTertiary: rgba(255, 255, 255, 21.69%);
+    --elevation_strokeColor_controlStroke_onAccentDisabled: rgba(255, 255, 255, 20%);
+    --elevation_strokeColor_controlStroke_forStrongFillWhenOnImage: rgba(0, 0, 0, 42%);
+    --elevation_strokeColor_controlStrongStroke_default: rgba(255, 255, 255, 54,42%);
+    --elevation_strokeColor_controlStrongStroke_disabled: rgba(255, 255, 255, 15.81%);
+    --elevation_strokeColor_dividerStroke_default: rgba(255, 255, 255, 8.37%);
+    --elevation_strokeColor_surfaceStroke_default: rgba(255, 255, 255, 40%);
+    --elevation_strokeColor_surfaceStroke_flyout: rgba(255, 255, 255, 20%);
+    --elevation_strokeColor_cardStroke_default: rgba(0, 0, 0, 10%);
+    --elevation_strokeColor_cardStroke_defaultSolid: #1C1C1C;
+    --elevation_strokeColor_focusStroke_inner: #FFFFFF;
+    --elevation_strokeColor_focusStroke_outer: rgba(0, 0, 0, 70%);
+    --background_cardBackground_default: rgba(255, 255, 255, 5.12%);
+    --background_cardBackground_secondary: rgba(255, 255, 255, 3.26%);
+    --background_smoke_default: rgba(0, 0, 0, 30%);
+    --background_solidBackground_base: #202020;
+    --background_solidBackground_secondary: #1C1C1C;
+    --background_solidBackground_tertiary: #282828;
+    --background_solidBackground_quarternary: #2C2C2C;
+    --background_micaBackground_base: #202020;
+    --background_micaBackground_baseActive: #20202080;
+    --background_acrylicBackground_default: linear-gradient(rgba(44, 44, 44, 15%), rgba(44, 44, 44, 15%)), linear-gradient(rgba(44, 44, 44, 96%), rgba(44, 44, 44, 96%));;
+    --background_acrylicBackground_base: linear-gradient(rgba(32, 32, 32, 50%), rgba(32, 32, 32, 50%)), linear-gradient(rgba(32, 32, 32, 96%), rgba(32, 32, 32, 96%));;
+    --background_layer_default: #3A3A3A30;
+    --background_layer_alt: rgba(255, 255, 255, 5.38%);
+    --background_layerOnAcrylic_default: rgba(255, 255, 255, 3.59%);
+    --background_layerOnAccentAcrylic_default: rgba(255, 255, 255, 3.59%);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+$fill_text_primary: var(--fill_text_primary);
+$fill_text_secondary: var(--fill_text_secondary);
+$fill_text_tertiary: var(--fill_text_tertiary);
+$fill_text_disabled: var(--fill_text_disabled);
+$fill_accentText_primary: var(--fill_accent_primary);
+$fill_accentText_secondary: var(--fill_accent_secondary);
+$fill_accentText_tertiary: var(--fill_accent_tertiary);
+$fill_accentText_disabled: var(--fill_accent_disabled);
+$fill_textOnAccent_primary: var(--fill_textOnAccent_primary);
+$fill_textOnAccent_secondary: var(--fill_textOnAccent_secondary);
+$fill_textOnAccent_disabled: var(--fill_textOnAccent_disabled);
+$fill_textOnAccent_selectedText: var(--fill_textOnAccent_selectedText);
+$fill_control_transparent: var(--fill_control_transparent);
+$fill_control_default: var(--fill_control_default);
+$fill_control_secondary: var(--fill_control_secondary);
+$fill_control_tertiary: var(--fill_control_tertiary);
+$fill_control_disabled: var(--fill_control_disabled);
+$fill_control_inputActive: var(--fill_control_inputActive);
+$fill_controlStrong_default: var(--fill_controlStrong_default);
+$fill_controlStrong_disabled: var(--fill_controlStrong_disabled);
+$fill_controlAlt_transparent: var(--fill_controlAlt_transparent);
+$fill_controlAlt_secondary: var(--fill_controlAlt_secondary);
+$fill_controlAlt_tertiary: var(--fill_controlAlt_tertiary);
+$fill_controlAlt_quarternary: var(--fill_controlAlt_quarternary);
+$fill_controlAlt_disabled: var(--fill_controlAlt_disabled);
+$fill_subtle_transparent: var(--fill_subtle_transparent);
+$fill_subtle_secondary: var(--fill_subtle_secondary);
+$fill_subtle_tertiary: var(--fill_subtle_tertiary);
+$fill_subtle_disabled: var(--fill_subtle_disabled);
+$fill_accent_default: var(--fill_accent_default);
+$fill_accent_secondary: var(--fill_accent_secondary);
+$fill_accent_tertiary: var(--fill_accent_tertiary);
+$fill_accent_disabled: var(--fill_accent_disabled);
+$fill_accent_selectedTextBackground: var(--fill_accent_selectedTextBackground);
+$fill_controlSolid_default: var(--fill_controlSolid_default);
+$fill_system_critical: var(--fill_system_critical);
+$fill_system_success: var(--fill_system_success);
+$fill_system_attention: var(--fill_system_attention);
+$fill_system_caution: var(--fill_system_caution);
+$fill_system_attentionBackground: var(--fill_system_attentionBackground);
+$fill_system_successBackground: var(--fill_system_successBackground);
+$fill_system_cautionBackground: var(--fill_system_cautionBackground);
+$fill_system_criticalBackground: var(--fill_system_criticalBackground);
+$fill_system_neutral: var(--fill_system_neutral);
+$fill_system_neutralBackground: var(--fill_system_neutralBackground);
+$fill_system_solidAttentionBackground: var(
+    --fill_system_solidAttentionBackground
+);
+$fill_system_solidNeutral: var(--fill_system_solidNeutral);
+$fill_system_solidNeutralBackground: var(--fill_system_solidNeutralBackground);
+$fill_controlOnImage_default: var(--fill_controlOnImage_default);
+$fill_controlOnImage_secondary: var(--fill_controlOnImage_secondary);
+$fill_controlOnImage_tertiary: var(--fill_controlOnImage_tertiary);
+$fill_controlOnImage_disabled: var(--fill_controlOnImage_disabled);
+$elevation_control_border: var(--elevation_control_border);
+$elevation_control_borderBottom: var(--elevation_control_borderBottom);
+$elevation_circle_border: var(--elevation_circle_border);
+$elevation_circle_borderBottom: var(--elevation_circle_borderBottom);
+$elevation_textControl_border: var(--elevation_textControl_border);
+$elevation_textControl_borderFocused: var(
+    --elevation_textControl_borderFocused
+);
+$elevation_accentControl_border: var(--elevation_accentControl_border);
+$elevation_strokeColor_controlStroke_default: var(
+    --elevation_strokeColor_controlStroke_default
+);
+$elevation_strokeColor_controlStroke_onAccentDefault: var(
+    --elevation_strokeColor_controlStroke_onAccentDefault
+);
+$elevation_strokeColor_controlStroke_secondary: var(
+    --elevation_strokeColor_controlStroke_secondary
+);
+$elevation_strokeColor_controlStroke_onAccentSecondary: var(
+    --elevation_strokeColor_controlStroke_onAccentSecondary
+);
+$elevation_strokeColor_controlStroke_onAccentTertiary: var(
+    --elevation_strokeColor_controlStroke_onAccentTertiary
+);
+$elevation_strokeColor_controlStroke_onAccentDisabled: var(
+    --elevation_strokeColor_controlStroke_onAccentDisabled
+);
+$elevation_strokeColor_controlStroke_forStrongFillWhenOnImage: var(
+    --elevation_strokeColor_controlStroke_forStrongFillWhenOnImage
+);
+$elevation_strokeColor_controlStrongStroke_default: var(
+    --elevation_strokeColor_controlStrongStroke_default
+);
+$elevation_strokeColor_controlStrongStroke_disabled: var(
+    --elevation_strokeColor_controlStrongStroke_disabled
+);
+$elevation_strokeColor_dividerStroke_default: var(
+    --elevation_strokeColor_dividerStroke_default
+);
+$elevation_strokeColor_surfaceStroke_default: var(
+    --elevation_strokeColor_surfaceStroke_default
+);
+$elevation_strokeColor_surfaceStroke_flyout: var(
+    --elevation_strokeColor_surfaceStroke_flyout
+);
+$elevation_strokeColor_cardStroke_default: var(
+    --elevation_strokeColor_cardStroke_default
+);
+$elevation_strokeColor_cardStroke_defaultSolid: var(
+    --elevation_strokeColor_cardStroke_defaultSolid
+);
+$elevation_strokeColor_focusStroke_outer: var(
+    --elevation_strokeColor_focusStroke_outer
+);
+$elevation_strokeColor_focusStroke_inner: var(
+    --elevation_strokeColor_focusStroke_inner
+);
+$background_cardBackground_default: var(--background_cardBackground_default);
+$background_cardBackground_secondary: var(
+    --background_cardBackground_secondary
+);
+$background_smoke_default: var(--background_smoke_default);
+$background_solidBackground_base: var(--background_solidBackground_base);
+$background_solidBackground_secondary: var(
+    --background_solidBackground_secondary
+);
+$background_solidBackground_tertiary: var(
+    --background_solidBackground_tertiary
+);
+$background_solidBackground_quarternary: var(
+    --background_solidBackground_quarternary
+);
+$background_micaBackground_base: var(--background_micaBackground_base);
+$background_micaBackground_baseActive: var(
+    --background_micaBackground_baseActive
+);
+$background_acrylicBackground_default: var(
+    --background_acrylicBackground_default
+);
+$background_acrylicBackground_base: var(--background_acrylicBackground_base);
+$background_layer_default: var(--background_layer_default);
+$background_layer_alt: var(--background_layer_alt);
+$background_layerOnAcrylic_default: var(--background_layerOnAcrylic_default);
+$background_layerOnAccentAcrylic_default: var(
+    --background_layerOnAccentAcrylic_default
+);
+
+::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+    margin: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: $fill_text_tertiary;
+    border-radius: 8px;
+    border: 1px solid $background_solidBackground_base;
+}
+
+::-webkit-scrollbar-track {
+    background: $background_solidBackground_base;
+}
