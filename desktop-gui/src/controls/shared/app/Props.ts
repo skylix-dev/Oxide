@@ -8,4 +8,9 @@ export default interface Props {
      * Window title
      */
     title?: string;
+
+    /**
+     * The suffix for the title such as BETA, ALPHA or anything else
+     */
+    titleSuffix?: string;
 }

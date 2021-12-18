@@ -27,7 +27,8 @@
 		"erb",
 		"lang-cfml",
 		"cfml",
-		"HTML (Eex)"
+		"HTML (Eex)",
+		"typescriptreact"
 	],
 	"editor.tabSize": 4
 }

@@ -17,6 +17,7 @@
     justify-content: space-between;
     background: $background_solidBackground_base;
     -webkit-app-region: drag;
+    padding: 0 10px;
 }
 
 .body {
@@ -33,11 +34,15 @@
 .titleBarTitleArea {
     display: flex;
     flex-direction: row;
+    margin-left: 10px;
+    height: 100%;
+    align-items: center;
+    user-select: none;
 }
 
 .titleBarTitleAreaIcon {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     border-radius: 4px;
     overflow: hidden;
     display: flex;
@@ -47,4 +52,76 @@
     img {
         width: 100%;
     }
+}
+
+.titleBarTitleAreaText {
+    color: $fill_text_secondary;
+    font-family: "Segoe UI";
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+.titleBarTitleAreaSuffix {
+    margin-left: 10px;
+    color: $fill_text_disabled;
+    font-size: 11px;
+}
+
+.titleBarButtonArea {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+    margin-right: -10px;
+
+    button {
+        -webkit-app-region: no-drag;
+        height: 100%;
+        width: 48px;
+        border: none;
+        background: $fill_subtle_transparent;
+        color: $fill_text_primary;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        outline: none;
+        
+        &:hover {
+            background: $fill_subtle_secondary;
+
+            &:active {
+                background: $fill_subtle_tertiary;
+            }
+        }
+    }
+}
+
+.titleBarButtonAreaClose {
+    &:hover {
+        background: #C4314B !important;
+
+        &:active {
+            background: #82192B !important;
+        }
+    }
+}
+
+.titleBarButtonAreaMinimizeIcon {
+    font-size: 17px;
+}
+
+.titleBarButtonAreaRestoreIcon {
+    font-size: 16px;
+}
+
+.titleBarButtonAreaDismissIcon {
+    font-size: 16px;
+}
+
+.titleBarButtonAreaMaximizeIcon {
+    font-size: 16px;
+}
+
+.titleBarButtonAreaFullScreenMinimizeIcon {
+    font-size: 17px;
 }

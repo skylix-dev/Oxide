@@ -4,6 +4,7 @@ import { BrowserWindow, app, dialog } from "electron";
 import isDev from "electron-is-dev";
 import InternalSetupTask from './InternalSetupTask';
 import Errors from './Errors';
+import { initialize as initRemote, enable as remoteEnable } from "@electron/remote/main";
 
 export default class DesktopElectron {
 	/**
@@ -50,8 +51,19 @@ export default class DesktopElectron {
 				width: this.settings.width,
 				height: this.settings.height,
                 show: false,
-				frame: false
+				frame: false,
+				webPreferences: {
+					nodeIntegration: true,
+					contextIsolation: false,
+					webviewTag: true,
+					enableWebSQL: true,
+					webSecurity: true,
+					webgl: true
+				}
 			});
+
+			remoteEnable(this.browserWindow!.webContents);
+			initRemote();
 
             if (isDev) {
                 this.browserWindow.loadURL("http://localhost:" + process.argv[2]).then(() => {
