@@ -9,3 +9,4 @@ export interface Settings {
      */
     height?: number;
 }
+ 

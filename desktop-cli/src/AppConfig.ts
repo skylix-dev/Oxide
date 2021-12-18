@@ -22,5 +22,10 @@ export default interface AppConfig {
 		 * Path to the electron preload file
 		 */
 		electronPreload?: string;
+
+		/**
+		 * Other directories that could be related to Electron, when files or folders are changed here, your Electron development app will auto reload
+		 */
+		otherElectronDirs?: string[];
 	};
 }

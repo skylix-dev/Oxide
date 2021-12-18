@@ -17,6 +17,7 @@ const defaultConfig: AppConfig = {
 		electronMain: "electron/Main.ts",
 		electronPreload: undefined,
 		electronRoot: "electron",
+		otherElectronDirs: []
 	},
 };
 

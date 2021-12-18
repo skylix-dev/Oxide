@@ -16,6 +16,7 @@
     align-items: center;
     justify-content: space-between;
     background: $background_solidBackground_base;
+    -webkit-app-region: drag;
 }
 
 .body {

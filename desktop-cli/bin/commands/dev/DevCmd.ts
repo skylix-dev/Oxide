@@ -115,6 +115,7 @@ export default class DevCmd {
 						.join(process.cwd(), this.config.paths?.electronRoot!)
 						.replace(new RegExp(/\\/g), "/"),
 					projectRoot: process.cwd(),
+					otherElectronDirs: this.config.paths?.otherElectronDirs!
 				})
 				.then(() => {
 					clearInterval(timer);

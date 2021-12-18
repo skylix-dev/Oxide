@@ -49,7 +49,8 @@ export default class DesktopElectron {
 			this.browserWindow = new BrowserWindow({
 				width: this.settings.width,
 				height: this.settings.height,
-                // show: false
+                show: false,
+				frame: false
 			});
 
             if (isDev) {
@@ -105,3 +106,4 @@ export default class DesktopElectron {
 		});
 	}
 }
+ 
