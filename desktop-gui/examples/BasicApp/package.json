@@ -3,9 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "dev": "oxide-desktop dev"
   },
   "dependencies": {
     "@illuxdev/oxide-desktop-cli": "file:../../../desktop-cli",

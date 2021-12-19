@@ -15,6 +15,8 @@ export default React.forwardRef((props: Props, ref) => {
     const [isMaximized, setMaximized] = useState(windowApi.getWindowState() == "maximized");
     const [isFullscreen, setFullscreen] = useState(windowApi.getWindowState() == "fullScreened");
 
+    document.title = props.title ?? "";
+
     if (!onStateChange) {
         windowApi.on("stateChange", newState => onStateChange && onStateChange(newState));
     }
@@ -35,8 +37,10 @@ export default React.forwardRef((props: Props, ref) => {
 
     return (
         <div className={style.root}>
-            <div className={style.titleBar}>
-                <div className={style.titleBarTitleArea}>
+            <div className={style.body + (props.titleBarMode != "default" ? " " + style.bodyNoTitleBarSpace : "")}>{props.children}</div>
+
+            { props.titleBarMode != "hidden" && <div className={style.titleBar + (props.titleBarMode == "overlay" ? " " + style.titleBarOverlayMode : "")}>
+                { props.titleBarMode != "overlay" ? <div className={style.titleBarTitleArea}>
                     <div className={style.titleBarTitleAreaIcon}>
                         <img draggable={false} src="https://raw.githubusercontent.com/IlluxDev/Illux/main/Logo.svg" />
                     </div>
@@ -45,7 +49,7 @@ export default React.forwardRef((props: Props, ref) => {
                         {props.title}
                         { props.titleSuffix && <span className={style.titleBarTitleAreaSuffix}>{props.titleSuffix.toUpperCase()}</span>}
                     </span> }
-                </div>
+                </div> : <span></span> }
 
                 <div className={style.titleBarButtonArea}>
                     <button onClick={() => windowApi.setWindowState("minimized")}>
@@ -64,9 +68,7 @@ export default React.forwardRef((props: Props, ref) => {
                         <Icon className={style.titleBarButtonAreaDismissIcon} icon={dismiss16Regular} />
                     </button>
                 </div>
-            </div>
-
-            <div className={style.body}>{props.children}</div>
+            </div> }
         </div>
     );
 });

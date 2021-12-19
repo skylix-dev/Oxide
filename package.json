@@ -22,7 +22,8 @@
 		"install:desktop-electron": "cd desktop-electron && npm i && cd ../",
 		"watch": "run-p watch:desktop-cli watch:desktop-gui watch:mobile-cli watch:mobile-gui watch:utils watch:websocket watch:terminal watch:desktop-electron",
 		"postinstall": "run-p install:desktop-cli install:desktop-gui install:mobile-cli install:mobile-gui install:utils install:websocket install:terminal install:desktop-electron && npm run watch",
-		"prettier": "prettier --write ."
+		"prettier": "prettier --write .",
+		"desktop-gui:examples:basic-app:dev": "cd desktop-gui/examples/BasicApp && npm run dev"
 	},
 	"repository": {
 		"type": "git",

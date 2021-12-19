@@ -18,6 +18,15 @@
     background: $background_solidBackground_base;
     -webkit-app-region: drag;
     padding: 0 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.titleBarOverlayMode {
+    background: transparent;
+    -webkit-app-region: no-drag;
+    pointer-events: none;
 }
 
 .body {
@@ -29,6 +38,11 @@
     background: $background_solidBackground_tertiary;
     padding: 0;
     margin: 0;
+}
+
+.bodyNoTitleBarSpace {
+    height: 100vh;
+    top: 0;
 }
 
 .titleBarTitleArea {
@@ -85,6 +99,7 @@
         align-items: center;
         justify-content: center;
         outline: none;
+        pointer-events: all;
         
         &:hover {
             background: $fill_subtle_secondary;

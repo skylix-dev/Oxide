@@ -13,4 +13,6 @@ export default interface Props {
      * The suffix for the title such as BETA, ALPHA or anything else
      */
     titleSuffix?: string;
+
+    titleBarMode?: "overlay" | "hidden" | "default";
 }
