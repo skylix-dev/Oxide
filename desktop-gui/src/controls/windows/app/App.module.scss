@@ -154,6 +154,7 @@
 .coverSheetDisabled {
     opacity: 0;
     pointer-events: none;
+    transition: opacity 0ms;
 }
 
 .coverSheetNoSmoke {
@@ -162,6 +163,9 @@
 
 .dialogWindow {
     position: absolute;
+    width: 100vw;
+    max-width: 500px;
+    transition: 150ms;
     top: 50vh;
     left: 50vw;
     transform: translate(-50%, -50%);
@@ -183,6 +187,7 @@
 
 .dialogWindowBody {
     padding: 20px;
+    user-select: none;
 
     h1 {
         color: $fill_text_primary;
@@ -202,4 +207,11 @@
 .dialogWindowFooterButtonWrapper {
     width: 100%;
     max-width: 50%;
+}
+
+.dialogWindowClosed {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+    pointer-events: none;
+    transition: 0ms;
 }

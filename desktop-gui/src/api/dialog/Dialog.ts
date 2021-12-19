@@ -12,7 +12,7 @@ export default class Dialog {
     public events = {
         open: [] as ((dialog: {
             title: string,
-            body: string,
+            body: string[] | string,
             buttons: Button[]
         }) => void)[],
         close: [] as (() => void)[]
@@ -24,7 +24,7 @@ export default class Dialog {
      * @param body Dialog body text
      * @param buttons All dialog footer buttons
      */
-    public show(title: string, body: string, buttons: Button[]) {
+    public show(title: string, body: string[] | string, buttons: Button[]) {
         this.events.open.forEach(event => event({ title, body, buttons }));
     }
 
@@ -50,7 +50,7 @@ export default class Dialog {
      */
     public on(event: "open", listener: (dialog: {
         title: string,
-        body: string,
+        body: string[] | string,
         buttons: Button[]
     }) => void): void;
 

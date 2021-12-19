@@ -14,7 +14,7 @@ let onStateChange: null | ((state: ReturnType<typeof windowApi.getWindowState>) 
 let onDialogClose: null | (() => void) = null;
 let onDialogOpen: null | ((dialog: {
     title: string,
-    body: string,
+    body: string[] | string,
     buttons: DialogButton[]
 }) => void) = null;
 
@@ -23,6 +23,11 @@ export default React.forwardRef((props: Props, ref) => {
     const [isFullscreen, setFullscreen] = useState(windowApi.getWindowState() == "fullScreened");
     const [sheetEnabled, setSheetEnabled] = useState(false);
     const [noSmoke, setNoSmoke] = useState(true);
+    const [currentDialog, setCurrentDialog] = useState<{
+        title: string,
+        body: string[] | string,
+        buttons: DialogButton[];
+    } | null>(null);
 
     document.title = props.title ?? "";
 
@@ -34,9 +39,12 @@ export default React.forwardRef((props: Props, ref) => {
 
     onDialogClose = () => {
         setSheetEnabled(false);
+        setCurrentDialog(null);
     }
 
     onDialogOpen = dialogInfo => {
+        setCurrentDialog(dialogInfo);
+
         setSheetEnabled(true);
         setNoSmoke(false);
     }
@@ -92,22 +100,31 @@ export default React.forwardRef((props: Props, ref) => {
 
             <div className={style.coverSheet + (!sheetEnabled ? " " + style.coverSheetDisabled : "") + (noSmoke ? " " + style.coverSheetNoSmoke : "")} />
 
-            <div className={style.dialogWindow}>
+            <div className={style.dialogWindow + (currentDialog == null ? " " + style.dialogWindowClosed : "")}>
                 <div className={style.dialogWindowBody}>
-                    <h1>No Internet</h1>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, soluta?</p>
+                    <h1>{currentDialog?.title}</h1>
+                    
+                    {typeof currentDialog?.body == "string" ? <p>{currentDialog.body}</p> : currentDialog?.body.map(line => {
+                        return <p>{line}</p>
+                    })}
                 </div>
 
                 <div className={style.dialogWindowFooter}>
-                    <div className={style.dialogWindowFooterButtonWrapper}>
-                        <Button fluid>Ok</Button>
-                    </div>
+                    {currentDialog?.buttons.map(button => {
+                        return (
+                            <div className={style.dialogWindowFooterButtonWrapper}>
+                                <Button accent={button.accent} disabled={button.disabled} fluid onClick={() => {
+                                    if (button.dismiss) {
+                                        dialog.close();
+                                    }
 
-                    <div className={style.dialogWindowFooterButtonWrapper}>
-                        <Button accent fluid>Ok</Button>
-                    </div>
+                                    button.action!();
+                                }}>{button.label}</Button>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
         </div>
     );
-});
+}); 

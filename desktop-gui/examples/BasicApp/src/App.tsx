@@ -10,10 +10,17 @@ export default function() {
 		<App titleBarMode={titleBarStyle} titleSuffix="TEST" title="Oxide">
 			<Html>
  				<Flex gap={10} direction="row">
-					<Button onClick={() => dialog.show("No internet connection", "Please check your internet connection", [
+					<Button onClick={() => dialog.show("No internet connection", ["Please check your internet connection", "If you beleive this is a mistake, please open an issue in the oxide github repository at https://github.com/illuxdev/oxide, thanks!"], [
 						{
-							label: "Ok",
+							label: "Close",
 							dismiss: true
+						},
+						{
+							label: "Reload",
+							accent: true,
+							action() {
+								location.reload();
+							}
 						}
 					])}>Open WiFi dialog</Button>
 					<Button accent>Pending Friend</Button>
