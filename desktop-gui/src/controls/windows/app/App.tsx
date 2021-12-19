@@ -14,6 +14,8 @@ let onStateChange: null | ((state: ReturnType<typeof windowApi.getWindowState>) 
 export default React.forwardRef((props: Props, ref) => {
     const [isMaximized, setMaximized] = useState(windowApi.getWindowState() == "maximized");
     const [isFullscreen, setFullscreen] = useState(windowApi.getWindowState() == "fullScreened");
+    const [sheetEnabled, setSheetEnabled] = useState(false);
+    const [noSmoke, setNoSmoke] = useState(true);
 
     document.title = props.title ?? "";
 
@@ -69,6 +71,8 @@ export default React.forwardRef((props: Props, ref) => {
                     </button>
                 </div>
             </div> }
+
+            <div onClick={() => setSheetEnabled(false)} className={style.coverSheet + (!sheetEnabled ? " " + style.coverSheetDisabled : "") + (noSmoke ? " " + style.coverSheetNoSmoke : "")} />
         </div>
     );
 });

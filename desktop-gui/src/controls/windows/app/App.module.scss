@@ -140,3 +140,22 @@
 .titleBarButtonAreaFullScreenMinimizeIcon {
     font-size: 17px;
 }
+
+.coverSheet {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: $background_smoke_default;
+    width: 100vw;
+    height: 100vh;
+    transition: 150ms;
+}
+
+.coverSheetDisabled {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.coverSheetNoSmoke {
+    background: transparent;
+}
