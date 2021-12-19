@@ -1,5 +1,72 @@
 @import "../_theme/Vars.scss";
 
 .root {
+    height: 100%;
+    width: 100%;
 
+    & > div {
+        width: calc(100% - 5px);
+        overflow: auto;
+        height: 100%;
+        padding: 20px;
+
+        &::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+    
+        &::-webkit-scrollbar-thumb {
+            background: $fill_text_tertiary;
+            border: 3px solid $background_solidBackground_base;
+            border-radius: 40px;
+    
+            &:hover {
+                background: $fill_text_secondary;
+            }
+        }
+    
+        &::-webkit-scrollbar-track {
+            background: $background_solidBackground_base;
+            margin: 10px 0;
+            border-radius: 40px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: $fill_text_primary;
+            font-family: "SegoeUI-VF";
+            font-size: 40px;
+            border-bottom: 1px solid $fill_subtle_secondary;
+            padding-bottom: 10px;
+            margin: 0 0 5px 0;
+    
+            &::selection {
+                background: $fill_accent_selectedTextBackground;
+                color: $fill_textOnAccent_selectedText;
+            }
+        }
+
+        h2 {
+            font-size: 35px;
+        }
+        
+        h3 {
+            font-size: 30px;
+            border: none;
+        }
+    
+        h4 {
+            font-size: 25px;
+            border: none;
+        }
+    
+        h5 {
+            font-size: 20px;
+            border: none;
+        }
+    
+        h6 {
+            font-size: 15px;
+            border: none;
+        }
+    }
 }

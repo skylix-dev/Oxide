@@ -4,6 +4,8 @@ import style from "./Html.module.scss";
 
 export default React.forwardRef((props: Props, refs) => {
     return (
-        <div className={style.root}>{props.children}</div>
+        <div className={style.root}>
+            <div>{props.children}</div>
+        </div>
     );
 });

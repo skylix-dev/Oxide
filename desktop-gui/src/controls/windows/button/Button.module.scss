@@ -1,0 +1,59 @@
+@import "../_theme/Vars.scss";
+
+.root {
+    display: inline-flex;
+}
+
+.inner {
+    min-width: 120px;
+    height: 32px;
+    border-radius: 4px;
+    background: $fill_control_default;
+    display: flex;
+    color: $fill_text_primary;
+    border: 1px solid $elevation_control_border;
+    border-bottom-color: $elevation_control_borderBottom;
+    align-items: center;
+    justify-content: center;
+    font-family: "SegoeUI-VF";
+    font-size: 13px;
+    transition: 150ms;
+    user-select: none;
+
+    &:hover {
+        background: $fill_control_secondary;
+
+        &:active {
+            background: $fill_control_tertiary;
+            border-color: $elevation_strokeColor_controlStroke_default;
+            color: $fill_text_secondary;
+        }
+    }
+}
+
+.accent {
+    background: $fill_accent_default;
+    color: $fill_textOnAccent_primary;
+    border: none;
+
+    &:hover {
+        background: $fill_accent_secondary;
+
+        &:active {
+            background: $fill_accent_tertiary;
+            color: $fill_textOnAccent_secondary;
+        }
+    }
+}
+
+.disabled {
+    background: $fill_control_disabled;
+    color: $fill_text_disabled;
+    pointer-events: none;
+}
+
+.accentDisabled {
+    pointer-events: none;
+    background: $fill_accent_disabled;
+    color: $fill_textOnAccent_disabled;
+}
