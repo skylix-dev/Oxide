@@ -8,4 +8,9 @@ export default interface Props {
      * Spacing between all elements
      */
     gap?: number;
+
+    /**
+     * The flow direction of the content
+     */
+    direction?: "row" | "column";
 }
