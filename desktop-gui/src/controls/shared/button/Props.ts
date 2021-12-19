@@ -13,4 +13,9 @@ export default interface Props {
      * Make the button accent themed
      */
     accent?: boolean;
+
+    /**
+     * On click event
+     */
+    onClick?: () => void;
 }

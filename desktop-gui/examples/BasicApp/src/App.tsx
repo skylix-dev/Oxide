@@ -1,4 +1,4 @@
-import { App, Button, Flex, Html, windowApi } from "../../../src/Exports";
+import { App, Button, dialog, Flex, Html, windowApi } from "../../../src/Exports";
 import { useState } from 'react';
 
 windowApi.setZoom(1);
@@ -10,7 +10,12 @@ export default function() {
 		<App titleBarMode={titleBarStyle} titleSuffix="TEST" title="Oxide">
 			<Html>
  				<Flex gap={10} direction="row">
-					<Button>Pending Friend</Button>
+					<Button onClick={() => dialog.show("No internet connection", "Please check your internet connection", [
+						{
+							label: "Ok",
+							dismiss: true
+						}
+					])}>Open WiFi dialog</Button>
 					<Button accent>Pending Friend</Button>
 					<Button disabled>Pending Friend</Button>
 					<Button accent disabled>Pending Friend</Button>

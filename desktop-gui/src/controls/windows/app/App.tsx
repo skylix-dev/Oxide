@@ -7,9 +7,16 @@ import restore16Regular from "@iconify/icons-fluent/restore-16-regular";
 import maximize16Regular from "@iconify/icons-fluent/maximize-16-regular";
 import subtract16Regular from "@iconify/icons-fluent/subtract-16-regular";
 import fullScreenMinimize24Regular from "@iconify/icons-fluent/full-screen-minimize-24-regular";
-import { windowApi } from "../../../Exports";
+import { dialog, windowApi } from "../../../Exports";
+import DialogButton from './../../../api/dialog/Button';
 
 let onStateChange: null | ((state: ReturnType<typeof windowApi.getWindowState>) => void) = null;
+let onDialogClose: null | (() => void) = null;
+let onDialogOpen: null | ((dialog: {
+    title: string,
+    body: string,
+    buttons: DialogButton[]
+}) => void) = null;
 
 export default React.forwardRef((props: Props, ref) => {
     const [isMaximized, setMaximized] = useState(windowApi.getWindowState() == "maximized");
@@ -21,6 +28,17 @@ export default React.forwardRef((props: Props, ref) => {
 
     if (!onStateChange) {
         windowApi.on("stateChange", newState => onStateChange && onStateChange(newState));
+        dialog.on("close", () => onDialogClose && onDialogClose());
+        dialog.on("open", dialog => onDialogOpen && onDialogOpen(dialog));
+    }
+
+    onDialogClose = () => {
+        setSheetEnabled(false);
+    }
+
+    onDialogOpen = dialogInfo => {
+        setSheetEnabled(true);
+        setNoSmoke(false);
     }
 
     onStateChange = state => {

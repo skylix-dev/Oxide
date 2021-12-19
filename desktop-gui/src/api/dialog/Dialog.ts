@@ -2,10 +2,19 @@ import Button from './Button';
 
 export default class Dialog {
     /**
+     * Is the dialog open
+     */
+    private opened = false;
+
+    /**
      * All event listeners
      */
     public events = {
-        open: [] as (() => void)[],
+        open: [] as ((dialog: {
+            title: string,
+            body: string,
+            buttons: Button[]
+        }) => void)[],
         close: [] as (() => void)[]
     };
 
@@ -16,7 +25,22 @@ export default class Dialog {
      * @param buttons All dialog footer buttons
      */
     public show(title: string, body: string, buttons: Button[]) {
+        this.events.open.forEach(event => event({ title, body, buttons }));
+    }
 
+    /**
+     * Close the current open dialog
+     */
+    public close() {
+        this.events.close.forEach(event => event());
+    }
+
+    /**
+     * Check if the dialog is open
+     * @returns Is the dialog open
+     */
+    public isOpen(): boolean {
+        return this.opened;
     }
 
     /**
@@ -24,7 +48,11 @@ export default class Dialog {
      * @param event Event name
      * @param listener Event callback
      */
-    public on(event: "open", listener: () => void): void;
+    public on(event: "open", listener: (dialog: {
+        title: string,
+        body: string,
+        buttons: Button[]
+    }) => void): void;
 
     /**
      * Listen for when the dialog is closed

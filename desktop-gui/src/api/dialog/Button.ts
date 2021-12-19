@@ -7,7 +7,7 @@ export default interface Button {
     /**
      * The button's click action
      */
-    action: () => void;
+    action?: () => void;
 
     /**
      * Is the button and accent themed button
@@ -18,4 +18,9 @@ export default interface Button {
      * Is the button disabled
      */
     disabled?: boolean;
+
+    /**
+     * Should this button be used to dismiss the dialog
+     */
+    dismiss?: boolean;
 }
