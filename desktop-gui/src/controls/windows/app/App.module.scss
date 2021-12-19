@@ -148,7 +148,7 @@
     background: $background_smoke_default;
     width: 100vw;
     height: 100vh;
-    transition: 150ms;
+    transition: opacity 150ms;
 }
 
 .coverSheetDisabled {
@@ -158,4 +158,48 @@
 
 .coverSheetNoSmoke {
     background: transparent;
+}
+
+.dialogWindow {
+    position: absolute;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    background: $background_solidBackground_tertiary;
+    border-radius: 8px;
+    box-shadow: 0 0 0 2px $elevation_control_border, 0 0 20px -4px rgba(0, 0, 0, 50%);
+}
+
+.dialogWindowFooter {
+    background: $background_solidBackground_secondary;
+    border-radius: 0 0 8px 8px;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 20px;
+    gap: 10px;
+}
+
+.dialogWindowBody {
+    padding: 20px;
+
+    h1 {
+        color: $fill_text_primary;
+        font-size: 20px;
+        font-family: "SegoeUI-VF";
+        margin: 0 0 15px 0;
+        font-weight: 400;
+    }
+
+    p {
+        color: $fill_text_secondary;
+        font-family: "SegoeUI-VF";
+        font-size: 13px;
+    }
+}
+
+.dialogWindowFooterButtonWrapper {
+    width: 100%;
+    max-width: 50%;
 }

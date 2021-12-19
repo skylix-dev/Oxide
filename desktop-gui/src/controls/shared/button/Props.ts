@@ -18,4 +18,9 @@ export default interface Props {
      * On click event
      */
     onClick?: () => void;
+
+    /**
+     * Should the button have a fluid width
+     */
+    fluid?: boolean;
 }

@@ -7,7 +7,8 @@ export default React.forwardRef((props: Props, ref) => {
     const defaultSettings = {
         accent: false,
         disabled: false,
-        onClick: () => {}
+        onClick: () => {},
+        fluid: false
     } as Props;
 
     const settings = deepmerge(defaultSettings, props);

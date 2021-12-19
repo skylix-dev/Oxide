@@ -7,7 +7,7 @@ import restore16Regular from "@iconify/icons-fluent/restore-16-regular";
 import maximize16Regular from "@iconify/icons-fluent/maximize-16-regular";
 import subtract16Regular from "@iconify/icons-fluent/subtract-16-regular";
 import fullScreenMinimize24Regular from "@iconify/icons-fluent/full-screen-minimize-24-regular";
-import { dialog, windowApi } from "../../../Exports";
+import { Button, dialog, windowApi } from "../../../Exports";
 import DialogButton from './../../../api/dialog/Button';
 
 let onStateChange: null | ((state: ReturnType<typeof windowApi.getWindowState>) => void) = null;
@@ -90,7 +90,24 @@ export default React.forwardRef((props: Props, ref) => {
                 </div>
             </div> }
 
-            <div onClick={() => setSheetEnabled(false)} className={style.coverSheet + (!sheetEnabled ? " " + style.coverSheetDisabled : "") + (noSmoke ? " " + style.coverSheetNoSmoke : "")} />
+            <div className={style.coverSheet + (!sheetEnabled ? " " + style.coverSheetDisabled : "") + (noSmoke ? " " + style.coverSheetNoSmoke : "")} />
+
+            <div className={style.dialogWindow}>
+                <div className={style.dialogWindowBody}>
+                    <h1>No Internet</h1>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, soluta?</p>
+                </div>
+
+                <div className={style.dialogWindowFooter}>
+                    <div className={style.dialogWindowFooterButtonWrapper}>
+                        <Button fluid>Ok</Button>
+                    </div>
+
+                    <div className={style.dialogWindowFooterButtonWrapper}>
+                        <Button accent fluid>Ok</Button>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 });
