@@ -123,3 +123,7 @@ package-lock.json
 
 # Publish Packages
 *.zip
+
+# NextJS Files
+!next.config.js
+!next-env.d.ts
