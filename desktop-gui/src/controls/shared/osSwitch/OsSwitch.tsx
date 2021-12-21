@@ -1,6 +1,6 @@
 import { windowApi } from "../../../Exports";
 import Props from "./Props";
-import WindowPlatform from './../../../api/WindowPlatform';
+import WindowPlatform from './../../../api/window/WindowPlatform';
 import React from "react";
 
 export default React.forwardRef((props: Props, ref) => {

@@ -1,7 +1,7 @@
 import { App, AppTitleBarMode, Button, dialog, Flex, Html, windowApi, WindowPlatform } from "../../../src/Exports";
 import { useState } from 'react';
 
-windowApi.setOsPlatformOverride(WindowPlatform.mac);
+windowApi.setOsPlatformOverride(WindowPlatform.windows);
 windowApi.setZoom(1);
 
 export default function() {

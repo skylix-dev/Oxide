@@ -5,8 +5,8 @@
 	"main": "src/Exports.js",
 	"scripts": {
 		"watch": "tsc --watch",
-		"install:example:basic-app": "cd examples/BasicApp && npm i && cd ../../",
-		"postinstall": "npm run install:example:basic-app"
+		"install:examples:basic-app": "cd examples/BasicApp && npm i && cd ../../",
+		"postinstall": "npm run install:examples:basic-app"
 	},
 	"author": {
 		"name": "ILLUX",

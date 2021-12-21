@@ -25,6 +25,11 @@
     left: 0;
 }
 
+.titleBarOverlayMode {
+    background: transparent;
+    -webkit-app-region: no-drag;
+}
+
 .titleBarTitleArea {
     display: flex; 
     flex-direction: row;

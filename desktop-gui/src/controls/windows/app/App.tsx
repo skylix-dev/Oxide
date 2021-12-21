@@ -10,6 +10,7 @@ import fullScreenMinimize24Regular from "@iconify/icons-fluent/full-screen-minim
 import { Button, dialog, windowApi } from "../../../Exports";
 import DialogButton from './../../../api/dialog/Button';
 import TitleBarMode from "../../shared/app/TitleBarMode";
+import WindowState from './../../../api/window/WindowState';
 
 let onStateChange: null | ((state: ReturnType<typeof windowApi.getWindowState>) => void) = null;
 let onDialogClose: null | (() => void) = null;
@@ -20,8 +21,8 @@ let onDialogOpen: null | ((dialog: {
 }) => void) = null;
 
 export default React.forwardRef((props: Props, ref) => {
-    const [isMaximized, setMaximized] = useState(windowApi.getWindowState() == "maximized");
-    const [isFullscreen, setFullscreen] = useState(windowApi.getWindowState() == "fullScreened");
+    const [isMaximized, setMaximized] = useState(windowApi.getWindowState() == WindowState.maximized);
+    const [isFullscreen, setFullscreen] = useState(windowApi.getWindowState() == WindowState.fullScreened);
     const [sheetEnabled, setSheetEnabled] = useState(false);
     const [noSmoke, setNoSmoke] = useState(true);
     const [currentDialog, setCurrentDialog] = useState<{
@@ -51,12 +52,12 @@ export default React.forwardRef((props: Props, ref) => {
     }
 
     onStateChange = state => {
-        if (state == "fullScreened") {
+        if (state == WindowState.fullScreened) {
             setFullscreen(true);
         } else {
             setFullscreen(false);
 
-            if (state == "maximized") {
+            if (state == WindowState.maximized) {
                 setMaximized(true);
             } else {
                 setMaximized(false);
@@ -81,15 +82,15 @@ export default React.forwardRef((props: Props, ref) => {
                 </div> : <span></span> }
 
                 <div className={style.titleBarButtonArea}>
-                    <button onClick={() => windowApi.setWindowState("minimized")}>
+                    <button onClick={() => windowApi.setWindowState(WIndowState.minimized)}>
                         <Icon className={style.titleBarButtonAreaMinimizeIcon} icon={subtract16Regular} />
                     </button>
 
-                    { isFullscreen ? <button onClick={() => windowApi.setWindowState("normal")}>
+                    { isFullscreen ? <button onClick={() => windowApi.setWindowState(WindowState.normal)}>
                         <Icon className={style.titleBarButtonAreaFullScreenMinimizeIcon} icon={fullScreenMinimize24Regular} />
-                    </button> : (isMaximized ? <button onClick={() => windowApi.setWindowState("normal")}>
+                    </button> : (isMaximized ? <button onClick={() => windowApi.setWindowState(WindowState.normal)}>
                         <Icon className={style.titleBarButtonAreaRestoreIcon} icon={restore16Regular} />
-                    </button> : <button onClick={() => windowApi.setWindowState("maximized")}>
+                    </button> : <button onClick={() => windowApi.setWindowState(WindowState.maximized)}>
                         <Icon className={style.titleBarButtonAreaMaximizeIcon} icon={maximize16Regular} />
                     </button>) }
 

@@ -1,14 +1,14 @@
-import { getCurrentWindow, webFrame } from "./Electron";
+import { getCurrentWindow, webFrame } from "../Electron";
 import WindowPlatform from "./WindowPlatform";
+import WindowState from "./WindowState";
 
-type WindowState = "minimized" | "maximized" | "normal" | "fullScreened";
 let instanceCreated = false;
 
 export default class Window {
     /**
      * The window's current state
      */
-    private windowState: WindowState = "normal";
+    private windowState: WindowState = WindowState.normal;
     
     /**
      * The current window
@@ -45,13 +45,13 @@ export default class Window {
 
         const handleWindowState = () => {
             if (this.window.isFullScreen()) {
-                this.windowState = "fullScreened";
+                this.windowState = WindowState.fullScreened;
             } else if (this.window.isMaximized()) {
-                this.windowState = "maximized";
+                this.windowState = WindowState.maximized;
             } else if (this.window.isMinimized()) {
-                this.windowState = "minimized";
+                this.windowState = WindowState.minimized;
             } else {
-                this.windowState = "normal";
+                this.windowState = WindowState.normal;
             }
 
             this.events.stateChange.forEach(event => event(this.windowState));
@@ -98,20 +98,20 @@ export default class Window {
      */
     public setWindowState(state: WindowState) {
         switch (state) {
-            case "fullScreened":
+            case WindowState.fullScreened:
                 this.window.setFullScreen(true);
                 break;
 
-            case "maximized":
+            case WindowState.maximized:
                 this.window.maximize();
                 break;
 
-            case "minimized":
+            case WindowState.minimized:
                 this.window.minimize();
                 break;
 
-            case "normal":
-                if (this.windowState == "fullScreened") {
+            case WindowState.normal:
+                if (this.windowState == WindowState.fullScreened) {
                     this.window.setFullScreen(false);
                 } else {
                     this.window.restore();
