@@ -1,3 +1,5 @@
+import TitleBarMode from './TitleBarMode';
+
 export default interface Props {
     /**
      * Body content
@@ -17,5 +19,5 @@ export default interface Props {
     /**
      * Mode of the title bar
      */
-    titleBarMode?: "overlay" | "hidden" | "default";
+    titleBarMode?: TitleBarMode;
 }

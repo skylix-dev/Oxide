@@ -4,10 +4,11 @@ import WindowsApp from "../../windows/app/App";
 import MacApp from "../../mac/app/App";
 import deepmerge from "deepmerge";
 import OsSwitch from "../osSwitch/OsSwitch";
+import TitleBarMode from './TitleBarMode';
 
 export default React.forwardRef((props: Props, ref) => {
     const defaultSettings = {
-        titleBarMode: "default"
+        titleBarMode: TitleBarMode.default
     } as Props;
 
     const settings = deepmerge(defaultSettings, props);

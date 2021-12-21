@@ -9,6 +9,7 @@ import subtract16Regular from "@iconify/icons-fluent/subtract-16-regular";
 import fullScreenMinimize24Regular from "@iconify/icons-fluent/full-screen-minimize-24-regular";
 import { Button, dialog, windowApi } from "../../../Exports";
 import DialogButton from './../../../api/dialog/Button';
+import TitleBarMode from "../../shared/app/TitleBarMode";
 
 let onStateChange: null | ((state: ReturnType<typeof windowApi.getWindowState>) => void) = null;
 let onDialogClose: null | (() => void) = null;
@@ -65,10 +66,10 @@ export default React.forwardRef((props: Props, ref) => {
 
     return (
         <div className={style.root}>
-            <div className={style.body + (props.titleBarMode != "default" ? " " + style.bodyNoTitleBarSpace : "")}>{props.children}</div>
+            <div className={style.body + (props.titleBarMode != TitleBarMode.default ? " " + style.bodyNoTitleBarSpace : "")}>{props.children}</div>
 
-            { props.titleBarMode != "hidden" && <div className={style.titleBar + (props.titleBarMode == "overlay" ? " " + style.titleBarOverlayMode : "")}>
-                { props.titleBarMode != "overlay" ? <div className={style.titleBarTitleArea}>
+            { props.titleBarMode != TitleBarMode.hidden && <div className={style.titleBar + (props.titleBarMode == TitleBarMode.overlay ? " " + style.titleBarOverlayMode : "")}>
+                { props.titleBarMode != TitleBarMode.overlay ? <div className={style.titleBarTitleArea}>
                     <div className={style.titleBarTitleAreaIcon}>
                         <img draggable={false} src="https://raw.githubusercontent.com/IlluxDev/Illux/main/Logo.svg" />
                     </div>

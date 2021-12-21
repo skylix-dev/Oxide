@@ -8,10 +8,11 @@ import Dialog from './api/dialog/Dialog';
 import WindowPlatform from './api/WindowPlatform';
 import DialogButton from './api/dialog/Button';
 import OsSwitch from "./controls/shared/osSwitch/OsSwitch";
+import AppTitleBarMode from "./controls/shared/app/TitleBarMode";
 
 const windowApi = new WindowApi();
 const dialog = new Dialog();
 
-export { windowApi, electron, dialog, WindowPlatform };
+export { windowApi, electron, dialog, WindowPlatform, AppTitleBarMode };
 export type { DialogButton };
 export { App, Html, Button, Flex, OsSwitch };
