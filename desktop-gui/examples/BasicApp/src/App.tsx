@@ -1,11 +1,12 @@
-import { App, AppTitleBarMode, Button, dialog, Flex, Html, windowApi } from "../../../src/Exports";
+import { App, AppTitleBarMode, Button, dialog, Flex, Html, windowApi, WindowPlatform } from "../../../src/Exports";
 import { useState } from 'react';
 
+windowApi.setOsPlatformOverride(WindowPlatform.mac);
 windowApi.setZoom(1);
 
 export default function() {
 	const [titleBarStyle, setTitleBarStyle] = useState<AppTitleBarMode>(AppTitleBarMode.default);
-
+ 
 	return (
 		<App titleBarMode={titleBarStyle} titleSuffix="TEST" title="Oxide">
 			<Html>

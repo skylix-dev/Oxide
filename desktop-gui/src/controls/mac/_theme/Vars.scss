@@ -1,0 +1,17 @@
+@font-face {
+    src: url("/_fonts/Mac.otf");
+    font-family: "San Francisco";
+}
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --app_titleBar_background: linear-gradient(rgb(75, 75, 75), rgb(61, 61, 61));
+    --app_titleBar_textColor: #fff;
+}
+
+$app_titleBar_background: var(--app_titleBar_background);
+$app_titleBar_textColor: var(--app_titleBar_textColor);
+ 
