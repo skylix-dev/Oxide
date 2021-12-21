@@ -25,11 +25,17 @@ export default React.forwardRef((props: Props, ref) => {
     const [isFullscreen, setFullscreen] = useState(windowApi.getWindowState() == WindowState.fullScreened);
     const [sheetEnabled, setSheetEnabled] = useState(false);
     const [noSmoke, setNoSmoke] = useState(true);
+    const [currentMenu, setCurrentMenu] = useState<{
+        label: string;
+        action: () => void;
+        items?: any[];
+    }[] | null>();
     const [currentDialog, setCurrentDialog] = useState<{
         title: string,
         body: string[] | string,
         buttons: DialogButton[];
     } | null>(null);
+    let itemsUsingSheet = 0;
 
     document.title = props.title ?? "";
 
@@ -40,11 +46,17 @@ export default React.forwardRef((props: Props, ref) => {
     }
 
     onDialogClose = () => {
-        setSheetEnabled(false);
+        itemsUsingSheet--;
         setCurrentDialog(null);
+        setNoSmoke(true);
+        
+        if (itemsUsingSheet <= 0) {
+            setSheetEnabled(false);
+        }
     }
 
     onDialogOpen = dialogInfo => {
+        itemsUsingSheet++;
         setCurrentDialog(dialogInfo);
 
         setSheetEnabled(true);
@@ -82,7 +94,18 @@ export default React.forwardRef((props: Props, ref) => {
                 </div> : <span></span> }
 
                 <div className={style.titleBarButtonArea}>
-                    <button onClick={() => windowApi.setWindowState(WIndowState.minimized)}>
+                    <button onClick={() => {
+                        setCurrentMenu([
+                            {
+                                label: "First",
+                                action() {}
+                            }
+                        ]);
+                        setSheetEnabled(true);
+                    }}>
+                        CM
+                    </button>
+                    <button onClick={() => windowApi.setWindowState(WindowState.minimized)}>
                         <Icon className={style.titleBarButtonAreaMinimizeIcon} icon={subtract16Regular} />
                     </button>
 
@@ -100,7 +123,14 @@ export default React.forwardRef((props: Props, ref) => {
                 </div>
             </div> }
 
-            <div className={style.coverSheet + (!sheetEnabled ? " " + style.coverSheetDisabled : "") + (noSmoke ? " " + style.coverSheetNoSmoke : "")} />
+            <div onClick={() => {
+                itemsUsingSheet--;
+                setCurrentMenu(null);
+
+                if (itemsUsingSheet <= 0 && !currentDialog) {
+                    setSheetEnabled(false);
+                }
+            }} className={style.coverSheet + (!sheetEnabled ? " " + style.coverSheetDisabled : "") + (noSmoke ? " " + style.coverSheetNoSmoke : "")} />
 
             <div className={style.dialogWindow + (currentDialog == null ? " " + style.dialogWindowClosed : "")}>
                 <div className={style.dialogWindowBody}>
@@ -127,6 +157,62 @@ export default React.forwardRef((props: Props, ref) => {
                     })}
                 </div>
             </div>
+
+            { currentMenu && <div className={style.contextMenu}>
+                <div className={style.contextMenuInner + (currentMenu ? " " + style.contextMenuInnerShown : "")}>
+                    <div className={style.contextMenuRowList}>
+                        <button>
+                            <Icon icon="fluent:search-16-regular" />
+                        </button>
+
+                        <button>
+                            <Icon icon="fluent:search-16-regular" />
+                        </button>
+                    </div>
+
+                    <div className={style.contextMenuBody}>
+                        <button>
+                            <div className={style.contextMenuBodyItemIcon}>
+                                <Icon icon="fluent:search-16-regular" />
+                            </div>
+
+                            <span>This is a row item that is much longer</span>
+                        </button>
+
+                        <button>
+                            <div className={style.contextMenuBodyItemIcon}>
+                                <Icon icon="fluent:search-16-regular" />
+                            </div>
+
+                            <span>This is a row item with a very very very long title and it's cut off</span>
+                        </button>
+
+                        <button>
+                            <div className={style.contextMenuBodyItemIcon}>
+                                <Icon icon="fluent:search-16-regular" />
+                            </div>
+
+                            <span>This is a row item</span>
+                        </button>
+
+                        <button>
+                            <div className={style.contextMenuBodyItemIcon}>
+                                <Icon icon="fluent:search-16-regular" />
+                            </div>
+
+                            <span>This is a row item</span>
+                        </button>
+                        
+                        <button>
+                            <div className={style.contextMenuBodyItemIcon}>
+                                <Icon icon="fluent:search-16-regular" />
+                            </div>
+
+                            <span>This is a row item</span>
+                        </button>
+                    </div>
+                </div>
+            </div> }
         </div>
     );
 }); 
