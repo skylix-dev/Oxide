@@ -1,6 +1,8 @@
 import { getCurrentWindow, webFrame } from "./Electron";
+import WindowPlatform from "./WindowPlatform";
 
 type WindowState = "minimized" | "maximized" | "normal" | "fullScreened";
+let instanceCreated = false;
 
 export default class Window {
     /**
@@ -21,9 +23,24 @@ export default class Window {
     };
 
     /**
+     * The current OS platform
+     */
+    private platform: WindowPlatform;
+
+    /**
      * A class used to interact with the current BrowserWindow
      */
     public constructor() {
+        if (process.platform == "win32") {
+            this.platform = WindowPlatform.windows;
+        } else if (process.platform == "linux") {
+            this.platform = WindowPlatform.linux;
+        } else if (process.platform == "darwin") {
+            this.platform = WindowPlatform.mac;
+        } else {
+            this.platform = WindowPlatform.windows;
+        }
+
         this.window = getCurrentWindow();
 
         const handleWindowState = () => {
@@ -67,6 +84,15 @@ export default class Window {
     }
 
     /**
+     * The window's OS platform
+     * @returns The window's platform
+     */
+    public getWindowPlatform(): WindowPlatform {
+        instanceCreated = true;
+        return this.platform;
+    }
+
+    /**
      * Set the state of the window
      * @param state The window's new state
      */
@@ -99,6 +125,18 @@ export default class Window {
      */
     public exit() {
         this.window.close();
+    }
+
+    /**
+     * Override the automatic OS detection
+     * @param os The OS
+     */
+    public setOsPlatformOverride(os: WindowPlatform) {
+        if (instanceCreated) {
+            throw new Error("Window manager instance has already been created, please run this before rendering components for the react app");
+        }
+
+        this.platform = os;
     }
 
     /**

@@ -5,9 +5,13 @@ import * as electron from "./api/Electron";
 import Button from "./controls/shared/button/Button";
 import Flex from "./controls/shared/flex/Flex";
 import Dialog from './api/dialog/Dialog';
+import WindowPlatform from './api/WindowPlatform';
+import DialogButton from './api/dialog/Button';
+import OsSwitch from "./controls/shared/osSwitch/OsSwitch";
 
 const windowApi = new WindowApi();
 const dialog = new Dialog();
 
-export { windowApi, electron, dialog };
-export { App, Html, Button, Flex };
+export { windowApi, electron, dialog, WindowPlatform };
+export type { DialogButton };
+export { App, Html, Button, Flex, OsSwitch };

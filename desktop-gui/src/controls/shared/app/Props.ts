@@ -14,5 +14,8 @@ export default interface Props {
      */
     titleSuffix?: string;
 
+    /**
+     * Mode of the title bar
+     */
     titleBarMode?: "overlay" | "hidden" | "default";
 }

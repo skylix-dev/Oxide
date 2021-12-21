@@ -165,7 +165,7 @@
     position: absolute;
     width: 100vw;
     max-width: 500px;
-    transition: 150ms;
+    transition: opacity 150ms, transform 150ms;
     top: 50vh;
     left: 50vw;
     transform: translate(-50%, -50%);
