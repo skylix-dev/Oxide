@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Props from "../../shared/app/Props";
 import style from "./App.module.scss";
 import { Icon } from "@iconify/react"
@@ -7,7 +7,7 @@ import restore16Regular from "@iconify/icons-fluent/restore-16-regular";
 import maximize16Regular from "@iconify/icons-fluent/maximize-16-regular";
 import subtract16Regular from "@iconify/icons-fluent/subtract-16-regular";
 import fullScreenMinimize24Regular from "@iconify/icons-fluent/full-screen-minimize-24-regular";
-import { Button, dialog, windowApi } from "../../../Exports";
+import { Button, dialog, menu, MenuButton, windowApi } from "../../../Exports";
 import DialogButton from './../../../api/dialog/Button';
 import TitleBarMode from "../../shared/app/TitleBarMode";
 import WindowState from './../../../api/window/WindowState';
@@ -19,23 +19,30 @@ let onDialogOpen: null | ((dialog: {
     body: string[] | string,
     buttons: DialogButton[]
 }) => void) = null;
+let onContextOpen: null | ((buttons: MenuButton[], position?: { left: number, top: number }) => void) = null;
+let onContextClose: null | (() => void) = null;
 
 export default React.forwardRef((props: Props, ref) => {
     const [isMaximized, setMaximized] = useState(windowApi.getWindowState() == WindowState.maximized);
     const [isFullscreen, setFullscreen] = useState(windowApi.getWindowState() == WindowState.fullScreened);
     const [sheetEnabled, setSheetEnabled] = useState(false);
     const [noSmoke, setNoSmoke] = useState(true);
-    const [currentMenu, setCurrentMenu] = useState<{
-        label: string;
-        action: () => void;
-        items?: any[];
-    }[] | null>();
+    const [currentMenu, setCurrentMenu] = useState<MenuButton[] | null>();
     const [currentDialog, setCurrentDialog] = useState<{
         title: string,
         body: string[] | string,
         buttons: DialogButton[];
     } | null>(null);
     let itemsUsingSheet = 0;
+    const [mouseOverContext, setMouseOverContext] = useState(false);
+    const [mousePosition, setMousePosition] = useState({
+        left: 0,
+        top: 0
+    });
+    const [contextPosition, setContextPosition] = useState({
+        left: 0,
+        top: 0
+    });
 
     document.title = props.title ?? "";
 
@@ -43,6 +50,8 @@ export default React.forwardRef((props: Props, ref) => {
         windowApi.on("stateChange", newState => onStateChange && onStateChange(newState));
         dialog.on("close", () => onDialogClose && onDialogClose());
         dialog.on("open", dialog => onDialogOpen && onDialogOpen(dialog));
+        menu.on("open", (buttons, position) => onContextOpen && onContextOpen(buttons, position));
+        menu.on("close", () => onContextClose && onContextClose());
     }
 
     onDialogClose = () => {
@@ -77,8 +86,26 @@ export default React.forwardRef((props: Props, ref) => {
         }
     }
 
+    onContextOpen = (buttons, position) => {
+        setContextPosition(position ? position : mousePosition);
+        setCurrentMenu(buttons);
+    }
+
+    onContextClose = () => {
+        setCurrentMenu(null);
+    }
+
     return (
-        <div className={style.root}>
+        <div onMouseMove={(event) => {
+            setMousePosition({
+                left: event.pageX,
+                top: event.pageY
+            });
+        }} onMouseDown={() => {
+            if (!mouseOverContext) {
+                setCurrentMenu(null);
+            }
+        }} className={style.root}>
             <div className={style.body + (props.titleBarMode != TitleBarMode.default ? " " + style.bodyNoTitleBarSpace : "")}>{props.children}</div>
 
             { props.titleBarMode != TitleBarMode.hidden && <div className={style.titleBar + (props.titleBarMode == TitleBarMode.overlay ? " " + style.titleBarOverlayMode : "")}>
@@ -95,13 +122,14 @@ export default React.forwardRef((props: Props, ref) => {
 
                 <div className={style.titleBarButtonArea}>
                     <button onClick={() => {
-                        setCurrentMenu([
+                        menu.show([
                             {
-                                label: "First",
-                                action() {}
+                                label: "Save"
+                            },
+                            {
+                                label: "Save All"
                             }
-                        ]);
-                        setSheetEnabled(true);
+                        ], mousePosition);
                     }}>
                         CM
                     </button>
@@ -123,14 +151,7 @@ export default React.forwardRef((props: Props, ref) => {
                 </div>
             </div> }
 
-            <div onClick={() => {
-                itemsUsingSheet--;
-                setCurrentMenu(null);
-
-                if (itemsUsingSheet <= 0 && !currentDialog) {
-                    setSheetEnabled(false);
-                }
-            }} className={style.coverSheet + (!sheetEnabled ? " " + style.coverSheetDisabled : "") + (noSmoke ? " " + style.coverSheetNoSmoke : "")} />
+            <div className={style.coverSheet + (!sheetEnabled ? " " + style.coverSheetDisabled : "") + (noSmoke ? " " + style.coverSheetNoSmoke : "")} />
 
             <div className={style.dialogWindow + (currentDialog == null ? " " + style.dialogWindowClosed : "")}>
                 <div className={style.dialogWindowBody}>
@@ -150,7 +171,7 @@ export default React.forwardRef((props: Props, ref) => {
                                         dialog.close();
                                     }
 
-                                    button.action!();
+                                    button.action ? button.action() : null;
                                 }}>{button.label}</Button>
                             </div>
                         );
@@ -158,7 +179,11 @@ export default React.forwardRef((props: Props, ref) => {
                 </div>
             </div>
 
-            { currentMenu && <div className={style.contextMenu}>
+            <div onMouseLeave={() => setMouseOverContext(false)} onMouseEnter={() => setMouseOverContext(true)} style={{
+                display: currentMenu ? "flex" : "none",
+                top: contextPosition.top + "px",
+                left: contextPosition.left + "px"
+            }} className={style.contextMenu}>
                 <div className={style.contextMenuInner + (currentMenu ? " " + style.contextMenuInnerShown : "")}>
                     <div className={style.contextMenuRowList}>
                         <button>
@@ -171,48 +196,20 @@ export default React.forwardRef((props: Props, ref) => {
                     </div>
 
                     <div className={style.contextMenuBody}>
-                        <button>
-                            <div className={style.contextMenuBodyItemIcon}>
-                                <Icon icon="fluent:search-16-regular" />
-                            </div>
+                        {currentMenu?.map((menuBodyItem, index) => {
+                            return (
+                                <button key={"menu-item-" + menuBodyItem.label.split(" ").join("_") + "-" + index}>
+                                    <div className={style.contextMenuBodyItemIcon}>
+                                        <Icon icon="fluent:search-16-regular" />
+                                    </div>
 
-                            <span>This is a row item that is much longer</span>
-                        </button>
-
-                        <button>
-                            <div className={style.contextMenuBodyItemIcon}>
-                                <Icon icon="fluent:search-16-regular" />
-                            </div>
-
-                            <span>This is a row item with a very very very long title and it's cut off</span>
-                        </button>
-
-                        <button>
-                            <div className={style.contextMenuBodyItemIcon}>
-                                <Icon icon="fluent:search-16-regular" />
-                            </div>
-
-                            <span>This is a row item</span>
-                        </button>
-
-                        <button>
-                            <div className={style.contextMenuBodyItemIcon}>
-                                <Icon icon="fluent:search-16-regular" />
-                            </div>
-
-                            <span>This is a row item</span>
-                        </button>
-                        
-                        <button>
-                            <div className={style.contextMenuBodyItemIcon}>
-                                <Icon icon="fluent:search-16-regular" />
-                            </div>
-
-                            <span>This is a row item</span>
-                        </button>
+                                    <span>{menuBodyItem.label}</span>
+                                </button>
+                            );
+                        })}
                     </div>
                 </div>
-            </div> }
+            </div>
         </div>
     );
 }); 

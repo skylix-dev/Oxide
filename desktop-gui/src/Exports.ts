@@ -10,10 +10,14 @@ import DialogButton from './api/dialog/Button';
 import OsSwitch from "./controls/shared/osSwitch/OsSwitch";
 import AppTitleBarMode from "./controls/shared/app/TitleBarMode";
 import WindowState from './api/window/WindowState';
+import MenuButton from "./api/menu/Button";
+import Menu from "./api/menu/Menu";
+import MenuBar from "./controls/shared/menuBar/MenuBar";
 
 const windowApi = new WindowApi();
 const dialog = new Dialog();
+const menu = new Menu();
 
-export { windowApi, electron, dialog, WindowPlatform, AppTitleBarMode, WindowState };
-export type { DialogButton };
-export { App, Html, Button, Flex, OsSwitch };
+export { windowApi, electron, dialog, WindowPlatform, AppTitleBarMode, WindowState, menu };
+export type { DialogButton, MenuButton };
+export { App, Html, Button, Flex, OsSwitch, MenuBar };

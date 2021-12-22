@@ -1,4 +1,4 @@
-import { App, AppTitleBarMode, Button, dialog, Flex, Html, windowApi, WindowPlatform } from "../../../src/Exports";
+import { App, AppTitleBarMode, Button, dialog, Flex, Html, menu, windowApi, WindowPlatform } from "../../../src/Exports";
 import { useState } from 'react';
 
 windowApi.setOsPlatformOverride(WindowPlatform.windows);
@@ -17,10 +17,17 @@ export default function() {
 							dismiss: true
 						},
 						{
-							label: "Reload",
+							label: "See Options",
 							accent: true,
 							action() {
-								location.reload();
+								menu.show([
+									{
+										label: "Reload",
+										action() {
+											location.reload();
+										}
+									}
+								])
 							}
 						}
 					])}>Open WiFi dialog</Button>

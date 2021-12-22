@@ -246,12 +246,19 @@
     flex-direction: row;
     align-items: center;
     background: $background_solidBackground_quarternary;
+    margin-bottom: -5px;
 
     button {
         border: none;
         background: $fill_subtle_transparent;
         color: $fill_text_primary;
-
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+ 
         &:hover {
             background: $fill_subtle_secondary;
 
