@@ -1,4 +1,4 @@
-# Oxide
+# Oxide (END OF LIFE): https://github.com/skylixgh/nexts <-- use this instead, deprecated cause of it :D
 
 Create full-stack applications including, desktop, mobile, web, and servers!
 
